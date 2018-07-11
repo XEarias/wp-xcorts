@@ -17,6 +17,7 @@ Version: 0.0.1
 .escort-item .escort-item-internal {
     position: relative;
     overflow: hidden;
+    border: 1px solid #EDEDED;
 }
 
 .escort-item .escort-item-internal .escort-info-container{
@@ -29,6 +30,45 @@ Version: 0.0.1
     transition: 0.3s all ease;
 }
 
+.escort-item .escort-item-internal .escort-info-container .escort-info-header {
+    height: 20%;
+}
+
+.escort-item .escort-item-internal .escort-info-container .escort-info-header .escort-info-header-left{
+    height: 66px;
+    width: 60%;
+    font-size: 12px;
+    display: block;
+    float: left;
+    position: relative;
+    padding-top: 14px;
+    padding-left: 10px;
+}
+
+.escort-item .escort-item-internal .escort-info-container .escort-info-header .escort-info-header-left:before {
+    content: "";
+    width: 1px;
+    height: 38px;
+    position: absolute;
+    right: 0;
+    top: 14px;
+    background: grey;
+}
+
+.escort-item .escort-item-internal .escort-info-container .escort-info-header .escort-info-header-right{
+    height: 66px;
+    width: 40%;
+    font-size: 12px;
+    display: block;
+    float: left;
+    padding-top: 14px;
+    padding-left: 2px;
+    text-align: center;
+}
+
+.escort-item .escort-item-internal .escort-info-container .escort-info-body {
+    height: 80%;
+}
 
 .escort-item .escort-item-internal .escort-info-container:hover {
     transform: translateY(-80%);
