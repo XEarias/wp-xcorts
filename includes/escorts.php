@@ -316,10 +316,120 @@ function admin_save_escort( $post_id, $post_object)
 add_action('post_updated', 'admin_save_escort', 10, 2);
 
 
+function get_escort_extra_info($id, &$data){
+    
+    GLOBAL $rates, $langs;
+
+    $url = get_post_permalink($id);
+    $image = get_the_post_thumbnail_url($id);
+
+    $meta_age = get_post_meta($id, "escort_age", true);
+    $meta_stature = get_post_meta($id, "escort_stature", true);
+    $meta_weight = get_post_meta($id, "escort_weight", true);
+    $meta_langs = (get_post_meta($id, "escort_langs", true)) ? get_post_meta($id, "escort_langs", true) : [] ;
+    $meta_skin_color = get_post_meta($id, "escort_skin_color", true);
+    $meta_hair_color = get_post_meta($id, "escort_hair_color", true);
+    $meta_profession = get_post_meta($id, "escort_profession", true);
+    $meta_measure = get_post_meta($id, "escort_measure", true) ? get_post_meta($id, "escort_measure", true) : [];
+
+    $langs_with_labels = [];
+
+    foreach($meta_langs as $meta_lang){
+        $langs_with_labels[$meta_lang] = $langs[$meta_lang];
+    }
+
+    $meta_rates = get_post_meta($id, "escort_rates", true) ? get_post_meta($id, "escort_rates", true) : [];
+
+    $rates_with_labels = [];
+
+    foreach($meta_rates as $key => $meta_rate){
+        $rates_with_labels[$key] = [
+            "label" => $rates[$key], 
+            "value" => ($meta_rate) ? $meta_rate : false
+        ];
+    }
+
+    $services_raw = get_the_terms( $id, "escorts_services" );
+
+    $services = [];
+
+    if($services_raw){
+        foreach($services_raw as $service_raw){
+            $services[] = [
+                "name" => $service_raw->name,
+                "ID" => $service_raw->term_id
+            ];
+        }
+    }
+
+    $zones_raw = get_the_terms( $id, "escorts_zones" );
+
+    $zones = [];
+
+    if($zones_raw){
+        foreach($zones_raw as $zone_raw){
+            $zones[] = [
+                "name" => $zone_raw->name,
+                "ID" => $zone_raw->term_id
+            ];
+        }
+    }
+
+    $extra_data = [
+        "image" => $image,
+        "url" => $url,
+        "gallery" => json_encode([]),
+        "basic_info" => [
+            "skin_color" => $meta_skin_color,
+            "hair_color" => $meta_hair_color,
+            "measure" => $meta_measure,
+            "langs" => $langs_with_labels,
+            "profession" => $meta_profession,
+            "weight" => $meta_weight,
+            "age" => $meta_age,
+            "stature" => $meta_stature
+        ],
+        "rates" => $rates_with_labels,
+        "principal_rate" => $rates_with_labels[2],
+        "services" => $services,
+        "zone" => $zones
+    ];
+
+
+    $data = array_merge($data, $extra_data);
+
+}
+
+
+
+function get_escort($id){
+   
+    if($escort_raw = get_post($id)){
+        $escort_raw_id = $escort_raw->ID;
+        $escort_name = $escort_raw->post_title;
+        $escort_description = $escort_raw->post_content;
+    
+        $escort = [
+            "ID" => $escort_raw_id,
+            "name" => $escort_name,
+            "description" => $escort_description
+        ];
+    
+        get_escort_extra_info($escort_raw_id, $escort);
+    
+        return $escort;  
+    }
+
+    return false;
+    
+  
+
+
+    
+}
+
 
 function get_escorts($options = []){
-
-    GLOBAL $rates, $langs;
 
     $args = [
         "numberposts" => 80,
@@ -328,10 +438,11 @@ function get_escorts($options = []){
     ];
 
     if($options){
+        
         if(isset($options["taxonomy"]) && isset($options["term"])){
             $taxonomy = $options["taxonomy"];
             $term = $options["term"];
-
+            
             $args['tax_query'] = [
                 [
                     'taxonomy' => $taxonomy,
@@ -354,85 +465,15 @@ function get_escorts($options = []){
             $escort_raw_id = $escort_raw->ID;
             $escort_name = $escort_raw->post_title;
             $escort_description = $escort_raw->post_content;
-            $url = get_post_permalink($escort_raw_id);
-            $image = get_the_post_thumbnail_url($escort_raw_id);
 
-            $meta_age = get_post_meta($escort_raw_id, "escort_age", true);
-            $meta_stature = get_post_meta($escort_raw_id, "escort_stature", true);
-            $meta_weight = get_post_meta($escort_raw_id, "escort_weight", true);
-            $meta_langs = (get_post_meta($escort_raw_id, "escort_langs", true)) ? get_post_meta($escort_raw_id, "escort_langs", true) : [] ;
-            $meta_skin_color = get_post_meta($escort_raw_id, "escort_skin_color", true);
-            $meta_hair_color = get_post_meta($escort_raw_id, "escort_hair_color", true);
-            $meta_profession = get_post_meta($escort_raw_id, "escort_profession", true);
-            $meta_measure = get_post_meta($escort_raw_id, "escort_measure", true) ? get_post_meta($escort_raw_id, "escort_measure", true) : [];
-
-            $langs_with_labels = [];
-
-            foreach($meta_langs as $meta_lang){
-                $langs_with_labels[$meta_lang] = $langs[$meta_lang];
-            }
-
-            $meta_rates = get_post_meta($escort_raw_id, "escort_rates", true) ? get_post_meta($escort_raw_id, "escort_rates", true) : [];
-
-            $rates_with_labels = [];
-
-            foreach($meta_rates as $key => $meta_rate){
-                $rates_with_labels[$key] = [
-                    "label" => $rates[$key], 
-                    "value" => ($meta_rate) ? $meta_rate : false
-                ];
-            }
-
-            $services_raw = get_the_terms( $escort_raw_id, "escorts_services" );
-
-            $services = [];
-
-            if($services_raw){
-                foreach($services_raw as $service_raw){
-                    $services[] = [
-                        "name" => $service_raw->name,
-                        "ID" => $service_raw->term_id
-                    ];
-                }
-            }
-
-            $zones_raw = get_the_terms( $escort_raw_id, "escorts_zones" );
-
-            $zones = [];
-
-            if($zones_raw){
-                foreach($zones_raw as $zone_raw){
-                    $zones[] = [
-                        "name" => $zone_raw->name,
-                        "ID" => $zone_raw->term_id
-                    ];
-                }
-            }
-
-            
-
-            $escorts[] = [
+            $escort = [
                 "ID" => $escort_raw_id,
                 "name" => $escort_name,
-                "url" => $url,
-                "image" => $image,
-                "gallery" => json_encode([]),
-                "description" => $escort_description,
-                "basic_info" => [
-                    "skin_color" => $meta_skin_color,
-                    "hair_color" => $meta_hair_color,
-                    "measure" => $meta_measure,
-                    "langs" => $langs_with_labels,
-                    "profession" => $meta_profession,
-                    "weight" => $meta_weight,
-                    "age" => $meta_age,
-                    "stature" => $meta_stature
-                ],
-                "rates" => $rates_with_labels,
-                "principal_rate" => $rates_with_labels[2],
-                "services" => $services,
-                "zone" => $zones
-            ];    
+                "description" => $escort_description
+            ];
+
+            get_escort_extra_info($escort_raw_id, $escort);
+            $escorts[] = $escort;
         }
     }
 
@@ -455,7 +496,7 @@ function prepare_escorts_by_taxonomy(){
 
     $options = [
         "taxonomy" =>  $taxonomy_name,
-        "slug" => $term_slug
+        "term" => $term_slug
     ];
 
     $escorts = get_escorts($options);
