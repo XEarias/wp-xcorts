@@ -5,8 +5,16 @@ Description: Tema de damas de compañía
 Version: 0.0.1
 */
 
+:root {
+    --main-color: #f39;
+}
+
 html {
     margin-top: 0 !important;
+}
+
+*:not(i) {
+    font-family: 'Roboto';
 }
 
 /* ESCORTS LIST */
@@ -98,7 +106,7 @@ html {
 
 
 .escort-principal-rate {
-    color: #F39; 
+    color: var(--main-color); 
     font-size: 11px;
 }
 
@@ -118,9 +126,83 @@ svg.hidden-background {
 /*SINGLE ESCORT*/
 
 .single-escort-name {
-    color: #F39;
+    color: var(--main-color);
 }
 
 .single-escort-link a {
     color: #666;
+    text-decoration: underline;
+}
+
+.single-escort-phone {
+    background-color: var(--main-color);
+    height: 38px;
+    position: relative;
+    top: 15px;
+    padding: 15px;
+    font-weight: 600;
+    font-size: 22px;
+    color: white
+}
+
+.single-escort-phone span {
+    position: relative;
+    bottom: 4px;
+    font-size: 12px;
+    margin: 10px;
+    background-color: white;
+    color: var(--main-color);
+    font-weight: 500;
+    padding: 1px 5px 2px;
+}
+
+
+.single-escort-info-card {
+    height: 400px;
+    background-color: #F5F5F5;
+    border-bottom: 2px solid #999;
+}
+
+.single-escort-info-card-header {
+    border-bottom: 1px solid var(--main-color);
+    color: var(--main-color);
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.single-escort-info-card ul {
+    padding: 0;
+    margin: 0;
+}
+
+.single-escort-info-card ul li {
+    list-style: none;
+    border-bottom: #999 solid 1px;
+    padding: 5px 0;
+}
+
+.single-escort-info-card ul li span {
+    position: relative;
+    font-weight: 700;
+    float: right;
+}
+
+.single-escort-service-tag {
+    background-color: #BFBFBF;
+    padding: 2px 6px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    width: fit-content;
+    float: left;
+    margin: 3px 2px;
+}
+
+.single-escort-service-tag a {
+    color: white;
+    text-decoration: none;
+}
+
+.single-escort-service-tag:hover {
+    background-color: var(--main-color);
 }

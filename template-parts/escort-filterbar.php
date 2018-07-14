@@ -1,7 +1,19 @@
 <section class="filterbar-container container-fluid">
-    <div class="row">
-        <div class="col-md-12 bg-primary pt-2 pb-2">
-            <h4 class="text-center">FILTER ESCORTS</h4>
+    <form action="">
+        <div class="row">
+            <div class="col-md-12">
+            </div>
         </div>
-    </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a data-toggle="collapse" href="#extra-filters" role="button" aria-expanded="false" aria-controls="extra-filters">
+                    <small>MAS FILTROS</small>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="collapse" id="extra-filters">
+            </div>
+        </div>
+    </form>
 </section>
