@@ -124,3 +124,17 @@ svg.hidden-background {
 .single-escort-link a {
     color: #666;
 }
+
+
+
+
+
+/**** Menu Principal **/
+
+nav#principal-menu ul.navbar-nav > li > a{
+    color: #f3f2f2; 
+    font-weight: bold; 
+    font-size: 14px; 
+    padding-left: 10px; 
+    padding-right: 10px;
+}

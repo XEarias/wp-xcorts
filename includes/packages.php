@@ -22,6 +22,9 @@ function adding_packages() {
     wp_register_script('escort_item', get_template_directory_uri(). '/assets/js/escort_item.js');
     wp_enqueue_script('escort_item');
 
+    wp_register_script('escort_slider', get_template_directory_uri(). '/assets/js/escort_slider.js');
+    wp_enqueue_script('escort_slider');
+
     wp_enqueue_style( 'fmp-style', get_stylesheet_uri() );
 }
 

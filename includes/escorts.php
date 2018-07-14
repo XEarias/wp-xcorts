@@ -54,9 +54,9 @@ function add_escort_type()
 			'has_archive' => true,
 			"show_in_menu" => true,
 			"exclude_from_search" => true,
-			"show_in_nav_menus" => false,
+			'show_in_nav_menus' => true,
 			"show_in_admin_bar" => false,
-			"supports" => ["title", "thumbnail", "custom-fields", "editor"]
+			"supports" => ["title", "thumbnail", "custom-fields", "editor", "the_excerpt"]
 		]
     );
 
@@ -84,7 +84,8 @@ function add_escorts_service_taxonomy() {
         "public" => true,
         'show_ui' => true,
         'query_var' => true,
-        'show_admin_column' => true
+        'show_admin_column' => true,
+        'show_in_nav_menus' => true
     ];
  
     register_taxonomy( 'escorts_services', 'escort', $args );
@@ -110,8 +111,8 @@ function add_escorts_service_taxonomy() {
         'show_ui' => true,
         "hierarchical" => true,
         'query_var' => true,
-        'rewrite' => true, 
-        'show_admin_column' => true
+        'show_admin_column' => true,
+        'show_in_nav_menus' => true
     ];
  
     register_taxonomy( 'escorts_zones', 'escort', $args );
