@@ -36,7 +36,7 @@ Version: 0.0.1
 
 .escort-item .escort-item-internal .escort-info-container .escort-info-header .escort-info-header-left{
     height: 66px;
-    width: 60%;
+    width: 58%;
     font-size: 12px;
     display: block;
     float: left;
@@ -57,7 +57,7 @@ Version: 0.0.1
 
 .escort-item .escort-item-internal .escort-info-container .escort-info-header .escort-info-header-right{
     height: 66px;
-    width: 40%;
+    width: 42%;
     font-size: 12px;
     display: block;
     float: left;
@@ -70,10 +70,34 @@ Version: 0.0.1
     height: 80%;
 }
 
+.escort-item .escort-item-internal .escort-info-container .escort-info-body .escort-description {
+    height: 70%;
+    font-size: 11px;
+    padding: 0px 15px;
+    overflow: hidden;
+}
+
+.escort-item .escort-item-internal .escort-info-container .escort-info-body .escort-extra-data {
+    height: 30%;
+    font-size: 11px;
+    padding: 0px 15px;
+    overflow: hidden;
+}
+
+.escort-item .escort-item-internal .escort-info-container .escort-info-body .escort-extra-data > div{
+    margin-top: 5px;
+}
+
 .escort-item .escort-item-internal .escort-info-container:hover {
     transform: translateY(-80%);
 }
 
+
+
+.escort-principal-rate {
+    color: #F39; 
+    font-size: 11px;
+}
 
 
 .hidden-background{
