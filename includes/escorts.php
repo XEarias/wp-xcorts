@@ -328,10 +328,11 @@ function get_escorts($options = []){
     ];
 
     if($options){
+        
         if(isset($options["taxonomy"]) && isset($options["term"])){
             $taxonomy = $options["taxonomy"];
             $term = $options["term"];
-
+            
             $args['tax_query'] = [
                 [
                     'taxonomy' => $taxonomy,
@@ -457,7 +458,7 @@ function prepare_escorts_by_taxonomy(){
 
     $options = [
         "taxonomy" =>  $taxonomy_name,
-        "slug" => $term_slug
+        "term" => $term_slug
     ];
 
     $escorts = get_escorts($options);
