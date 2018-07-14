@@ -355,9 +355,13 @@ function get_escort_extra_info($id, &$data){
 
     if($services_raw){
         foreach($services_raw as $service_raw){
+
+            $service_url = get_term_link( $service_raw, "escorts_services" );
+            
             $services[] = [
                 "name" => $service_raw->name,
-                "ID" => $service_raw->term_id
+                "ID" => $service_raw->term_id,
+                "url" => $service_url
             ];
         }
     }
@@ -368,9 +372,12 @@ function get_escort_extra_info($id, &$data){
 
     if($zones_raw){
         foreach($zones_raw as $zone_raw){
+
+            $zone_url = get_term_link( $zone_raw, "escorts_zones" );
             $zones[] = [
                 "name" => $zone_raw->name,
-                "ID" => $zone_raw->term_id
+                "ID" => $zone_raw->term_id,
+                "url" => $zone_url
             ];
         }
     }
@@ -378,7 +385,7 @@ function get_escort_extra_info($id, &$data){
     $extra_data = [
         "image" => $image,
         "url" => $url,
-        "gallery" => json_encode([]),
+        "gallery" => [],
         "basic_info" => [
             "skin_color" => $meta_skin_color,
             "hair_color" => $meta_hair_color,
