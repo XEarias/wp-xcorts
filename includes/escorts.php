@@ -482,11 +482,9 @@ function get_escorts($options = []){
             get_escort_extra_info($escort_raw_id, $escort);
             $escorts[] = $escort;
         }
-      
-        return $escorts;
     }
 
-    return false;
+    return $escorts;
 }
 
 function get_escorts_by_ids($array = []){

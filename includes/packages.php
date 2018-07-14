@@ -18,7 +18,9 @@ function adding_packages() {
     wp_register_style('slick-theme.css', get_template_directory_uri() . '/packages/slick-carousel/slick/slick.css');
     wp_enqueue_style('slick-theme-css');
 
- 
+    /*CUSTOM*/
+    wp_register_script('escort_item', get_template_directory_uri(). '/assets/js/escort_item.js');
+    wp_enqueue_script('escort_item');
 
     wp_enqueue_style( 'fmp-style', get_stylesheet_uri() );
 }
