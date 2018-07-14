@@ -317,7 +317,7 @@ add_action('post_updated', 'admin_save_escort', 10, 2);
 
 
 
-function get_escorts($quantity = false, $offset = false){
+function get_escorts($options = []){
 
     GLOBAL $rates, $langs;
 
@@ -326,6 +326,23 @@ function get_escorts($quantity = false, $offset = false){
         "post_status" => 'publish',
         "post_type" => "escort"
     ];
+
+    if($options){
+        if(isset($options["taxonomy"]) && isset($options["term"])){
+            $taxonomy = $options["taxonomy"];
+            $term = $options["term"];
+
+            $args['tax_query'] = [
+                [
+                    'taxonomy' => $taxonomy,
+                    'field' => 'slug',
+                    'terms' => $term,
+                    'include_children' => false
+                ]
+            ];
+        }
+    }
+
 
     $escorts_raw = get_posts($args);
 
@@ -426,6 +443,25 @@ function get_escorts($quantity = false, $offset = false){
 
 function get_escorts_by_ids($array = []){
     return [];
+}
+
+function prepare_escorts() {
+    $escorts = get_escorts();
+    set_query_var( 'escorts', $escorts );
+}
+
+function prepare_escorts_by_taxonomy(){
+    $term_slug = get_query_var( 'term' );
+    $taxonomy_name = get_query_var( 'taxonomy' );
+    $term = get_term_by( 'slug', $term_slug, $taxonomy_name); 
+
+    $options = [
+        "taxonomy" =>  $taxonomy_name,
+        "slug" => $term_slug
+    ];
+
+    $escorts = get_escorts($options);
+    set_query_var( 'escorts', $escorts );
 }
 
 
