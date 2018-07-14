@@ -434,11 +434,9 @@ function get_escorts($options = []){
                 "zone" => $zones
             ];    
         }
-      
-        return $escorts;
     }
 
-    return false;
+    return $escorts;
 }
 
 function get_escorts_by_ids($array = []){
