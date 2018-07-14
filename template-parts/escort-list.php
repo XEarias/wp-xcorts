@@ -1,12 +1,17 @@
 <?php $escorts = get_query_var('escorts'); ?>
 
-<section class="escorts-container container-fluid">
-    <div class="row">
+<section class="escorts-container container-fluid pt-5">
+
+    <?php $offset = 1; ?>
 
     <?php foreach($escorts as $key => $escort): ?>
 
+        <?php if($offset == 1): ?>
+        <div class="row">
+        <?php endif; ?>
+
         <?php $langs = $escort["basic_info"]["langs"]; ?>
-        <div data-escort-id="<?php echo $escort['ID'];?>" class="escort-item col-md-2 <?php echo ($key == 0 or $key == 5) ? 'offset-md-1' : '';?>">
+        <div data-escort-id="<?php echo $escort['ID'];?>" class="escort-item col-md-2 <?php echo ($offset == 1) ? 'offset-md-1' : ''; ?>">
             <a href="<?php echo $escort['url'];?>">
                 <div class="escort-item-internal">
                     <svg viewBox="0 0 100 170" class="hidden-background escort-item-internal-image"
@@ -58,7 +63,12 @@
                 </div>
             </a>
         </div>
-       
+
+        <?php if($offset == 5): ?>
+        </div>
+        <?php endif; ?>
+
+        <?php if ($offset == 5) { $offset = 1; } else { $offset++; } ?>
+    
     <?php endforeach; ?>
-    </div>
 </section>

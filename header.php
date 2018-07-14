@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html <?php language_attributes(); ?> class="no-js">
+<html <?php language_attributes(); ?> class="no-js" style="margin-top: 0 !important;">
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width">
@@ -8,4 +8,4 @@
 	<?php wp_head(); ?>
 </head>
 	<body>
-		<?php get_template_part( 'menu' ); ?>
+		<?php get_template_part( 'template-parts/menu' ); ?>

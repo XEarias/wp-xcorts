@@ -5,9 +5,11 @@ Description: Tema de damas de compañía
 Version: 0.0.1
 */
 
+html {
+    margin-top: 0 !important;
+}
 
 /* ESCORTS LIST */
-
 
 .escort-item{
     /*position: relative;*/
@@ -68,6 +70,7 @@ Version: 0.0.1
 
 .escort-item .escort-item-internal .escort-info-container .escort-info-body {
     height: 80%;
+    border-top: 1px solid #EDEDED;
 }
 
 .escort-item .escort-item-internal .escort-info-container .escort-info-body .escort-description {
@@ -109,4 +112,15 @@ svg.hidden-background {
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-size: cover;
+}
+
+
+/*SINGLE ESCORT*/
+
+.single-escort-name {
+    color: #F39;
+}
+
+.single-escort-link a {
+    color: #666;
 }
