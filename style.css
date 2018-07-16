@@ -226,4 +226,5 @@ nav#principal-menu ul.navbar-nav > li > a{
 footer{
     height: 120px;
     background-color: black;
+    margin-top: 60px;
 }
