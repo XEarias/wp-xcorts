@@ -86,7 +86,7 @@
             <div class="single-escort-info-card p-2">
                 <div class="single-escort-info-card-header">SERVICIOS</div>
                 <?php $services = $escort["services"]; ?>
-                <?php foreach($services as $services): ?>
+                <?php foreach($services as $service): ?>
 
                     <p class="single-escort-service-tag"> <a href="<?= $service['url']; ?>"><?= $service['name']; ?></a> </p>
 
