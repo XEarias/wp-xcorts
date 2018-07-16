@@ -512,10 +512,7 @@ function get_escort($id){
         $escort_raw_id = $escort_raw->ID;
         $escort_name = $escort_raw->post_title;
         $escort_description = $escort_raw->post_content;
-    
-        $is_new = false;
-
-        //print_r($escort_raw->post_date);
+        $is_new = !date_diff_helper($escort_raw->post_date, 30);
 
         $escort = [
             "ID" => $escort_raw_id,
@@ -592,7 +589,6 @@ function get_escorts($options = []){
 
             get_escort_extra_info($escort_raw_id, $escort);
 
-            print_r($escort);
             $escorts[] = $escort;
         }
     }
