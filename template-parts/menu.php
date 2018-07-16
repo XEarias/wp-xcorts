@@ -1,10 +1,7 @@
 <?php $menu_items = get_single_menu("principal-menu");?>
 
 <nav class="navbar navbar-expand-lg navbar-dark  bg-dark" style="background-color: black !important;" id="principal-menu">
-  <a class="navbar-brand" href="#">
-    <img src="/docs/4.1/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-    MENU
-  </a>
+  <?php get_template_part('template-parts/custom-logo'); ?>
 
   <div class="collapse navbar-collapse">
     <ul class="navbar-nav mr-auto" style="margin: auto;">

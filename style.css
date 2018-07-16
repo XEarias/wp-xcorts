@@ -179,6 +179,7 @@ svg.hidden-background {
     list-style: none;
     border-bottom: #999 solid 1px;
     padding: 5px 0;
+    font-size: 12px;
 }
 
 .single-escort-info-card ul li span {
