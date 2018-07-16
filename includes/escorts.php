@@ -1,4 +1,4 @@
- <?php
+<?php
 
 $rates = [
     "30 Minutos",
@@ -130,6 +130,16 @@ function add_escorts_service_taxonomy() {
     register_taxonomy( 'escorts_zones', 'escort', $args );
 }  
 add_action( 'init', 'add_escorts_service_taxonomy');
+
+
+function date_diff_helper($start, $days){
+    
+    $date = new DateTime($start);
+    $now = new DateTime();
+    $diff = $now->diff($date);
+
+    return $diff->days > $days;
+}
 
 
 function add_escorts_metaboxes()
@@ -590,7 +600,7 @@ function prepare_escorts($options = []) {
     set_query_var( 'escorts', $escorts );
 }
 
-function prepare_escorts_by_taxonomy($options){
+function prepare_escorts_by_taxonomy($options = []){
     $term_slug = get_query_var( 'term' );
     $taxonomy_name = get_query_var( 'taxonomy' );
     $term = get_term_by( 'slug', $term_slug, $taxonomy_name); 
