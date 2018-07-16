@@ -37,6 +37,18 @@ $langs = [
     "IT" => "Italiano"
 ];
 
+$payment_methods = [
+    "efective" => "Efectivo",
+    "bank_transfer" => "Transferencia bancaria",
+    "others" => "Otros"
+];
+
+$phone_permissions = [
+    "calls" => "Solo llamadas",
+    "whatsapps" => "Solo whatsapp",
+    "all" => "Llamadas y whatsapp"
+];
+
 /******** Escorts ********/
 
 function add_escort_type()
@@ -145,11 +157,12 @@ function escort_basic_metabox_html($post){
 
     /***** Global Values ****/
     
-    GLOBAL $ages, $hair_colors, $skin_colors, $langs;
+    GLOBAL $ages, $hair_colors, $skin_colors, $langs, $phone_permissions;
     
 
     $post_id = $post->ID;
     //Escort Metas
+    $meta_email = get_post_meta($post_id, "escort_email", true);
     $meta_age = get_post_meta($post_id, "escort_age", true);
     $meta_stature = get_post_meta($post_id, "escort_stature", true);
     $meta_weight = get_post_meta($post_id, "escort_weight", true);
@@ -158,10 +171,31 @@ function escort_basic_metabox_html($post){
     $meta_hair_color = get_post_meta($post_id, "escort_hair_color", true);
     $meta_profession = get_post_meta($post_id, "escort_profession", true);
     $meta_measure = get_post_meta($post_id, "escort_measure", true) ? get_post_meta($post_id, "escort_measure", true) : [];
-  
+    $meta_phone = get_post_meta($post_id, "escort_phone", true) ? get_post_meta($post_id, "escort_phone", true) : [];
 
 
     ?> 
+
+    <!-- TELEFONO -->
+    <label for="email"><b>Email:</b></label>
+    <input id="email" type="email" placeholder="Email" name="email" value="<?php echo $meta_email;?>"></input>
+    <br>
+
+    <!-- TELEFONO -->
+    <label for="phone"><b>Télefono:</b></label>
+    <input id="phone" type="text" placeholder="Télefono" name="phone[value]" value="<?php echo (isset($meta_phone['value'])) ? $meta_phone['value'] : "";?>"></input>
+    <br>
+
+    <!-- PERMISOS TELEFONO -->
+    <label for="phone_permission"><b>Permisos de télefono:</b></label>
+    <select id="phone_permission" name="phone[permission]">
+    <?php foreach($phone_permissions as $key => $phone_permission):?>
+        <option <?php echo (isset($meta_phone["permission"]) && $meta_phone["permission"] == $key) ?  "selected='selected'" : "" ?> value="<?php echo $key; ?>"><?php echo $phone_permission;?></option>
+    <?php endforeach;?>
+    </select>
+    <br>
+
+
     <!-- EDAD -->
     <label for="edad"><b>Edad:</b></label>
     <select id="edad" name="age">
@@ -225,12 +259,13 @@ function escort_basic_metabox_html($post){
 /****  META BOX de TARIFAS ***/
 function escort_rates_metabox_html($post){
 
-    GLOBAL $rates;
+    GLOBAL $rates, $payment_methods;
 
     $post_id = $post->ID;
     $meta_rates = get_post_meta($post_id, "escort_rates", true) ? get_post_meta($post_id, "escort_rates", true) : [];
-   
+    $meta_payment_methods = (get_post_meta($post_id, "escort_payment_methods", true)) ? get_post_meta($post_id, "escort_payment_methods", true) : [] ;
     ?>
+
     <div>
         
         <?php foreach($rates as $key => $rate):?>
@@ -239,6 +274,14 @@ function escort_rates_metabox_html($post){
             <br>
         <?php endforeach;?>
         
+    </div>
+
+    <div>
+        <label><b>Metódos de Pago:</b></label>
+        <?php foreach($payment_methods as $key => $payment_method): ?>
+            <label><?php echo $payment_method;?></label>
+            <input type="checkbox" name="payment_methods[<?php echo $key;?>]" <?php echo (in_array($key, $meta_payment_methods)) ? "checked='checked'" : ""; ?>/>
+        <?php endforeach; ?>
     </div>
     <?php
    
@@ -306,9 +349,28 @@ function admin_save_escort( $post_id, $post_object)
         update_post_meta($post_id, "escort_measure", $measure );
     }
 
+    if(isset($_POST["phone"])){
+        $phone = $_POST["phone"];
+        update_post_meta($post_id, "escort_phone", $phone );
+    }
+
+    if(isset($_POST["email"])){
+        $email = $_POST["email"];
+        update_post_meta($post_id, "escort_email", $email );
+    }
+
     if(isset($_POST["rates"])){
         $rates = $_POST["rates"];
         update_post_meta($post_id, "escort_rates", $rates );
+    }
+
+    //actualizar formas de pago
+    if(isset($_POST["payment_methods"])){
+        $payment_methods = [];
+        foreach($_POST["payment_methods"] as $key => $payment_method){
+           $payment_methods[] = $key;
+        }
+        update_post_meta($post_id, "escort_payment_methods", $payment_methods );
     }
    
 }
@@ -319,11 +381,12 @@ add_action('post_updated', 'admin_save_escort', 10, 2);
 
 function get_escort_extra_info($id, &$data){
     
-    GLOBAL $rates, $langs;
+    GLOBAL $rates, $langs, $payment_methods;
 
     $url = get_post_permalink($id);
     $image = get_the_post_thumbnail_url($id);
 
+    $meta_email = get_post_meta($id, "escort_email", true);
     $meta_age = get_post_meta($id, "escort_age", true);
     $meta_stature = get_post_meta($id, "escort_stature", true);
     $meta_weight = get_post_meta($id, "escort_weight", true);
@@ -332,6 +395,18 @@ function get_escort_extra_info($id, &$data){
     $meta_hair_color = get_post_meta($id, "escort_hair_color", true);
     $meta_profession = get_post_meta($id, "escort_profession", true);
     $meta_measure = get_post_meta($id, "escort_measure", true) ? get_post_meta($id, "escort_measure", true) : [];
+    $meta_phone = get_post_meta($id, "escort_phone", true) ? get_post_meta($id, "escort_phone", true) : [];
+
+    $phone = [
+        "value" => "",
+        "permission" => ""
+    ];
+
+    if($meta_phone){
+        $phone["value"] = isset($meta_phone["value"]) ? $meta_phone["value"] : "";
+        $phone["permission"] = isset($meta_phone["permission"]) ? $meta_phone["permission"] : "";
+    }
+
 
     $langs_with_labels = [];
 
@@ -348,6 +423,14 @@ function get_escort_extra_info($id, &$data){
             "label" => $rates[$key], 
             "value" => ($meta_rate) ? $meta_rate : false
         ];
+    }
+
+    $meta_payment_methods = (get_post_meta($id, "escort_payment_methods", true)) ? get_post_meta($id, "escort_payment_methods", true) : [] ;
+
+    $payment_methods_with_labels = [];
+
+    foreach($meta_payment_methods as $meta_payment_method){
+        $payment_methods_with_labels[$meta_payment_method] = $payment_methods[$meta_payment_method];
     }
 
     $services_raw = get_the_terms( $id, "escorts_services" );
@@ -395,10 +478,13 @@ function get_escort_extra_info($id, &$data){
             "profession" => $meta_profession,
             "weight" => $meta_weight,
             "age" => $meta_age,
-            "stature" => $meta_stature
+            "stature" => $meta_stature,
+            "phone" => $phone,
+            "email" => $meta_email
         ],
         "rates" => $rates_with_labels,
         "principal_rate" => $rates_with_labels[2],
+        "payment_methods" => $payment_methods_with_labels,
         "services" => $services,
         "zone" => $zones
     ];
@@ -460,6 +546,13 @@ function get_escorts($options = []){
                 ]
             ];
         }
+
+        if(isset($options["limit"])){
+
+            $limit = $options["limit"];
+            $args["numberposts"] = $limit; 
+
+        }
     }
 
 
@@ -492,20 +585,22 @@ function get_escorts_by_ids($array = []){
     return [];
 }
 
-function prepare_escorts() {
-    $escorts = get_escorts();
+function prepare_escorts($options = []) {
+    $escorts = get_escorts($options);
     set_query_var( 'escorts', $escorts );
 }
 
-function prepare_escorts_by_taxonomy(){
+function prepare_escorts_by_taxonomy($options){
     $term_slug = get_query_var( 'term' );
     $taxonomy_name = get_query_var( 'taxonomy' );
     $term = get_term_by( 'slug', $term_slug, $taxonomy_name); 
 
-    $options = [
+    $options_taxonomy = [
         "taxonomy" =>  $taxonomy_name,
         "term" => $term_slug
     ];
+
+    $options = array_merge($options, $options_taxonomy);
 
     $escorts = get_escorts($options);
     set_query_var( 'escorts', $escorts );
