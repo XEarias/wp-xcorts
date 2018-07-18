@@ -18,7 +18,7 @@
     <div class="row">
 
         <div class="col-md-8 pt-4 pb-2 pl-0 pr-0">
-            <h2 class="single-escort-name"><?= $escort['name'] ?></h2>
+            <h2 class="single-escort-name"><?= $escort['name'] ?> <small style="color: #999;font-size:17px"><?= $escort['basic_info']['email'] ?></small></h2>
             <?php if(count($escort['zone'])): ?>
                 <p class="single-escort-link"><a href="<?= $escort['zone'][0]['url'] ?>">Escorts en <strong><?= $escort['zone'][0]['name'] ?></strong></a></p>
             <?php else: ?>
@@ -27,8 +27,12 @@
         </div>
         <div class="col-md-4 pt-4 pb-2 pl-0 pr-0 text-right"> 
             <span class="single-escort-phone">
-                123-234-XXX <span>MOSTRAR</span>
+                <?= ($escort['basic_info']['phone']['value']) ? $escort['basic_info']['phone']['value'] : 'N/A'; ?><span>MOSTRAR</span>
             </span>
+
+            <br>
+
+            <p style="margin-top: 30px;"><?= $escort['basic_info']['phone']['permission'] ?></p>
         </div>
 
     </div>
@@ -36,7 +40,7 @@
     <div class="row">
         <div class="col-md-12 pt-4 pb-2 pl-0 pr-0">
             <h4 style="color:#F39" class="text-center">¡Tu guía de putas de lujo!</h4>
-            <p style="text-align: justify; font-size: 13px;"><?= $escort['description'] ?></p>
+            <p style="text-align: justify; font-size: 13px;"><?= ($escort['description']) ? $escort['description'] : '...' ?></p>
         </div>
     </div>
 
@@ -86,7 +90,7 @@
             <div class="single-escort-info-card p-2">
                 <div class="single-escort-info-card-header">SERVICIOS</div>
                 <?php $services = $escort["services"]; ?>
-                <?php foreach($services as $service): ?>
+                <?php foreach($services as $services): ?>
 
                     <p class="single-escort-service-tag"> <a href="<?= $service['url']; ?>"><?= $service['name']; ?></a> </p>
 
@@ -104,6 +108,15 @@
 
                     <?php endforeach;?>     
                     
+                    <?php $paymethods = $escort["payment_methods"]; ?>
+                    
+                    <li>Metodos de pago <span>
+                    <?php foreach($paymethods as $i => $pay): ?>
+
+                        <?= ($i == 'others') ? $pay : $pay.', ' ?>
+
+                    <?php endforeach;?></span>
+                    </li>     
                 </ul>
             </div>
         </div>
@@ -123,6 +136,13 @@
             <div class="mt-4 mb-4" style="background-color: #EDEDED; height: 5px;"></div>
         </div>
     </div>
+</section>
+
+<?php prepare_escorts(['limit' => 5]); ?>
+
+<?php get_template_part( 'template-parts/escort-list' ); ?>
+
+<section>
 
     <div class="row">
         <div class="col-md-12 text-center">

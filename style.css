@@ -179,6 +179,7 @@ svg.hidden-background {
     list-style: none;
     border-bottom: #999 solid 1px;
     padding: 5px 0;
+    font-size: 12px;
 }
 
 .single-escort-info-card ul li span {
@@ -224,7 +225,36 @@ nav#principal-menu ul.navbar-nav > li > a{
 
 /**** FOOTER ****/
 footer{
-    height: 120px;
     background-color: black;
     margin-top: 60px;
+    padding-bottom: 30px;
+    padding-top: 50px;
+}
+
+.site-map {
+    list-style: none;
+    padding: 0;
+}
+
+.site-map li{
+    margin-bottom: 5px;
+    position: relative;
+}
+
+.site-map li:before {
+    content: "";
+    width: 157px;
+    height: 1px;
+    background-color: white;
+    position: absolute;
+    bottom: 1px;
+}
+
+.site-map li a{
+    color: white;
+    text-decoration: none;
+}
+
+.escorts-widget {
+    width: 100%;
 }
