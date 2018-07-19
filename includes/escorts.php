@@ -391,7 +391,7 @@ add_action('post_updated', 'admin_save_escort', 10, 2);
 
 function get_escort_extra_info($id, &$data){
     
-    GLOBAL $rates, $langs, $payment_methods;
+    GLOBAL $rates, $langs, $payment_methods, $phone_permissions;
 
     $url = get_post_permalink($id);
     $image = get_the_post_thumbnail_url($id);
@@ -413,8 +413,12 @@ function get_escort_extra_info($id, &$data){
     ];
 
     if($meta_phone){
+        
+        $permission = $meta_phone["permission"];
+        
+
         $phone["value"] = isset($meta_phone["value"]) ? $meta_phone["value"] : "";
-        $phone["permission"] = isset($meta_phone["permission"]) ? $meta_phone["permission"] : "";
+        $phone["permission"] = isset($meta_phone["permission"]) ? $phone_permissions[$permission] : "";
     }
 
 
