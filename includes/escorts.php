@@ -186,14 +186,14 @@ function escort_basic_metabox_html($post){
 
     ?> 
 
-    <!-- TELEFONO -->
+    <!-- Email -->
     <label for="email"><b>Email:</b></label>
-    <input id="email" type="email" placeholder="Email" name="email" value="<?php echo $meta_email;?>"></input>
+    <input id="email" type="email" placeholder="Email" name="email" value="<?php echo $meta_email;?>"/>
     <br>
 
     <!-- TELEFONO -->
     <label for="phone"><b>Télefono:</b></label>
-    <input id="phone" type="text" placeholder="Télefono" name="phone[value]" value="<?php echo (isset($meta_phone['value'])) ? $meta_phone['value'] : "";?>"></input>
+    <input id="phone" type="text" placeholder="Télefono" name="phone[value]" value="<?php echo (isset($meta_phone['value'])) ? $meta_phone['value'] : "";?>"/>
     <br>
 
     <!-- PERMISOS TELEFONO -->
@@ -217,12 +217,12 @@ function escort_basic_metabox_html($post){
 
     <!-- ESTATURA -->
     <label for="stature"><b>Estatura:</b></label>
-    <input id="stature" type="text" placeholder="Estatura" name="stature" value="<?php echo $meta_stature;?>"></input>
+    <input id="stature" type="text" placeholder="Estatura" name="stature" value="<?php echo $meta_stature;?>"/>
     <br>
 
     <!-- PESO -->
     <label for="weight"><b>Peso:</b></label>
-    <input id="weight" type="text" placeholder="Peso" name="weight" value="<?php echo $meta_weight;?>"></input>
+    <input id="weight" type="text" placeholder="Peso" name="weight" value="<?php echo $meta_weight;?>"/>
     <br>
 
     <!-- IDIOMAS -->
@@ -252,7 +252,7 @@ function escort_basic_metabox_html($post){
 
     <!-- PROFESION -->
     <label for="profession"><b>Profesión:</b></label>
-    <input type="text" placeholder="Profesión" name="profession" value="<?php echo $meta_profession;?>"></input>
+    <input type="text" placeholder="Profesión" name="profession" value="<?php echo $meta_profession;?>"/>
     <br>
 
     <!-- MEDIDAS -->
@@ -382,9 +382,14 @@ function admin_save_escort( $post_id, $post_object)
         }
         update_post_meta($post_id, "escort_payment_methods", $payment_methods );
     }
+
+    /*
+    if(isset($_FILES["IMAGES"]) and){
+
+    }
+    */
    
 }
-
 
 add_action('post_updated', 'admin_save_escort', 10, 2);
 
