@@ -189,4 +189,29 @@ function add_new_escort(){
 
 add_action( 'admin_post_nopriv_add_new_escort', 'add_new_escort' );
 add_action( 'admin_post_add_new_escort', 'add_new_escort' );
+
+
+function get_escort_user_data(){
+
+    if(!is_user_logged_in()){
+        return false;
+    }
+
+    $escort_user = wp_get_current_user();
+
+    if(!$escort_user || in_array('escort',$escort_user->roles)){
+        return false;
+    }
+
+    $user = [
+        'ID' => $escort_user->ID,
+        'first_name' => $escort_user->first_name,
+        'last_name' => $escort_user->last_name,
+        'username' => $escort_user->user_login,
+        'email' => $escort_user->user_email
+    ];
+
+    return $user;
+
+}
 ?>
