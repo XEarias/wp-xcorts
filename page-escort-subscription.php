@@ -1,4 +1,12 @@
 <?php get_header(); ?>
+
+<?php 
+
+$zones = get_escorts_zones(); 
+$services = get_escorts_services(); 
+
+?>
+
 <form action="<?php echo admin_url('/admin-post.php'); ?>" method="POST" target="_blank" enctype="multipart/form-data">
 
     <?php wp_nonce_field("escort-register-account", "escort_nounce"); ?>
@@ -120,6 +128,32 @@
     <input type="text" placeholder="Caderas" name="measure[hip]" required/>
     <br>
 
+
+    <!-- Zona de Servicio -->
+    <label for="zone"><b>Ciudad:</b></label>
+    <select id="zone" name="zone">
+    <?php foreach($zones as $zone):?>
+        <?php if(count($zone["childs"])): ?>
+            <?php $child_zones = $zone["childs"]; ?>
+        <optgroup label="<?php echo $zone["name"]; ?>">
+            <?php foreach($child_zones as $child_zone):?>
+            <option value="<?php echo $child_zone["ID"];?>"><?php echo $child_zone["name"];?></option>
+            <?php endforeach;?>
+        </optgroup>
+        <?php endif;?>
+    <?php endforeach;?>
+    </select>
+    <br>
+
+    <!-- Zona de Servicio -->
+    <label for="services"><b>Servicios:</b></label>
+    <?php foreach($services as $service):?>
+    <label><?php echo $service["name"];?>:</label>
+    <input type="checkbox" name="langs[]" value="<?php echo $service["ID"];?>">
+    <?php endforeach;?>
+    <br>
+
+    <!--TARIFAS-->
 
     <?php foreach($rates as $key => $rate):?>
         <label><b><?php echo $rate; ?></b></label>

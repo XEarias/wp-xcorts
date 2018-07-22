@@ -394,6 +394,39 @@ function admin_save_escort( $post_id, $post_object)
 add_action('post_updated', 'admin_save_escort', 10, 2);
 
 
+
+
+function get_escort_ad_attachments($escort_ad_id){
+
+    $escort_thumbnail_id = get_post_thumbnail_id( $escort_ad_id  ); 
+
+    $images_raw = get_attached_media("image/*", $escort_ad_id );
+
+    $images = [];
+
+    foreach($images_raw as $image_raw){
+
+        if($image_raw->ID == $escort_thumbnail_id){
+            continue;
+        }
+
+        $image_url = wp_get_attachment_url($image_raw->ID);
+
+        $image = [
+            "ID" => $image_raw->ID,
+            "url" => $image_url
+        ];
+
+        $images[] = $image;
+    }
+
+    $media = [
+        "images" => $images,
+        "videos" => []
+    ];
+
+}
+
 function get_escort_extra_info($id, &$data){
     
     GLOBAL $rates, $langs, $payment_methods, $phone_permissions;
@@ -412,11 +445,12 @@ function get_escort_extra_info($id, &$data){
     $meta_measure = get_post_meta($id, "escort_measure", true) ? get_post_meta($id, "escort_measure", true) : [];
     $meta_phone = get_post_meta($id, "escort_phone", true) ? get_post_meta($id, "escort_phone", true) : [];
 
+    //TELEFONO
     $phone = [
         "value" => "",
         "permission" => ""
     ];
-
+    
     if($meta_phone){
         
         $permission = $meta_phone["permission"];
@@ -426,13 +460,15 @@ function get_escort_extra_info($id, &$data){
         $phone["permission"] = isset($meta_phone["permission"]) ? $phone_permissions[$permission] : "";
     }
 
-
+    //LENGUAJES
     $langs_with_labels = [];
 
     foreach($meta_langs as $meta_lang){
         $langs_with_labels[$meta_lang] = $langs[$meta_lang];
     }
 
+
+    //TARIFAS
     $meta_rates = get_post_meta($id, "escort_rates", true) ? get_post_meta($id, "escort_rates", true) : [];
 
     $rates_with_labels = [];
@@ -444,6 +480,7 @@ function get_escort_extra_info($id, &$data){
         ];
     }
 
+    //METODOS DE PAGO
     $meta_payment_methods = (get_post_meta($id, "escort_payment_methods", true)) ? get_post_meta($id, "escort_payment_methods", true) : [] ;
 
     $payment_methods_with_labels = [];
@@ -451,6 +488,8 @@ function get_escort_extra_info($id, &$data){
     foreach($meta_payment_methods as $meta_payment_method){
         $payment_methods_with_labels[$meta_payment_method] = $payment_methods[$meta_payment_method];
     }
+
+    //SERVICIOS
 
     $services_raw = get_the_terms( $id, "escorts_services" );
 
@@ -468,7 +507,7 @@ function get_escort_extra_info($id, &$data){
             ];
         }
     }
-
+    //ZONAS DE SERVICIO
     $zones_raw = get_the_terms( $id, "escorts_zones" );
 
     $zones = [];
@@ -485,10 +524,14 @@ function get_escort_extra_info($id, &$data){
         }
     }
 
+    $media = get_escort_ad_attachments($id);
+
+
     $extra_data = [
         "image" => $image,
         "url" => $url,
-        "gallery" => [],
+        "gallery" => $media["images"],
+        "videos" => $media["videos"],
         "basic_info" => [
             "skin_color" => $meta_skin_color,
             "hair_color" => $meta_hair_color,
@@ -630,5 +673,78 @@ function prepare_escorts_by_taxonomy($options = []){
     set_query_var( 'escorts', $escorts );
 }
 
+
+function get_escorts_zones(){
+    
+    $zones = [];
+
+    $parent_args = [
+        'taxonomy'     => 'escorts_zones',
+        'parent'        => 0,
+        'hide_empty'    => false           
+    ];
+    $parent_zones_raw = get_terms( $parent_args );
+    
+    foreach($parent_zones_raw as $parent_zone_raw){
+        
+        $parent_zone = [
+            "ID" => $parent_zone_raw->term_id,
+            "name" => $parent_zone_raw->name,
+            "childs" => []
+        ];
+
+        $child_args = [
+            'taxonomy'     => 'escorts_zones',
+            'parent'        => $parent_zone["ID"],
+            'hide_empty'    => false           
+        ];
+
+        $child_zones_raw = get_terms( $child_args);
+
+        foreach($child_zones_raw as $child_zone_raw){
+            $child_zone = [
+                "ID" => $child_zone_raw->term_id,
+                "name" => $child_zone_raw->name
+            ];
+
+            $parent_zone["childs"][] = $child_zone;
+
+        }
+
+        $zones[] = $parent_zone;
+
+    }
+
+    return $zones; 
+
+}
+
+function get_escorts_services(){
+    
+    $services = [];
+
+    $args = [
+        'taxonomy'     => 'escorts_services',
+        'hide_empty'    => false           
+    ];
+    $services_raw = get_terms( $args );
+
+    foreach($services_raw as $service_raw){
+        $service = [
+            "ID" => $service_raw->term_id,
+            "name" => $service_raw->name
+        ];
+
+        $services[] = $service;
+    }
+
+    return $services;
+
+
+}
+
+
+add_action( 'admin_post_nopriv_xxx', 'get_escort_ad_attachments' );
+add_action( 'admin_post_priv_xxx', 'get_escort_ad_attachments' );
 
 ?>
