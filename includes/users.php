@@ -50,7 +50,7 @@ function add_accounts_pages(){
 add_action('init','add_accounts_pages');
 
 
-function escort_login_redirect()
+/*function escort_login_redirect()
 {
     $account_slug = 'escort-account';
     $login_slug = 'escort-login';
@@ -71,7 +71,7 @@ function escort_login_redirect()
 
 
 }
-add_action( 'template_redirect', 'escort_login_redirect' );
+add_action( 'template_redirect', 'escort_login_redirect' );*/
 
 
 ?>

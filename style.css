@@ -258,3 +258,64 @@ footer{
 .escorts-widget {
     width: 100%;
 }
+
+/* ESCORT LOGIN */
+
+.login-box {
+    padding: 40px 15px;
+    box-shadow: 0px 2px 4px 2px #d4d4d4;
+    background-color: #F44336;
+    color: white;
+}
+
+form#loginform {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+form#loginform p, form#loginform p label{
+    width: 100%;
+}
+
+form#loginform p label{
+    text-align: left;
+    /*text-transform: uppercase;*/
+}
+
+form#loginform p input:not([type="checkbox"]){
+    border: none;
+    padding: 7px 10px;
+    width: 100%;
+    border-radius: 2px;
+}
+
+form#loginform p input[type=submit] {
+    background-color: black;
+    text-transform: uppercase;
+    color: white;
+    font-weight: bold;
+}
+
+/* ESCORT ACCOUNT */
+
+.escort-account-sidebar {
+    border-radius: 0;
+    background-color: black !important;
+}
+
+.escort-account-sidebar li {
+    border-radius: 0;
+    background-color: transparent;
+}
+
+.escort-account-sidebar li:not(:last-child) {
+    border-bottom: 1px solid white;
+}
+
+.escort-account-sidebar li a{
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase
+}
