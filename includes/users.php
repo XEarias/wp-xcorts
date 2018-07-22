@@ -199,10 +199,16 @@ function add_new_escort(){
     $first_name = wp_strip_all_tags($_POST["first_name"]);
     $last_name = wp_strip_all_tags($_POST["last_name"]);
     $visible_name = wp_strip_all_tags($_POST["visible_name"]);
-    
     $description = wp_strip_all_tags($_POST['description']);
 
+    $services_raw = $_POST["services"];
 
+    $services = [];
+    foreach($services_raw as $service_raw){
+        $services[] = (int) $service_raw;
+    }   
+
+    $zone = (int) $_POST["zone"];
 
     $user_id = username_exists( $username );
     if ( !$user_id and email_exists($email) == false ) {
@@ -237,6 +243,13 @@ function add_new_escort(){
         return;
     }
 
+    $subscription_id = add_new_subscription($escort_ad_id);
+
+    //AGREGAR SERVICIOS y ZONA A UN ANUNCIO
+    wp_set_object_terms( $escort_ad_id, $services, 'escorts_services');
+    wp_set_object_terms( $escort_ad_id, $zone , 'escorts_zones');
+
+    //OBTENEMOS EL POST COMO OBJETO PARA AGREGAR SUS CAMPOS EXTRA
     $escort_ad_object = get_post($escort_ad_id);
 
     admin_save_escort($escort_ad_id,$escort_ad_object );
