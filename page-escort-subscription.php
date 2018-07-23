@@ -19,7 +19,7 @@ $services = get_escorts_services();
             </ul>
         </div>
         <div class="col-md-10 offset-md-1">
-            <form action="<?php echo admin_url('/admin-post.php'); ?>" method="POST" target="_blank" enctype="multipart/form-data" id="escort-subscription">
+            <form action="<?php echo admin_url('/admin-post.php'); ?>" method="POST" target="_blank" enctype="multipart/form-data" id="escort-subscription" novalidate>
 
                 <fieldset>
 
@@ -30,37 +30,37 @@ $services = get_escorts_services();
 
                     <div class="row" style="margin-top: 25px">
                         <div class="col-md-6 form-group">
-                            <label for="username">Nombre de usuario</label>
+                            <label for="username">Nombre de usuario (*)</label>
                             <input type="text" class="form-control" id="username" name="username" placeholder="Nombre de usuario">
                         </div>
                         <div class="col-md-3 form-group">
-                            <label for="password">Contraseña</label>
+                            <label for="password">Contraseña (*)</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña">
                         </div>
                         <div class="col-md-3 form-group">
-                            <label for="password_repeat">Confirmar contraseña</label>
+                            <label for="password_repeat">Confirmar contraseña (*)</label>
                             <input type="password" class="form-control" id="password_repeat" name="password_repeat" placeholder="Confirmar Contraseña">
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-4 form-group">
-                            <label for="first_name">Nombes</label>
+                            <label for="first_name">Nombes (*)</label>
                             <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Nombres">
                         </div>
                         <div class="col-md-4 form-group">
-                            <label for="last_name">Apellidos</label>
+                            <label for="last_name">Apellidos (*)</label>
                             <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Apellidos">
                         </div>
                         <div class="col-md-4 form-group">
-                            <label for="email">Confirmar contraseña</label>
+                            <label for="email">Email (*)</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Email">
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 form-group">
-                            <label for="phone">Télefono</label>
+                            <label for="phone">Télefono (*)</label>
                             <input type="text" class="form-control" id="phone" name="phone[value]" placeholder="Télefono">
                         </div>
                         <div class="col-md-6 form-group">
@@ -73,9 +73,8 @@ $services = get_escorts_services();
                         </div>
                     </div>
 
-                    <input type="button" name="next" class="next-step action-button" value="Siguiente" />
+                    <input type="button" data-step="1" name="next" class="next-step action-button" value="Siguiente" />
                 </fieldset>
-
 
                 <fieldset>
 
@@ -83,11 +82,11 @@ $services = get_escorts_services();
 
                     <div class="row" style="margin-top: 25px">
                         <div class="col-md-4 form-group">
-                            <label for="visible_name">Nombre visible en el sitio</label>
+                            <label for="visible_name">Nombre visible en el sitio (*)</label>
                             <input type="text" class="form-control" id="visible_name" name="visible_name" placeholder="Nombre visible en el sitio">
                         </div>
                         <div class="col-md-4 form-group">
-                            <label for="age">Edad</label>
+                            <label for="age">Elige tu edad</label>
                             <select class="form-control" id="age" name="age">
                                 <?php foreach($ages as $age):?>
                                     <option><?php echo $age;?></option>
@@ -95,12 +94,12 @@ $services = get_escorts_services();
                             </select>
                         </div>
                         <div class="col-md-2 form-group">
-                            <label for="stature">Estatura</label>
-                            <input type="text" class="form-control" id="stature" name="stature" placeholder="Estatura">
+                            <label for="stature">Estatura (*)</label>
+                            <input type="text" class="form-control" id="stature" name="stature" placeholder="Cm">
                         </div>
                         <div class="col-md-2 form-group">
-                            <label for="weight">Peso</label>
-                            <input type="text" class="form-control" id="weight" name="weight" placeholder="Peso">
+                            <label for="weight">Peso (*)</label>
+                            <input type="text" class="form-control" id="weight" name="weight" placeholder="Kg">
                         </div>
                     </div>
 
@@ -113,17 +112,17 @@ $services = get_escorts_services();
 
                     <div class="row">
                         <div class="col-md-12 form-group">
-                            <label for="description">Descripción</label>
+                            <label for="description">Descripción (*)</label>
                             <textarea class="form-control" id="description" name="description" placeholder="Descripcion"></textarea>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-4 form-group">
-                            <label for="age">Idiomas</label>
+                            <label for="age">Que idiomas hablas</label>
                             <?php foreach($langs as $key => $lang):?>
                                 <div class="form-check">
-                                    <input class="form-check-input"type="checkbox" name="langs[<?php echo $key;?>]" id="<?php echo $key;?>">
+                                    <input class="form-check-input"type="checkbox" name="lang[<?php echo $key;?>]" id="<?php echo $key;?>">
                                     <label class="form-check-label" for="<?php echo $key;?>">
                                         <?php echo $lang;?>
                                     </label>
@@ -163,8 +162,8 @@ $services = get_escorts_services();
                         </div>
                     </div>
 
-                    <input type="button" name="previous" class="previous-step action-button" value="Anterior" />
-                    <input type="button" name="next" class="next-step action-button" value="Siguiente" />
+                    <input type="button" data-step="1" name="previous" class="previous-step action-button" value="Anterior" />
+                    <input type="button" data-step="2" name="next" class="next-step action-button" value="Siguiente" />
 
                 </fieldset>
 
@@ -174,7 +173,7 @@ $services = get_escorts_services();
 
                     <div class="row" style="margin-top: 25px">
                         <div class="col-md-12">
-                            <label for="featured_image">Foto destacada</label>
+                            <label for="featured_image">Foto destacada (*)</label>
                             <div class="row featured-image-box">
                                 <label for="featured_image"></label>
                                 <div class="col-md-2 offset-md-5 item">
@@ -183,6 +182,9 @@ $services = get_escorts_services();
                                     <label/>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="file" id="featured_image" name="featured_image" style="visibility:hidden; height: 1px"><br>
                         </div>
                     </div>
 
@@ -198,12 +200,14 @@ $services = get_escorts_services();
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-12">
+                            <input type="file" id="images" name="images[]" style="visibility:hidden; height: 1px" multiple>
+                        </div>
                     </div>
 
-                    <input type="button" name="previous" class="previous-step action-button" value="Anterior" />
-                    <input type="button" name="next" class="next-step action-button" value="Siguiente" />
+                    <input type="button" data-step="2" name="previous" class="previous-step action-button" value="Anterior" />
+                    <input type="button" data-step="3" name="next" class="next-step action-button" value="Siguiente" />
                 </fieldset>
-
 
                 <fieldset>
 
@@ -227,10 +231,10 @@ $services = get_escorts_services();
                         </div>
 
                         <div class="col-md-4 form-group">
-                            <label for="services">Servicios</label>
+                            <label for="services">Servicios (*)</label>
                             <?php foreach($services as $service):?>
                                 <div class="form-check">
-                                    <input class="form-check-input"type="checkbox" name="services[<?php echo $service["name"];?>]" id="<?php echo $service["name"];?>" value="<?php echo $service["ID"];?>">
+                                    <input class="form-check-input"type="checkbox" name="services[]" id="<?php echo $service["name"];?>" value="<?php echo $service["ID"];?>">
                                     <label class="form-check-label" for="<?php echo $service["name"];?>">
                                         <?php echo $lang;?>
                                     </label>
@@ -256,7 +260,7 @@ $services = get_escorts_services();
                     
                     <div class="row">
                         <div class="col-md-4 form-group">
-                            <label for="">Metódos de pago</label>
+                            <label for="">Metódos de pago (*)</label>
                             <?php foreach($payment_methods as $key => $payment_method): ?>
                                 <div class="form-check">
                                     <input class="form-check-input"type="checkbox" name="payment_methods[<?php echo $key;?>]" id="<?php echo $payment_method;?>">
@@ -265,11 +269,12 @@ $services = get_escorts_services();
                                     </label>
                                 </div>
                             <?php endforeach;?>
+                            <label id="payment_methods_error" class="hidden" for="payment_methods"> Debe seleccionar al menos un metodo</label>
                         </div>
                     </div>
 
-                    <input type="button" name="previous" class="previous-step action-button" value="Anterior" />
-                    <input type="button" name="next" class="next-step action-button" value="Siguiente" />
+                    <input type="button" data-step="3" name="previous" class="previous-step action-button" value="Anterior" />
+                    <input type="button" data-step="4" name="next" class="next-step action-button" value="Siguiente" />
                 </fieldset>
 
                 <fieldset> 
@@ -285,10 +290,31 @@ $services = get_escorts_services();
                                     </div>
                                     <div class="plan-box-body">
                                         <div class="rates">
-                                            <label for="<?= $name.'_weekly' ?>" class="checked">Semanal</label>
-                                            <label for="<?= $name.'_monthly' ?>">Mensual</label>
+                                            <label for="<?= $name.'_weekly' ?>" data-price="<?= $plan['rates']['weekly'] ?>" class="l checked">
+                                                <?php if ($name == 'free'): ?>
+                                                    N/A
+                                                <?php else: ?>
+                                                    SEMANAL
+                                                <?php endif; ?>
+                                            </label>
+                                            <label for="<?= $name.'_monthly' ?>" data-price="<?= $plan['rates']['monthly'] ?>" class="r">
+                                                <?php if ($name == 'free'): ?>
+                                                    N/A
+                                                <?php else: ?>
+                                                    MENSUAL
+                                                <?php endif; ?>
+                                            </label>
                                         </div>
                                         <div class="description">
+                                            <div class="price">
+                                                <h4 class="price">
+                                                    <?php if ($name == 'free'): ?>
+                                                        <span style="color: green">GRATIS</span>
+                                                    <?php else: ?>
+                                                        <?= $plan['rates']['weekly'] ?> $
+                                                    <?php endif; ?>
+                                                </h4>
+                                            </div>
                                             <?= $plan['descripcion'] ?>
                                         </div>
                                         <div class="items">
@@ -316,8 +342,8 @@ $services = get_escorts_services();
                         <input type="radio" id="monthly" name="plan[type]" value="monthly">
                     </div>
 
-                    <input type="button" name="previous" class="previous-step action-button" value="Anterior" />
-                    <input type="submit" value="Enviar" />
+                    <input type="button" data-step="4" name="previous" class="previous-step action-button" value="Anterior" />
+                    <input type="submit" data-step="5" value="Enviar" />
                 </fieldset>
             </form>
         </div>

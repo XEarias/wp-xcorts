@@ -1,10 +1,5 @@
 <?php 
 
-    $langs = get_query_var('langs');
-    $langs = get_query_var('langs');
-    $langs = get_query_var('langs');
-    $langs = get_query_var('langs');
-
     $post_id = 30;
     //Escort Metas
     $meta_email = get_post_meta($post_id, "escort_email", true);

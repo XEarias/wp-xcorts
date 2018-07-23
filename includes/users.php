@@ -400,7 +400,7 @@ function verify_username(WP_REST_Request $request){
     $user_id = username_exists($username);
     
     if($user_id){
-        return "false";
+        return "El usuario ya está en uso";
     }
 
     return "true";
@@ -415,7 +415,7 @@ function verify_email(WP_REST_Request $request){
     $exists = email_exists($email);
     
     if($exists){
-        return "false";
+        return "El email ya está en uso";
     }
 
     return "true";

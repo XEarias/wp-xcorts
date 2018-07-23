@@ -4,8 +4,16 @@ function adding_packages() {
 
     wp_enqueue_script("jquery");
 
+    //JQUERY EASING 4.1.1
     wp_register_script('jquery_easing', get_template_directory_uri() . '/packages/jquery.easing.min.js');
     wp_enqueue_script('jquery_easing');
+
+    //JQUERY VALIDATION
+    wp_register_script('jquery_validate', get_template_directory_uri() . '/packages/jquery-validate/jquery.validate.min.js');
+    wp_enqueue_script('jquery_validate');
+
+    wp_register_script('jquery_validate_methods', get_template_directory_uri() . '/packages/jquery-validate/additional-methods.min.js');
+    wp_enqueue_script('jquery_validate_methods');
 
     //Bootstrap 4.1.1
     wp_register_style('bootstrap', get_template_directory_uri() . '/packages/bootstrap/dist/css/bootstrap.min.css');
@@ -33,8 +41,16 @@ function adding_packages() {
     wp_enqueue_script('escort_subscription');
 
     wp_enqueue_style( 'fmp-style', get_stylesheet_uri() );
+
+
+    wp_localize_script('escort_subscription', 'wp_params', [
+        'home_url' => home_url()
+        ]
+    );
+
 }
 
 add_action( 'wp_enqueue_scripts', 'adding_packages' );
+
 
 ?>

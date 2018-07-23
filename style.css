@@ -567,12 +567,12 @@ form#loginform p input[type=submit] {
     cursor: pointer;
 }
 
-.plan-box-body .rates label[for="weekly"] {
-    border-radius: 8px 0 0 8px;
+.plan-box-body .rates label.l {
+    border-radius: 23px 0 0 23px;
 }
 
-.plan-box-body .rates label[for="monthly"] {
-    border-radius: 0 8px 8px 0;
+.plan-box-body .rates label.r {
+    border-radius: 0 23px 23px 0;
 }
 
 .plan-box-body .rates label.checked {
@@ -596,3 +596,24 @@ form#loginform p input[type=submit] {
     color: white;
 }
 
+.plan-box-body .description div h4.price {
+    border: none !important;
+    font-weight: bold;
+}
+
+label.is-invalid {
+    font-size: 12px;
+    color: red;
+}
+
+label.hidden {
+    display: none;
+}
+
+.form-check-input.is-invalid~.form-check-label, .was-validated .form-check-input:invalid~.form-check-label {
+    color: black !important;
+}
+
+.form-check-input.is-valid~.form-check-label, .was-validated .form-check-input:valid~.form-check-label {
+    color: black !important;
+}
