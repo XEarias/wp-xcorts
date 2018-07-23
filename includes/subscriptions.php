@@ -11,7 +11,7 @@ $plans = [
 		"description" => "",
 		"items" => []
 	],
-	"standard" => [
+	"silver" => [
 		"rates" => [
 			"weekly" => 199,
 			"monthly" => 499
@@ -19,7 +19,7 @@ $plans = [
 		"description" => "",
 		"items" => []
 	],
-	"gold" => [
+	"silver" => [
 		"rates" => [
 			"weekly" => 399,
 			"monthly" => 999
@@ -27,7 +27,7 @@ $plans = [
 		"description" => "",
 		"items" => []		
 	],
-	"vip" => [
+	"gold" => [
 		"rates" => [
 			"weekly" => 499,
 			"monthly" => 1499
@@ -82,7 +82,29 @@ function escort_subscription()
 }
 add_action('init', 'escort_subscription');
 
+function days_left($date_start, $type){
 
+	if($type == "monthly"){
+		$duration = 30;
+	} else if($type == "weekly"){
+		$duration = 7;
+	}
+
+	$earlier = new DateTime($date_start);
+	$today = new DateTime();
+
+	$diff = $today->diff($earlier)->d;
+
+	$left = (($duration - $diff) >= 0 ) ? $duration - $diff : 0; 
+	$days = [
+		"used" => $diff,
+		"left" => $left
+	];
+	return $days;
+
+
+
+}
 function add_new_subscription($escort_ad_id, $plan = "free", $type = false){
 
 	$ad_status = ($plan == "free") ? "paid" : "default";
@@ -100,9 +122,14 @@ function add_new_subscription($escort_ad_id, $plan = "free", $type = false){
 
 	$subscription_raw = get_post($subscription_id);
 
+	$timestamp = strtotime($subscription_raw->post_date);
+
+	$pretty_date = date('d-m-Y', $timestamp);
+
 	$subscription = [
 		"ID" => $subscription_raw->ID,
 		"date" => $subscription_raw->post_date,
+		"pretty_date" => $pretty_date,
 		"status" => $subscription_raw->post_status,
 		"plan" => [
 			"name" => $plan
@@ -111,6 +138,15 @@ function add_new_subscription($escort_ad_id, $plan = "free", $type = false){
 
 	if($type){
 		$subscription["plan"]["type"] = $type;
+
+		if(isset($plans[$plan]) && $plans[$plan]["rates"][$type]){
+			$value = $plans[$plan]["rates"][$type];
+			$subscription["plan"]["value"] = $value;
+		}
+
+		$days = days_left($pretty_date, $type);
+		$subscription["days"] = $days;
+		
 	}
 
 	return $subscription;
@@ -121,6 +157,8 @@ function add_new_subscription($escort_ad_id, $plan = "free", $type = false){
 
 //se obtiene la subscripcion o se crea una free de no existir 
 function get_or_set_subscription($escort_ad_id){
+
+	GLOBAL $plans;
 
 	$args = [
 		'numberposts' => 1,
@@ -139,7 +177,7 @@ function get_or_set_subscription($escort_ad_id){
 	$subscriptions = get_posts($args);
 
 	//si no tiene suscripciones o la ultima suscripcion finalizo se le crea una nueva de tipo 'free'
-	if(!$subscriptions || !count($subscriptions) || $subscriptions[0]["post_status"] == "finished" ){
+	if(!$subscriptions || !count($subscriptions) || $subscriptions[0]->post_status == "finished" ){
 		$subscription = add_new_subscription($escort_ad_id);
 		return $subscription;
 	} 
@@ -149,27 +187,40 @@ function get_or_set_subscription($escort_ad_id){
 	
 	$plan = get_post_meta($subscription_raw->ID, "subscription_plan", true);
 	$type = get_post_meta($subscription_raw->ID, "subscription_type", true);
+	$timestamp = strtotime($subscription_raw->post_date);
+
+	$pretty_date = date('d-m-Y', $timestamp );
+
+	$badge_url = get_template_directory_uri()."/assets/badges/".$plan.".png";
 
 	$subscription = [
 		"ID" => $subscription_raw->ID,
 		"date" => $subscription_raw->post_date,
+		"pretty_date" => $pretty_date, 
 		"status" => $subscription_raw->post_status,
 		"plan" => [
-			"name" => $plan
+			"name" => $plan,
+			"badge" => $badge_url
 		]
 	];
 
 	if($type){
-		$subscription["plan"]["type"] = $type;
-	}
 
+		$subscription["plan"]["type"] = $type;
+
+		if(isset($plans[$plan]) && $plans[$plan]["rates"][$type]){
+			$value = $plans[$plan]["rates"][$type];
+			$subscription["plan"]["value"] = $value;
+		}
+
+		$days = days_left($pretty_date, $type);
+		$subscription["days"] = $days;
+
+	}
 
 	return $subscription;
 
-
 }
-/*
-add_action( 'admin_post_nopriv_xxx', 'get_subscription' );
-add_action( 'admin_post_priv_xxx', 'get_subscription' );
-*/
+
+
 ?>

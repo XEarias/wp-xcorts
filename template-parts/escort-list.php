@@ -30,7 +30,8 @@
                                 <p class="escort-info-header-time">
                                     <span class="escort-principal-rate"><strong><?php echo ($escort['principal_rate']["value"]) ? $escort['principal_rate']["value"] : "CONSULTAR";?></strong></span>
                                     <br>
-                                    <?php echo $escort['principal_rate']["label"];?>
+
+                                    <?php echo (is_array($escort['principal_rate']["label"])) ? $escort['principal_rate']["label"]["label"] : $escort['principal_rate']["label"];?>
                                 </p>
                             </div>
                         </div>

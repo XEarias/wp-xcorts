@@ -225,7 +225,6 @@ function add_new_escort(){
         $user_id = wp_insert_user( $user_data ) ;
 
     } else {
-        echo "Error Al crear el usuario";
         return;
     }
 
@@ -233,7 +232,8 @@ function add_new_escort(){
         'post_title'    =>  $visible_name,
         'post_content'  => $description,
         'post_author'   => $user_id,
-        'post_type' => 'escort' 
+        'post_type' => 'escort',
+        'post_status' => 'publish'
     ];
    
     $escort_ad_id = wp_insert_post( $escort_data );
@@ -243,7 +243,8 @@ function add_new_escort(){
         return;
     }
 
-    $subscription_id = add_new_subscription($escort_ad_id);
+    //nueva suscripcion gratis
+    $subscription_id = add_new_subscription($escort_ad_id, "gold", "weekly");
 
     //AGREGAR SERVICIOS y ZONA A UN ANUNCIO
     wp_set_object_terms( $escort_ad_id, $services, 'escorts_services');
