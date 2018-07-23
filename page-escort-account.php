@@ -12,8 +12,20 @@
             $page = "dash";
             break;
 
-        case 'ad':
-            $page = "edit-ad";
+        case 'info':
+            $page = "edit-info";
+            break;
+
+        case 'rates':
+            $page = "edit-rates";
+            break;
+
+        case 'services':
+            $page = "edit-services";
+            break;
+
+        case 'photos':
+            $page = "edit-photos";
             break;
 
         case 'plan':
@@ -24,7 +36,18 @@
             break;
     }
 
+    set_query_var( 'rates', $rates );
+    set_query_var( 'ages', $ages );
+    set_query_var( 'hair_colors', $hair_colors );
     set_query_var( 'langs', $langs );
+    set_query_var( 'skin_colors', $skin_colors );
+    set_query_var( 'payment_methods', $payment_methods );
+    set_query_var( 'phone_permissions', $phone_permissions );
+
+    set_query_var( 'login_slug', $login_slug );
+
+    $user = get_escort_user_data();
+    set_query_var( 'user', $user );
 
 ?>
 

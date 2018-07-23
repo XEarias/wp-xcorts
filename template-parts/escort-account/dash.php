@@ -1,3 +1,3 @@
 <div style="height: 400px;">
-    BIENVENIDA
+    BIENVENIDA <?= strtoupper($user['first_name'].' '.$user['last_name']) ?>
 </div>

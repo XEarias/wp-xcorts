@@ -1,6 +1,6 @@
 <?php 
 
-    $post_id = 30;
+    $post_id = $user['ad']['ID'];
     //Escort Metas
     $meta_email = get_post_meta($post_id, "escort_email", true);
     $meta_age = get_post_meta($post_id, "escort_age", true);
@@ -13,12 +13,10 @@
     $meta_measure = get_post_meta($post_id, "escort_measure", true) ? get_post_meta($post_id, "escort_measure", true) : [];
     $meta_phone = get_post_meta($post_id, "escort_phone", true) ? get_post_meta($post_id, "escort_phone", true) : []; 
 
-?>
+    $meta_rates = (get_post_meta($post_id, "escort_rates", true)) ? get_post_meta($post_id, "escort_rates", true) : [];
+    $meta_payment_methods = (get_post_meta($post_id, "escort_payment_methods", true)) ? get_post_meta($post_id, "escort_payment_methods", true) : [] ;
 
-    <!-- TELEFONO -->
-    <label for="email"><b>Email:</b></label>
-    <input id="email" type="email" placeholder="Email" name="email" value="<?php echo $meta_email;?>"></input>
-    <br>
+?>
 
     <!-- TELEFONO -->
     <label for="phone"><b>Télefono:</b></label>
@@ -89,3 +87,26 @@
     <input type="text" placeholder="Pecho" name="measure[chest]" value="<?php echo ($meta_measure && isset($meta_measure['chest'])) ? $meta_measure['chest'] : "" ?>">
     <input type="text" placeholder="Cintura" name="measure[waist]" value="<?php echo ($meta_measure && isset($meta_measure['waist'])) ? $meta_measure['waist'] : "" ?>">
     <input type="text" placeholder="Caderas" name="measure[hip]" value="<?php echo ($meta_measure && isset($meta_measure['hip'])) ? $meta_measure['hip'] : "" ?>">
+
+
+   
+
+    <div>
+        
+        <?php foreach($rates as $key => $rate):?>
+            <label><b><?php echo $rate; ?></b></label>
+            <input name="rates[<?php echo $key; ?>]" placeholder="<?php echo $rate; ?>" value="<?php echo ($meta_rates && isset($meta_rates[$key])) ? $meta_rates[$key] : "" ;?>">
+            <br>
+        <?php endforeach;?>
+        
+    </div>
+
+    <div>
+        <label><b>Metódos de Pago:</b></label>
+        <?php foreach($payment_methods as $key => $payment_method): ?>
+            <label><?php echo $payment_method;?></label>
+            <input type="checkbox" name="payment_methods[<?php echo $key;?>]" <?php echo (in_array($key, $meta_payment_methods)) ? "checked='checked'" : ""; ?>/>
+        <?php endforeach; ?>
+    </div>
+    <?php
+   

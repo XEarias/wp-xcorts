@@ -339,6 +339,14 @@ form#loginform p input[type=submit] {
     background-color: transparent;
 }
 
+.escort-account-sidebar li.active {
+    border-radius: 0;
+    background-color: #f44336;
+    border-top: 1px solid white;
+    border-left: 0;
+    border-right: 0;
+}
+
 .escort-account-sidebar li:not(:last-child) {
     border-bottom: 1px solid white;
 }

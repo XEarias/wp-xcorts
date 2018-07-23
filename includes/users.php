@@ -60,9 +60,8 @@ add_action('init','add_accounts_pages');
 
 function escort_page_redirect($page_slug){
     $page = get_page_by_path($page_slug);
-    $page_url = get_page_link($page_slug->ID);
-    wp_redirect( $page_url );
-    die;
+    $page_url = get_page_link($page->ID);
+    if (wp_redirect( $page_url )) { die; }
 }
 
 function escort_security_redirect()
@@ -82,27 +81,23 @@ function escort_security_redirect()
 
     if( is_page($account_slug)){
 
-        if(current_user_can('escort')){
+        if(current_user_can('escort_user')){
             return;
         }        
         
         wp_redirect( home_url());
         exit;       
-        
-    }
+        return;
+    } else if (is_page($login_slug)){
 
-
-    if(is_page($login_slug)){
-
-        if(current_user_can('escort')){
+        if(current_user_can('escort_user')){
             escort_page_redirect($account_slug);
             return;
         } 
 
         wp_redirect( home_url());
         exit;
-    }
-
+     }
 }
 add_action( 'template_redirect', 'escort_security_redirect' );
 
@@ -328,6 +323,25 @@ function get_escort_user_data(){
         'username' => $escort_user->user_login,
         'email' => $escort_user->user_email
     ];
+
+    $escort_ad_args = [
+        "post_type" => "escort",
+        "author" => $escort_user->ID,
+
+    ];
+
+    $escort_ad = get_posts($escort_ad_args);
+
+    if($escort_ad){
+
+        $ad = [
+           "ID" => $escort_ad[0]->ID,
+           "display_name" => $escort_ad[0]->post_title,
+           "description" => $escort_ad[0]->post_content
+        ];
+
+        $user["ad"] = $ad;
+    }
 
     return $user;
 
