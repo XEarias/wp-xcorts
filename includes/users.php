@@ -2,6 +2,7 @@
 
 $account_slug = 'escort-account';
 $login_slug = 'escort-login';
+$subscription_slug = 'escort-subscription';
 
 
 $page_definitions = [
