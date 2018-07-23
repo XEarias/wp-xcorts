@@ -223,4 +223,100 @@ function get_or_set_subscription($escort_ad_id){
 }
 
 
+
+/***** TRABAJO CRONOMETRADO ****/
+
+//registro de evento cronometrado
+function escorts_cron_register() {
+    if (! wp_next_scheduled ( 'update_escort_status' )) {
+	    wp_schedule_event(time(), 'twicedaily', 'update_escort_status');
+    }
+}
+add_action("init", "escorts_cron_register");
+
+function update_escort_status() {
+	
+	$subscriptions = [];
+
+	$escorts_args = [
+		"post_type" => "escort",
+		"post_status" => "any",
+		"numberposts" => -1
+	];
+	
+	$escorts_ads = get_posts($escorts_args);
+
+	foreach($escorts_ads as $escorts_ad){
+
+		$args = [
+			'numberposts' => 1,
+			'post_type'  => 'escort_subscription',
+			'post_status' => 'any',
+			'meta_query' => [
+				[
+					'key'     => 'subscription_ad',
+					'value'   => $escorts_ad->ID,
+					'compare' => '='
+				],
+				[
+					'key'     => 'subscription_plan',
+					'value'   => 'free',
+					'compare' => '!='
+				]
+			]
+
+		];
+
+		$subscriptions_raw = get_posts($args);
+
+		//si no tiene suscripciones o la ultima suscripcion no esta 'paid'
+		if(!$subscriptions_raw || !count($subscriptions_raw) || $subscriptions_raw[0]->post_status != "paid" ){
+			continue;
+		}
+
+
+		$subscription_id = $subscriptions_raw[0]->ID;
+
+		$type = get_post_meta($subscription_id, "subscription_type", true);
+		$timestamp = strtotime($subscriptions_raw[0]->post_date);
+		$pretty_date = date('d-m-Y', $timestamp);
+		$days = days_left($pretty_date , $type);
+
+		//si se agotaron los días
+		if(!$days["left"]){
+
+			$update_args = [
+				"ID" => $subscription_id,
+				"post_status" => "finished"
+			];
+
+			$result = wp_update_post($update_args);
+
+		} else if((($days["left"] < 5) && ($type == "monthly")) || (($days["left"] < 5) && ($type == "weekly"))){//si esta cerca de vencerse
+
+
+				//TODO: ENVIAR CORREO
+		}
+
+		$subscriptions[] = $days;
+		
+	}
+	   
+	return $subscriptions;
+
+}
+
+add_action( 'update_escort_status', 'update_escort_status' );
+
+
+function test(){
+	update_escort_status();
+    //print_r();
+}
+
+add_action( 'admin_post_nopriv_xxx', 'test' );
+add_action( 'admin_post_priv_xxx', 'test' );
+
+
+
 ?>
