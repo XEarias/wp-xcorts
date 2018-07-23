@@ -236,7 +236,7 @@ $services = get_escorts_services();
                                 <div class="form-check">
                                     <input class="form-check-input"type="checkbox" name="services[]" id="<?php echo $service["name"];?>" value="<?php echo $service["ID"];?>">
                                     <label class="form-check-label" for="<?php echo $service["name"];?>">
-                                        <?php echo $lang;?>
+                                        <?php echo $service["name"];?>
                                     </label>
                                 </div>
                             <?php endforeach;?>

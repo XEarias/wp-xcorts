@@ -72,17 +72,19 @@ function escort_security_redirect()
     if( is_page($account_slug) && ! is_user_logged_in() ) //sacar al usuario no logeado del area de Mi cuenta
     {
 
-        escort_page_redirect($account_slug);
+        escort_page_redirect($login_slug);
         
+    }
+
+    if( is_page($account_slug) && is_user_logged_in() && !current_user_can('escort')){
+        escort_page_redirect(home_url());
     }
 
     if( is_page($login_slug) && is_user_logged_in() ) //sacar al usuario logeado del area de Login
     {
-        if(current_user_can('escort')){
-            escort_page_redirect($login_slug);
-        } else {
-            escort_page_redirect(home_url());
-        }
+      
+        escort_page_redirect($account_slug);
+       
     }
 
 
