@@ -11,7 +11,7 @@ $plans = [
 		"description" => "",
 		"items" => []
 	],
-	"silver" => [
+	"bronze" => [
 		"rates" => [
 			"weekly" => 199,
 			"monthly" => 499
