@@ -10,7 +10,7 @@
         <div class="row">
         <?php endif; ?>
 
-        <?php $langs = $escort["basic_info"]["langs"]; ?>
+        <?php $langs_escort = $escort["basic_info"]["langs"]; ?>
         <div data-escort-id="<?php echo $escort['ID'];?>" class="escort-item col-md-2 <?php echo ($offset == 1) ? 'offset-md-1' : ''; ?>">
             <a href="<?php echo $escort['url'];?>">
                 <div class="escort-item-internal">
@@ -18,10 +18,10 @@
                     <?php if($escort["subscription"]["plan"]["badge"]): ?>
                     <img style="position: absolute;width: 40%;left: 30%;bottom: 25%;"  src="<?php echo $escort["subscription"]["plan"]["badge"]; ?>"/>
                     <?php endif;?>
-
+                    <?php $images_array = array_merge([$escort['image']], $escort["gallery"]);?>
                     <svg viewBox="0 0 100 170" class="hidden-background escort-item-internal-image"
                     style="background-image: url(<?php echo $escort['image'];?>"
-                    data-images="<?php echo implode(';', [$escort['image'],'https://img1.hottescorts.es/guia-55079.jpg','https://img1.hottescorts.es/guia-61615.jpg','https://img1.hottescorts.es/guia-61144.jpg','https://img1.hottescorts.es/guia-53165.jpg']); ?>"
+                    data-images="<?php echo implode(';', $images_array); ?>"
                     data-image-index="0">
                     </svg>
                     <div class="escort-info-container">
@@ -48,8 +48,8 @@
                                 <div>
                                     <b>Idiomas:</b>
 
-                                    <?php $last_lang = end($langs); ?>
-                                    <?php foreach($langs as $lang): ?>
+                                    <?php $last_lang = end($langs_escort); ?>
+                                    <?php foreach($langs_escort as $lang): ?>
 
                                         <?php 
                                         

@@ -513,6 +513,8 @@ function get_escort_ad_attachments($escort_ad_id){
         "videos" => []
     ];
 
+    return $media;
+
 }
 
 function get_escort_extra_info($id, &$data){

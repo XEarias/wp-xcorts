@@ -53,9 +53,9 @@
                     <li>
                         Idiomas 
                         <span>
-                            <?php $langs = $escort["basic_info"]["langs"]; ?>
-                            <?php $last_lang = end($langs); ?>
-                            <?php foreach($langs as $lang): ?>
+                            <?php $langs_escort = $escort["basic_info"]["langs"]; ?>
+                            <?php $last_lang = end($langs_escort); ?>
+                            <?php foreach($langs_escort as $lang): ?>
 
                                 <?php 
                                     echo $lang;
