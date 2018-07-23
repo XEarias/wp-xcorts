@@ -738,6 +738,10 @@ function get_escorts($options = []){
             ];
 
             get_escort_extra_info($escort_raw_id, $escort);
+            
+            if($escort["subscription"]["plan"]["name"] != "free" && $escort["subscription"]["plan"]["status"] == 'default'){
+                continue;
+            }
 
             $escort_tier = $escort["subscription"]["plan"]["name"];
             $escorts[$escort_tier][] = $escort;
@@ -845,17 +849,5 @@ function get_escorts_services(){
 
 
 }
-
-
-function test(){
-
-    print_r(get_escorts()[0]["principal_rate"]);
-    echo "<br><br><br>"; 
-    print_r(prepare_escorts(['limit' => 5])[0]["principal_rate"]);
-    
-}
-
-add_action( 'admin_post_nopriv_xxx', 'test' );
-add_action( 'admin_post_priv_xxx', 'test' );
 
 ?>

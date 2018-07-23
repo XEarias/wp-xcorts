@@ -59,9 +59,9 @@ add_action('init','add_accounts_pages');
 
 
 function escort_page_redirect($page_slug){
-    $account_page = get_page_by_path($account_slug);
-    $account_url = get_page_link($account_page->ID);
-    wp_redirect( $account_url );
+    $page = get_page_by_path($page_slug);
+    $page_url = get_page_link($page_slug->ID);
+    wp_redirect( $page_url );
     die;
 }
 
@@ -185,10 +185,12 @@ function handle_attachments_escorts_ads($escort_ad_id, $images, $multiple = fals
 function add_new_escort(){
   //print_r($_POST);
 
+    GLOBAL $subscription_slug, $login_slug;
+
     $nonce = $_POST['escort_nounce'];
     
     if(!wp_verify_nonce( $nonce, 'escort-register-account' )){
-        echo "ERROR DE NONCE";
+        escort_page_redirect($subscription_slug);
         return;
     }
 
@@ -199,15 +201,14 @@ function add_new_escort(){
     $last_name = wp_strip_all_tags($_POST["last_name"]);
     $visible_name = wp_strip_all_tags($_POST["visible_name"]);
     $description = wp_strip_all_tags($_POST['description']);
-
     $services_raw = $_POST["services"];
-
     $services = [];
     foreach($services_raw as $service_raw){
         $services[] = (int) $service_raw;
     }   
-
     $zone = (int) $_POST["zone"];
+
+    $plan = $_POST["plan"];
 
     $user_id = username_exists( $username );
     if ( !$user_id and email_exists($email) == false ) {
@@ -223,7 +224,8 @@ function add_new_escort(){
         ];
         $user_id = wp_insert_user( $user_data ) ;
 
-    } else {
+    } else {//error creando el usuario
+        escort_page_redirect($subscription_slug);
         return;
     }
 
@@ -237,13 +239,16 @@ function add_new_escort(){
    
     $escort_ad_id = wp_insert_post( $escort_data );
 
-    if(!$escort_ad_id){
-        echo "error al crear el post";
+    if(!$escort_ad_id){//error creando el anuncio
+        escort_page_redirect($subscription_slug);
         return;
     }
 
+    $plan_name = $plan["name"];
+    $plan_type = ($plan["name"] != 'free') ? $plan["type"] : null;
+
     //nueva suscripcion gratis
-    $subscription_id = add_new_subscription($escort_ad_id, "gold", "weekly");
+    $subscription_id = add_new_subscription($escort_ad_id, $plan_name, $plan_type);
 
     //AGREGAR SERVICIOS y ZONA A UN ANUNCIO
     wp_set_object_terms( $escort_ad_id, $services, 'escorts_services');
@@ -273,6 +278,8 @@ function add_new_escort(){
     $uploaded_images = $_FILES["images"];
 
     $attachs_ids = handle_attachments_escorts_ads($escort_ad_id, $uploaded_images, true); 
+
+    escort_page_redirect($login_slug);
 
 }
 
@@ -349,8 +356,91 @@ function update_escort_ad(){
 add_action( 'admin_post_nopriv_update_escort_ad', 'update_escort_ad' );
 add_action( 'admin_post_update_escort_ad', 'update_escort_ad' );
 
+/*
+
+function verify_email(){
+    print_r($_POST);
+    $email = $_POST["email"];
+
+    $user_id = username_exists($email);
+    
+    if($user_id){
+        wp_send_json( "false");
+        return;
+    }
+
+    wp_send_json( "true");
+
+}
 
 
+add_action( 'wp_ajax_nopriv_verify_email', 'verify_email' );
+add_action( 'wp_ajax_verify_email', 'verify_email' );
+
+
+
+function verify_username(){
+
+
+    
+
+}
+
+
+add_action( 'admin_post_nopriv_verify_email', 'verify_username' );
+add_action( 'admin_post_verify_email', 'verify_username' );
+*/
+
+
+
+function verify_username(WP_REST_Request $request){
+
+    $username = $request->get_param("username");
+
+    $user_id = username_exists($username);
+    
+    if($user_id){
+        return "false";
+    }
+
+    return "true";
+
+}
+
+
+function verify_email(WP_REST_Request $request){
+
+    $email = $request->get_param("email");
+
+    $exists = email_exists($email);
+    
+    if($exists){
+        return "false";
+    }
+
+    return "true";
+
+}
+
+
+
+add_action( 'rest_api_init', function () {
+            
+    register_rest_route( 'escorts/v1', 'verify-username',[
+
+        'methods'  => 'POST',
+        'callback' => 'verify_username'
+
+    ]) ;
+
+    register_rest_route( 'escorts/v1', 'verify-email',[
+
+        'methods'  => 'POST',
+        'callback' => 'verify_email'
+
+    ]) ;
+
+} );
 
 
 ?>
