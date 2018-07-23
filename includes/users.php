@@ -69,24 +69,39 @@ function escort_security_redirect()
 {
     GLOBAL $account_slug, $login_slug;
     
-    if( is_page($account_slug) && ! is_user_logged_in() ) //sacar al usuario no logeado del area de Mi cuenta
-    {
 
-        escort_page_redirect($login_slug);
+    if(!is_user_logged_in()){
+
+        if(is_page($account_slug)){
+            escort_page_redirect($login_slug);
+        }
+        return;
+    } 
+
+
+
+    if( is_page($account_slug)){
+
+        if(current_user_can('escort')){
+            return;
+        }        
+        
+        wp_redirect( home_url());
+        exit;       
         
     }
 
-    if( is_page($account_slug) && is_user_logged_in() && !current_user_can('escort')){
-        escort_page_redirect(home_url());
-    }
 
-    if( is_page($login_slug) && is_user_logged_in() ) //sacar al usuario logeado del area de Login
-    {
-      
-        escort_page_redirect($account_slug);
-       
-    }
+    if(is_page($login_slug)){
 
+        if(current_user_can('escort')){
+            escort_page_redirect($account_slug);
+            return;
+        } 
+
+        wp_redirect( home_url());
+        exit;
+    }
 
 }
 add_action( 'template_redirect', 'escort_security_redirect' );
