@@ -3,6 +3,10 @@
 function adding_packages() {
 
     wp_enqueue_script("jquery");
+
+    wp_register_script('jquery_easing', get_template_directory_uri() . '/packages/jquery.easing.min.js');
+    wp_enqueue_script('jquery_easing');
+
     //Bootstrap 4.1.1
     wp_register_style('bootstrap', get_template_directory_uri() . '/packages/bootstrap/dist/css/bootstrap.min.css');
     wp_enqueue_style('bootstrap');
@@ -24,6 +28,9 @@ function adding_packages() {
 
     wp_register_script('escort_slider', get_template_directory_uri(). '/assets/js/escort_slider.js');
     wp_enqueue_script('escort_slider');
+
+    wp_register_script('escort_subscription', get_template_directory_uri(). '/assets/js/escort_subscription.js');
+    wp_enqueue_script('escort_subscription');
 
     wp_enqueue_style( 'fmp-style', get_stylesheet_uri() );
 }

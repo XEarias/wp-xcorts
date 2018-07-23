@@ -64,9 +64,7 @@ function escort_page_redirect($page_slug){
     die;
 }
 
-
-
-function escort_security_redirect()
+/*function escort_security_redirect()
 {
     GLOBAL $account_slug, $login_slug;
     
@@ -83,7 +81,7 @@ function escort_security_redirect()
 
 }
 add_action( 'template_redirect', 'escort_security_redirect' );
-
+*/
 
 function do_cleaner_array(&$files) {
 
@@ -306,7 +304,7 @@ function get_escort_user_data(){
 }
 
 
-//ACTUALIZAR EL ANUNCIO DE UNA ESCORT DESDE SU PERFIL
+// ACTUALIZAR EL ANUNCIO DE UNA ESCORT DESDE SU PERFIL
 function update_escort_ad(){
 
     GLOBAL $account_slug;
