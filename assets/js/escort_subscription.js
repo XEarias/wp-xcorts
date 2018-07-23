@@ -81,4 +81,81 @@ jQuery(document).ready(function () {
     jQuery(".submit").click(function () {
         return false;
     });
+
+
+    jQuery('input#featured_image').on('change', function () { 
+        var files = jQuery(this).prop('files')
+        if (files && files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var img = jQuery('<img />', {
+                    src: e.target.result,
+                    height: '100%',
+                    width: '100%'
+                });
+
+                jQuery('.featured-image-box > .item > label').empty();
+                img.appendTo('.featured-image-box > .item > label');
+            }
+
+            reader.readAsDataURL(files[0]);
+        }
+    });
+
+    jQuery('input#images, label[for="images"]').click(function(e) {
+        var files = jQuery('input#images').prop("files");
+        if (files.length == 5) {
+            console.log(files.length)
+            e.preventDefault();
+        }
+    })
+
+    jQuery('input#images').on("change", function () {
+        var files = jQuery(this).prop("files");
+
+        jQuery('.images-box .item:not(.main)').remove();
+
+        for (let index = 0; index < files.length; index++) {
+            const file = files[index];
+
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+
+                var img = jQuery('<img />', {
+                    src: e.target.result,
+                    style: 'max-width: 100% ; max-height: 100%',
+                });
+
+                /*var divDelete = jQuery('<div >', {
+                    class: 'images-delete-item',
+                    'data-index': files.length - 1
+                });*/
+
+                var imageLabel = jQuery('<label >', {
+                    for: 'images',
+                    style: 'height: 130px'
+                });
+
+                var imageDiv = jQuery('<div >', {
+                    class: 'col-md-2 item',
+                    'data-index': files.length - 1
+                });
+
+                img.appendTo(imageLabel);
+
+                imageLabel.appendTo(imageDiv)
+                //divDelete.appendTo(imageDiv)
+
+                imageDiv.appendTo('.images-box');
+            }
+
+            reader.readAsDataURL(file);
+        }
+    });
+
+    jQuery('.rates label').click(function() {
+        console.log(jQuery(this));
+    })
 });

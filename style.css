@@ -377,8 +377,13 @@ form#loginform p input[type=submit] {
 #escort-subscription fieldset:not(:first-of-type) {
 	display: none;
 }
+
+#escort-subscription input[type="file"] {
+    visibility: hidden;
+}
+
 /*inputs*/
-#escort-subscription input, #escort-subscription textarea {
+#escort-subscription input:not([type="checkbox"],[type="button"]), #escort-subscription textarea {
     padding: 7px 10px;
 	border: 1px solid #ccc;
 	border-radius: 2px;
@@ -401,11 +406,23 @@ form#loginform p input[type=submit] {
 	margin: 10px 5px;
 }
 
+#escort-subscription  input[type="submit"] {
+	width: 100px;
+	background: #f44336;
+	font-weight: bold;
+	color: white;
+	border: 0 none;
+	border-radius: 1px;
+	cursor: pointer;
+	padding: 10px 5px;
+	margin: 10px 5px;
+}
+
 #escort-subscription .previous-step {
     float: left;
 }
 
-#escort-subscription .next-step {
+#escort-subscription .next-step,  #escort-subscription input[type="submit"] {
     float: right;
 }
 /*headings*/
@@ -473,3 +490,109 @@ form#loginform p input[type=submit] {
     background: #F44336;
     color: white;
 }
+
+.featured-image-box, .images-box{
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: 5px;
+    position: relative;
+    width: 100%;
+    min-height: 100px;
+    margin: 0 !important;
+}
+
+.featured-image-box > label[for="featured_image"],  .images-box > label[for="images"] {
+    position: absolute;
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    left: 5px;
+    top: 5px;
+    border-radius: 2px;
+    background-color: #ccc;
+}
+
+.featured-image-box .item, .images-box .item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
+    position: relative;
+}
+
+.images-box .item > div.images-delete-item{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border-radius: 50%;
+    background-color: #f44336;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.featured-image-box .item > label, .images-box .item > label {
+    width: 100%;
+    text-align: center;
+    border: 1px solid #b4b4b4;
+    background-color: white;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* PLANS */
+
+.plan-box-header {
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.plan-box-body {
+    width: 100%;
+    background: linear-gradient(black, #858585, #ccc, #eee);
+}
+
+.plan-box-body .rates, .plan-box-body .description, .plan-box-body .items, .plan-box-body .select-button{
+    display: flex;
+    justify-content: center
+}
+
+.plan-box-body .rates label {
+    background-color: white;
+    padding: 3px 10px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.plan-box-body .rates label[for="weekly"] {
+    border-radius: 8px 0 0 8px;
+}
+
+.plan-box-body .rates label[for="monthly"] {
+    border-radius: 0 8px 8px 0;
+}
+
+.plan-box-body .rates label.checked {
+    background-color: #f44336;
+    color: white;
+    padding: 3px 10px;
+}
+
+.plan-box-body .select-button label{
+    background: white;
+    padding: 10px 45px;
+    border-radius: 26px;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.plan-box-body .select-button label.selected-plan {
+    background: #f44336;
+    color: white;
+}
+

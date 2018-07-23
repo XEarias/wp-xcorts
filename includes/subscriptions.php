@@ -11,7 +11,7 @@ $plans = [
 		"description" => "",
 		"items" => []
 	],
-	"standard" => [
+	"bronze" => [
 		"rates" => [
 			"weekly" => 199,
 			"monthly" => 499
@@ -19,7 +19,7 @@ $plans = [
 		"description" => "",
 		"items" => []
 	],
-	"gold" => [
+	"silver" => [
 		"rates" => [
 			"weekly" => 399,
 			"monthly" => 999
@@ -27,7 +27,7 @@ $plans = [
 		"description" => "",
 		"items" => []		
 	],
-	"vip" => [
+	"gold" => [
 		"rates" => [
 			"weekly" => 499,
 			"monthly" => 1499
