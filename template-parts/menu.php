@@ -1,4 +1,12 @@
-<?php $menu_items = get_single_menu("principal-menu");?>
+<?php 
+GLOBAL $subscription_slug;
+
+$menu_items = get_single_menu("principal-menu");
+
+$subscription_page = get_page_by_path($subscription_slug);
+$subscription_url = get_page_link($subscription_page->ID);
+
+?>
 
 <nav class="navbar navbar-expand-lg navbar-dark  bg-dark" style="background-color: black !important;" id="principal-menu">
   <?php get_template_part('template-parts/custom-logo'); ?>
@@ -33,7 +41,7 @@
     </ul>
 
     
-    <a>
+    <a href="<?php echo $subscription_url; ?>">
       <button class="btn my-2 my-sm-0" style="background-color: rgb(255, 51, 153) !important; color: white; font-size: 14px; font-weight: bold;">ANUNCIATE</button>
     </a>
   </div>

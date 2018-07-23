@@ -144,6 +144,14 @@ function date_diff_helper($start, $days){
 
 function add_escorts_metaboxes()
 {
+
+    add_meta_box(
+        'escort_subscription_metabox',          
+        'Subscripción Actual:', 
+        'escort_subscription_metabox_html', 
+        'escort'                
+    );
+
     add_meta_box(
         'escort_basic_metabox',          
         'Datos Básicos', 
@@ -161,6 +169,60 @@ function add_escorts_metaboxes()
 
 add_action('add_meta_boxes', 'add_escorts_metaboxes');
 
+/****  META BOX CON DATOS DE SUSCRIPCION ***/
+function escort_subscription_metabox_html($post){
+
+    $subscription = get_or_set_subscription($post->ID);
+    ?>
+
+    <input type="hidden" name="subscription[id]" value="<?php echo $subscription["ID"];?>"/>
+    <label><b>Plan:</b></label>
+    <span style="text-transform: uppercase;"><b><?php echo $subscription["plan"]["name"];?></b></span>
+    <br>
+
+    <label><b>Estado de suscripción:</b></label>
+    <span><?php echo ($subscription["status"] == "default") ? "<span style='color:red;'>En deuda</span>" : "<span style='color:green;'>Activa</span>";?> </span>
+    <br>
+
+    <label><b>Fecha de suscripción:</b></label>
+    <span><?php echo $subscription["pretty_date"];?> </span>
+    <br>
+
+    <?php if($subscription["plan"]["name"] != "free"): ;?>
+    
+    <label><b>Días Restantes:</b></label>
+    <span><?php echo $subscription["days"]["left"]; ?> </span>
+    <br>
+
+    <label><b>Días Consumidos:</b></label>
+    <span><?php echo $subscription["days"]["used"]; ?> </span>
+    <br>
+
+    <label><b>Tipo de suscripción:</b></label>
+    <span><?php echo ($subscription["plan"]["type"] == "monthly") ? "Mensual" : "Semanal";?> </span>
+    <br>
+
+    <label><b>Costo de suscripción:</b></label>
+    <span><?php echo $subscription["plan"]["value"];?> </span>
+    <br>
+
+        <?php if($subscription["status"] == "default"):?>
+        <label for="subscription_paid"><b>Marcar como paga:</b></label>
+        <input id="subscription_paid" name="subscription[paid]" type="checkbox"/>
+        <br>
+        <?php endif;?>
+    
+
+
+    <?php endif;?>
+
+    <?php ?>
+
+
+    
+    <!---->
+    <?php
+}
 
 /****  META BOX CON DATOS BASICOS ***/
 function escort_basic_metabox_html($post){
@@ -180,8 +242,8 @@ function escort_basic_metabox_html($post){
     $meta_skin_color = get_post_meta($post_id, "escort_skin_color", true);
     $meta_hair_color = get_post_meta($post_id, "escort_hair_color", true);
     $meta_profession = get_post_meta($post_id, "escort_profession", true);
-    $meta_measure = get_post_meta($post_id, "escort_measure", true) ? get_post_meta($post_id, "escort_measure", true) : [];
-    $meta_phone = get_post_meta($post_id, "escort_phone", true) ? get_post_meta($post_id, "escort_phone", true) : [];
+    $meta_measure = (get_post_meta($post_id, "escort_measure", true)) ? get_post_meta($post_id, "escort_measure", true) : [];
+    $meta_phone = (get_post_meta($post_id, "escort_phone", true)) ? get_post_meta($post_id, "escort_phone", true) : [];
 
 
     ?> 
@@ -272,7 +334,7 @@ function escort_rates_metabox_html($post){
     GLOBAL $rates, $payment_methods;
 
     $post_id = $post->ID;
-    $meta_rates = get_post_meta($post_id, "escort_rates", true) ? get_post_meta($post_id, "escort_rates", true) : [];
+    $meta_rates = (get_post_meta($post_id, "escort_rates", true)) ? get_post_meta($post_id, "escort_rates", true) : [];
     $meta_payment_methods = (get_post_meta($post_id, "escort_payment_methods", true)) ? get_post_meta($post_id, "escort_payment_methods", true) : [] ;
     ?>
 
@@ -302,7 +364,6 @@ function escort_rates_metabox_html($post){
 function admin_save_escort( $post_id, $post_object)
 {
     
-
     if( !isset( $post_object->post_type ) or ($post_object->post_type != 'escort')){
         return;
     }
@@ -383,6 +444,33 @@ function admin_save_escort( $post_id, $post_object)
         update_post_meta($post_id, "escort_payment_methods", $payment_methods );
     }
 
+   
+    if(isset($_POST["subscription"]) && isset($_POST["subscription"]["paid"])){
+
+        $subscription_id = $_POST["subscription"]["id"];
+        
+        $subscription = get_post($subscription_id);
+       
+        if($subscription){
+            if ( ! wp_is_post_revision( $post_id ) ){
+               
+                remove_action('post_updated', 'admin_save_escort');
+
+                $update_subscription_args = [
+                    "ID" => $subscription_id,
+                    "post_status" => "paid"
+                ];
+
+                $updated_subscription = wp_update_post($update_subscription_args);
+
+                add_action('post_updated', 'admin_save_escort');
+            }
+        }
+
+       
+
+    }
+
     /*
     if(isset($_FILES["IMAGES"]) and){
 
@@ -442,8 +530,8 @@ function get_escort_extra_info($id, &$data){
     $meta_skin_color = get_post_meta($id, "escort_skin_color", true);
     $meta_hair_color = get_post_meta($id, "escort_hair_color", true);
     $meta_profession = get_post_meta($id, "escort_profession", true);
-    $meta_measure = get_post_meta($id, "escort_measure", true) ? get_post_meta($id, "escort_measure", true) : [];
-    $meta_phone = get_post_meta($id, "escort_phone", true) ? get_post_meta($id, "escort_phone", true) : [];
+    $meta_measure = (get_post_meta($id, "escort_measure", true)) ? get_post_meta($id, "escort_measure", true) : [];
+    $meta_phone = (get_post_meta($id, "escort_phone", true)) ? get_post_meta($id, "escort_phone", true) : [];
 
     //TELEFONO
     $phone = [
@@ -469,10 +557,10 @@ function get_escort_extra_info($id, &$data){
 
 
     //TARIFAS
-    $meta_rates = get_post_meta($id, "escort_rates", true) ? get_post_meta($id, "escort_rates", true) : [];
+    $meta_rates = (get_post_meta($id, "escort_rates", true)) ? get_post_meta($id, "escort_rates", true) : [];
 
     $rates_with_labels = [];
-
+    
     foreach($meta_rates as $key => $meta_rate){
         $rates_with_labels[$key] = [
             "label" => $rates[$key], 
@@ -526,6 +614,8 @@ function get_escort_extra_info($id, &$data){
 
     $media = get_escort_ad_attachments($id);
 
+    $subscription = get_or_set_subscription($id);
+
 
     $extra_data = [
         "image" => $image,
@@ -548,7 +638,8 @@ function get_escort_extra_info($id, &$data){
         "principal_rate" => $rates_with_labels[2],
         "payment_methods" => $payment_methods_with_labels,
         "services" => $services,
-        "zone" => $zones
+        "zone" => $zones,
+        "subscription" => $subscription
     ];
 
 
@@ -590,7 +681,7 @@ function get_escort($id){
 function get_escorts($options = []){
 
     $args = [
-        "numberposts" => 80,
+        "numberposts" => -1,
         "post_status" => 'publish',
         "post_type" => "escort"
     ];
@@ -622,7 +713,14 @@ function get_escorts($options = []){
 
     $escorts_raw = get_posts($args);
 
-    $escorts = [];
+    $escorts = [
+        "free" => [],
+        "bronze" => [],
+        "silver" => [],
+        "gold" => []
+    ];
+
+    $test = [];
 
     if($escorts_raw) {
         foreach($escorts_raw as $escort_raw){
@@ -641,11 +739,14 @@ function get_escorts($options = []){
 
             get_escort_extra_info($escort_raw_id, $escort);
 
-            $escorts[] = $escort;
+            $escort_tier = $escort["subscription"]["plan"]["name"];
+            $escorts[$escort_tier][] = $escort;
         }
     }
 
-    return $escorts;
+    $sorted_escorts = array_merge($escorts["gold"],$escorts["silver"], $escorts["bronze"], $escorts["free"]);
+
+    return $sorted_escorts;
 }
 
 function get_escorts_by_ids($array = []){
@@ -655,6 +756,8 @@ function get_escorts_by_ids($array = []){
 function prepare_escorts($options = []) {
     $escorts = get_escorts($options);
     set_query_var( 'escorts', $escorts );
+
+    return  $escorts;
 }
 
 function prepare_escorts_by_taxonomy($options = []){
@@ -744,7 +847,15 @@ function get_escorts_services(){
 }
 
 
-add_action( 'admin_post_nopriv_xxx', 'get_escort_ad_attachments' );
-add_action( 'admin_post_priv_xxx', 'get_escort_ad_attachments' );
+function test(){
+
+    print_r(get_escorts()[0]["principal_rate"]);
+    echo "<br><br><br>"; 
+    print_r(prepare_escorts(['limit' => 5])[0]["principal_rate"]);
+    
+}
+
+add_action( 'admin_post_nopriv_xxx', 'test' );
+add_action( 'admin_post_priv_xxx', 'test' );
 
 ?>
