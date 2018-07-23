@@ -310,8 +310,7 @@ add_action( 'update_escort_status', 'update_escort_status' );
 
 
 function test(){
-	update_escort_status();
-    //print_r();
+	print_r(get_escorts());
 }
 
 add_action( 'admin_post_nopriv_xxx', 'test' );

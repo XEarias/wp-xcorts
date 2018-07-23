@@ -88,7 +88,6 @@ function escort_security_redirect()
 
 }
 add_action( 'template_redirect', 'escort_security_redirect' );
-*/
 
 function do_cleaner_array(&$files) {
 

@@ -739,7 +739,7 @@ function get_escorts($options = []){
 
             get_escort_extra_info($escort_raw_id, $escort);
             
-            if($escort["subscription"]["plan"]["name"] != "free" && $escort["subscription"]["plan"]["status"] == 'default'){
+            if($escort["subscription"]["plan"]["name"] != "free" && $escort["subscription"]["status"] == 'default'){
                 continue;
             }
 
