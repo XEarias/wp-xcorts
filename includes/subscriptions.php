@@ -191,7 +191,7 @@ function get_or_set_subscription($escort_ad_id){
 
 	$pretty_date = date('d-m-Y', $timestamp );
 
-	$badge_url = get_template_directory_uri()."/assets/badges/".$plan.".png";
+	$badge_url = ( $plan != "free" ) ? get_template_directory_uri()."/assets/img/badges/".$plan.".png" : false;
 
 	$subscription = [
 		"ID" => $subscription_raw->ID,
@@ -310,8 +310,7 @@ add_action( 'update_escort_status', 'update_escort_status' );
 
 
 function test(){
-	update_escort_status();
-    //print_r();
+	print_r(get_escorts());
 }
 
 add_action( 'admin_post_nopriv_xxx', 'test' );

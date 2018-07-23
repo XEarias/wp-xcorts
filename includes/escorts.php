@@ -513,6 +513,8 @@ function get_escort_ad_attachments($escort_ad_id){
         "videos" => []
     ];
 
+    return $media;
+
 }
 
 function get_escort_extra_info($id, &$data){
@@ -739,7 +741,7 @@ function get_escorts($options = []){
 
             get_escort_extra_info($escort_raw_id, $escort);
             
-            if($escort["subscription"]["plan"]["name"] != "free" && $escort["subscription"]["plan"]["status"] == 'default'){
+            if($escort["subscription"]["plan"]["name"] != "free" && $escort["subscription"]["status"] == 'default'){
                 continue;
             }
 
