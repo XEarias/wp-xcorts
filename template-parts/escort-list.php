@@ -14,6 +14,11 @@
         <div data-escort-id="<?php echo $escort['ID'];?>" class="escort-item col-md-2 <?php echo ($offset == 1) ? 'offset-md-1' : ''; ?>">
             <a href="<?php echo $escort['url'];?>">
                 <div class="escort-item-internal">
+                    <!--IMAGEN DE PLAN-->
+                    <?php if($escort["subscription"]["plan"]["badge"]): ?>
+                    <img style="position: absolute;width: 40%;left: 30%;bottom: 25%;"  src="<?php echo $escort["subscription"]["plan"]["badge"]; ?>"/>
+                    <?php endif;?>
+
                     <svg viewBox="0 0 100 170" class="hidden-background escort-item-internal-image"
                     style="background-image: url(<?php echo $escort['image'];?>"
                     data-images="<?php echo implode(';', [$escort['image'],'https://img1.hottescorts.es/guia-55079.jpg','https://img1.hottescorts.es/guia-61615.jpg','https://img1.hottescorts.es/guia-61144.jpg','https://img1.hottescorts.es/guia-53165.jpg']); ?>"
