@@ -2,7 +2,9 @@
 
     $post_id = $user['ad']['ID'];
 
-    $meta_rates = (get_post_meta($post_id, "escort_rates", true)) ? get_post_meta($post_id, "escort_rates", true) : [];
+    $subscription = get_or_set_subscription($post_id);
+
+    //print_r($subscription);
 ?>
 
 <form action="<?php echo admin_url('/admin-post.php'); ?>" method="POST" class="escort-form" id="escort-edit-info" novalidate>
