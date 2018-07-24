@@ -361,18 +361,18 @@ function update_escort_ad(){
     }
 
     $escort_ad_args = [
-        'posts_per_page' => '1','author' => $escort_user->ID
+        'posts_per_page' => '1','author' => $escort_user['ID']
     ];
 
     $escort_ads = get_post($escort_ad_args);
 
-    if(!$escort_ads || count($escort_ads) === 0){
+    if(!$escort_ads){
         return;
     }
 
-    $escort_ad = $escort_ads[0];
+    //$escort_ad = $escort_ads[0];
 
-    $escort_ad_id = $escort_ad->ID;
+    $escort_ad_id = $escort_ads->ID;
     
     $escort_ad_display_name = wp_strip_all_tags($_POST['display_name']);
     $escort_ad_description = wp_strip_all_tags($_POST['description']);
@@ -385,8 +385,8 @@ function update_escort_ad(){
 
     $escort_ad_updated = wp_update_post( $escort_ad_data );
 
-    escort_page_redirect($account_slug);
-
+    escort_page_redirect($account_slug.'?p='.$_POST['redirect_p']);
+    
 }
 
 add_action( 'admin_post_nopriv_update_escort_ad', 'update_escort_ad' );

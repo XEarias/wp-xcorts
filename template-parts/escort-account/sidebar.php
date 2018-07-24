@@ -6,10 +6,10 @@
         <a href="<?= get_home_url().'/escort-account?p=info'; ?>">Mi información</a>
     </li>
     <li class="list-group-item <?php if ($_GET['p'] == 'services'): ?> active <?php endif; ?>">
-        <a href="<?= get_home_url().'/escort-account?p=services'; ?>">Mis servicios</a>
+        <a href="<?= get_home_url().'/escort-account?p=services'; ?>">Mi zona y servicios</a>
     </li>
     <li class="list-group-item <?php if ($_GET['p'] == 'rates'): ?> active <?php endif; ?>">
-        <a href="<?= get_home_url().'/escort-account?p=rates'; ?>">Mis tarifas</a>
+        <a href="<?= get_home_url().'/escort-account?p=rates'; ?>">Mis tarifas y metodos de pago</a>
     </li>
     <li class="list-group-item <?php if ($_GET['p'] == 'photos'): ?> active <?php endif; ?>">
         <a href="<?= get_home_url().'/escort-account?p=photos'; ?>">Mis fotos</a>

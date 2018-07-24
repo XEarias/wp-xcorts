@@ -44,6 +44,14 @@
     set_query_var( 'payment_methods', $payment_methods );
     set_query_var( 'phone_permissions', $phone_permissions );
 
+    $zones = get_escorts_zones(); 
+    $services = get_escorts_services(); 
+    
+    set_query_var( 'zones', $zones );
+    set_query_var( 'services', $services );
+
+    set_query_var( 'plans', $plans );
+
     set_query_var( 'login_slug', $login_slug );
 
     $user = get_escort_user_data();

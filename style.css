@@ -125,6 +125,12 @@ svg.hidden-background {
 
 /*SINGLE ESCORT*/
 
+.your-class .slick-list .slick-track .slick-slide img {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
 .single-escort-name {
     color: var(--main-color);
 }
@@ -360,10 +366,10 @@ form#loginform p input[type=submit] {
 
 /* ESCORT SUBSCRIPTION */
 
-#escort-subscription {
+.escort-form {
 	position: relative;
 }
-#escort-subscription fieldset {
+.escort-form fieldset {
 	background: white;
 	border: 0 none;
 	border-radius: 3px;
@@ -375,23 +381,23 @@ form#loginform p input[type=submit] {
 	position: relative;
 }
 
-#escort-subscription fieldset h4 {
+.escort-form fieldset h4 {
     color: #f44336;
     text-transform: uppercase;
     border-bottom: 1px solid;
 }
 
 /*Hide all except first fieldset*/
-#escort-subscription fieldset:not(:first-of-type) {
+.escort-form fieldset:not(:first-of-type) {
 	display: none;
 }
 
-#escort-subscription input[type="file"] {
+.escort-form input[type="file"] {
     visibility: hidden;
 }
 
 /*inputs*/
-#escort-subscription input:not([type="checkbox"],[type="button"]), #escort-subscription textarea {
+.escort-form input:not([type="checkbox"],[type="button"]), .escort-form textarea {
     padding: 7px 10px;
 	border: 1px solid #ccc;
 	border-radius: 2px;
@@ -402,7 +408,7 @@ form#loginform p input[type=submit] {
 	font-size: 13px;
 }
 /*buttons*/
-#escort-subscription .action-button {
+.escort-form .action-button {
 	width: 100px;
 	background: black;
 	font-weight: bold;
@@ -414,7 +420,7 @@ form#loginform p input[type=submit] {
 	margin: 10px 5px;
 }
 
-#escort-subscription  input[type="submit"] {
+.escort-form  input[type="submit"] {
 	width: 100px;
 	background: #f44336;
 	font-weight: bold;
@@ -426,11 +432,11 @@ form#loginform p input[type=submit] {
 	margin: 10px 5px;
 }
 
-#escort-subscription .previous-step {
+.escort-form .previous-step {
     float: left;
 }
 
-#escort-subscription .next-step,  #escort-subscription input[type="submit"] {
+.escort-form .next-step,  .escort-form input[type="submit"] {
     float: right;
 }
 /*headings*/

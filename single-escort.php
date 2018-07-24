@@ -3,14 +3,21 @@
 <?php  while ( have_posts() ) : the_post(); ?>
 
     <?php $escort = get_escort($post->ID); ?>
+    <?php $media = get_escort_ad_attachments($post->ID); ?>
 
 <?php endwhile;?>
 
 <section class="single-escort-container container pt-5">
     <div class="row">
 
-        <div class="col-md-12 pt-5 pb-5 bg-primary">
-            <h5 class="text-center pt-5 pb-5 mt-5 mb-5">IMAGENES</h5>            
+        <div class="col-md-12 pt-5 pb-5">
+            <div class="your-class">
+                <?php foreach ($media['images'] as $value) : ?>
+                <div>
+                    <img src="<?= $value['url'] ?>" alt="">
+                </div>
+                <?php endforeach; ?>
+            </div>
         </div>
     
     </div>

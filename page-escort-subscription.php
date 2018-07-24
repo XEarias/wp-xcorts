@@ -19,7 +19,7 @@ $services = get_escorts_services();
             </ul>
         </div>
         <div class="col-md-10 offset-md-1">
-            <form action="<?php echo admin_url('/admin-post.php'); ?>" method="POST" target="_blank" enctype="multipart/form-data" id="escort-subscription" novalidate>
+            <form action="<?php echo admin_url('/admin-post.php'); ?>" method="POST" target="_blank" enctype="multipart/form-data" class="escort-form" id="escort-subscription" novalidate>
 
                 <fieldset>
 
@@ -211,7 +211,7 @@ $services = get_escorts_services();
 
                 <fieldset>
 
-                    <h4>Zona, Servicios y Metodos de pago</h4>
+                    <h4>Zona, Servicios, Tarifas y Metodos de pago</h4>
 
                     <div class="row" style="margin-top: 25px">
                         <div class="col-md-4 form-group">
@@ -315,7 +315,7 @@ $services = get_escorts_services();
                                                     <?php endif; ?>
                                                 </h4>
                                             </div>
-                                            <?= $plan['descripcion'] ?>
+                                            <?= $plan['description'] ?>
                                         </div>
                                         <div class="items">
                                             <ul>

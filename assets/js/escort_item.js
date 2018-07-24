@@ -30,4 +30,11 @@ jQuery(document).ready(function () {
     }, function () {
         clearInterval(intervalImages);
     })
+
+    jQuery('.your-class').slick({
+        infinite: true,
+        slidesToShow: 4,
+        slidesToScroll: 2,
+        centerMode: true
+    });
 })
