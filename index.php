@@ -1,8 +1,10 @@
 <?php get_header(); ?>
 
 <?php get_template_part( 'template-parts/escort-slider' ); ?>
-<?php get_template_part( 'template-parts/escort-filterbar' ); ?>
+<?php //get_template_part( 'template-parts/escort-filterbar' ); ?>
 
+
+<?php get_search_form(); ?>
 <section class="container">
     <div class="row">
         <div class="col-md-12">

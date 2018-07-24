@@ -58,10 +58,10 @@ function add_accounts_pages(){
 add_action('init','add_accounts_pages');
 
 
-function escort_page_redirect($page_slug){
+function escort_page_redirect($page_slug, $query_var = ""){
     $page = get_page_by_path($page_slug);
     $page_url = get_page_link($page->ID);
-    if (wp_redirect( $page_url )) { die; }
+    if (wp_redirect( $page_url.$query_var)) { die; }
 }
 
 function escort_security_redirect()
@@ -353,39 +353,61 @@ function update_escort_ad(){
 
     GLOBAL $account_slug;
 
+    $query_var = (isset($_POST["redirect_p"])) ? '?p='.$_POST['redirect_p'] : "";
+
     $escort_user = get_escort_user_data();
 
     if(!$escort_user){
-        escort_page_redirect($account_slug);
+        escort_page_redirect($account_slug, $query_var);
         return;
     }
 
     $escort_ad_args = [
-        'posts_per_page' => '1','author' => $escort_user['ID']
+        'posts_per_page' => '1',
+        'author' => $escort_user['ID'],
+        "post_type" => "escort"
     ];
 
-    $escort_ads = get_post($escort_ad_args);
+    $escort_ads = get_posts($escort_ad_args);
 
-    if(!$escort_ads){
+    if(!$escort_ads || !count($escort_ads) ){
+        escort_page_redirect($account_slug, $query_var);
         return;
     }
 
-    //$escort_ad = $escort_ads[0];
+    $escort_ad = $escort_ads[0];
 
-    $escort_ad_id = $escort_ads->ID;
+    $escort_ad_id = $escort_ad->ID;
     
-    $escort_ad_display_name = wp_strip_all_tags($_POST['display_name']);
-    $escort_ad_description = wp_strip_all_tags($_POST['description']);
+    if(isset($_POST['display_name']) || isset($_POST['description'])) {
 
-    $escort_ad_data = [
-        'ID'           => $escort_ad_id,
-        'post_title'   => $escort_ad_display_name,
-        'post_content' => $escort_ad_description,
-    ];
+        $escort_ad_data = ['ID' => $escort_ad_id];
 
-    $escort_ad_updated = wp_update_post( $escort_ad_data );
+        if(isset($_POST['display_name'])){
 
-    escort_page_redirect($account_slug.'?p='.$_POST['redirect_p']);
+            $escort_ad_display_name = wp_strip_all_tags($_POST['display_name']);
+            $escort_ad_data['post_title'] = $escort_ad_display_name;
+        
+        }
+
+        if(isset($_POST['description'])){
+
+            $escort_ad_description = wp_strip_all_tags($_POST['description']);
+            $escort_ad_data['post_content'] = $escort_ad_description;
+        }
+
+        $escort_ad_updated = wp_update_post( $escort_ad_data );
+
+       
+    } else {
+        admin_save_escort($escort_ad, $escort_ad);
+    }
+
+    
+    escort_page_redirect($account_slug, $query_var);
+    
+
+    
     
 }
 
