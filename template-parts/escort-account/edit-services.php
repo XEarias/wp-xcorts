@@ -2,7 +2,7 @@
 
     $post_id = $user['ad']['ID'];
 
-    $meta_rates = (get_post_meta($post_id, "escort_rates", true)) ? get_post_meta($post_id, "escort_rates", true) : [];
+    $escort_services = get_escort_ad_services($post_id);
 
 ?>
 
@@ -36,8 +36,17 @@
             <div class="col-md-4 form-group">
                 <label for="services">Servicios (*)</label>
                 <?php foreach($services as $service):?>
+
+                    <?php 
+                        $checked = false;
+                        foreach($escort_services as $escort_service) {
+                            if($service["ID"] == $escort_service["ID"]){
+                                $checked = true;
+                            }
+                        }
+                    ;?>
                     <div class="form-check">
-                        <input class="form-check-input"type="checkbox" name="services[]" id="<?php echo $service["name"];?>" value="<?php echo $service["ID"];?>">
+                        <input class="form-check-input"type="checkbox" name="services[]" id="<?php echo $service["name"];?>" value="<?php echo $service["ID"];?>" <?php echo ($checked) ? "checked='checked'" : ""; ?>>
                         <label class="form-check-label" for="<?php echo $service["name"];?>">
                             <?php echo $service["name"];?>
                         </label>

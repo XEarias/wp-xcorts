@@ -37,7 +37,7 @@
                 <label for="">Metódos de pago (*)</label>
                 <?php foreach($payment_methods as $key => $payment_method): ?>
                     <div class="form-check">
-                        <input class="form-check-input"type="checkbox" name="payment_methods[<?php echo $key;?>]" id="<?php echo $payment_method;?>">
+                        <input class="form-check-input"type="checkbox" name="payment_methods[<?php echo $key;?>]" id="<?php echo $payment_method;?>" <?php echo (in_array($key, $meta_payment_methods)) ? "checked='checked'" : ""; ?>>
                         <label class="form-check-label" for="<?php echo $payment_method;?>">
                             <?php echo $payment_method;?>
                         </label>

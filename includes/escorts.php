@@ -431,6 +431,7 @@ function admin_save_escort( $post_id, $post_object)
     }
 
     if(isset($_POST["rates"])){
+
         $rates = $_POST["rates"];
         update_post_meta($post_id, "escort_rates", $rates );
     }
@@ -467,9 +468,28 @@ function admin_save_escort( $post_id, $post_object)
             }
         }
 
-       
+    }
+
+
+    //AGREGAR SERVICIOS y ZONA A UN ANUNCIO
+    if(isset( $_POST["zone"])){
+        $services_raw = $_POST["services"];
+        $services = [];
+        foreach($services_raw as $service_raw){
+            $services[] = (int) $service_raw;
+        }   
+
+        wp_set_object_terms( $post_id, $services, 'escorts_services');
+    
+    }
+    if(isset( $_POST["zone"])){
+        $zone = (int) $_POST["zone"];
+        
+        wp_set_object_terms( $post_id, $zone , 'escorts_zones');
 
     }
+
+
 
     /*
     if(isset($_FILES["IMAGES"]) and){
@@ -515,6 +535,28 @@ function get_escort_ad_attachments($escort_ad_id){
 
     return $media;
 
+}
+
+function get_escort_ad_services($escort_ad_id){
+
+    $services_raw = get_the_terms( $escort_ad_id, "escorts_services" );
+
+    $services = [];
+
+    if($services_raw){
+        foreach($services_raw as $service_raw){
+
+            $service_url = get_term_link( $service_raw, "escorts_services" );
+            
+            $services[] = [
+                "name" => $service_raw->name,
+                "ID" => $service_raw->term_id,
+                "url" => $service_url
+            ];
+        }
+    }
+
+    return $services;
 }
 
 function get_escort_extra_info($id, &$data){
@@ -581,22 +623,8 @@ function get_escort_extra_info($id, &$data){
 
     //SERVICIOS
 
-    $services_raw = get_the_terms( $id, "escorts_services" );
+    $services = get_escort_ad_services($id);    
 
-    $services = [];
-
-    if($services_raw){
-        foreach($services_raw as $service_raw){
-
-            $service_url = get_term_link( $service_raw, "escorts_services" );
-            
-            $services[] = [
-                "name" => $service_raw->name,
-                "ID" => $service_raw->term_id,
-                "url" => $service_url
-            ];
-        }
-    }
     //ZONAS DE SERVICIO
     $zones_raw = get_the_terms( $id, "escorts_zones" );
 

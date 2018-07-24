@@ -18,7 +18,15 @@
                     <?php if($escort["subscription"]["plan"]["badge"]): ?>
                     <img style="position: absolute;width: 40%;left: 30%;bottom: 25%;"  src="<?php echo $escort["subscription"]["plan"]["badge"]; ?>"/>
                     <?php endif;?>
-                    <?php $images_array = array_merge([$escort['image']], $escort["gallery"]);?>
+
+                    <?php 
+                        $gallery_images = [];
+                        foreach($escort["gallery"] as $image_gallery){
+                            $gallery_images[] = $image_gallery["url"];
+                        }
+                    ?>
+
+                    <?php $images_array = array_merge([$escort['image']], $gallery_images);?>
                     <svg viewBox="0 0 100 170" class="hidden-background escort-item-internal-image"
                     style="background-image: url(<?php echo $escort['image'];?>"
                     data-images="<?php echo implode(';', $images_array); ?>"

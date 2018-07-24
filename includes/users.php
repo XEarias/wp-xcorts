@@ -218,13 +218,6 @@ function add_new_escort(){
     $last_name = wp_strip_all_tags($_POST["last_name"]);
     $visible_name = wp_strip_all_tags($_POST["visible_name"]);
     $description = wp_strip_all_tags($_POST['description']);
-    $services_raw = $_POST["services"];
-    $services = [];
-    foreach($services_raw as $service_raw){
-        $services[] = (int) $service_raw;
-    }   
-    $zone = (int) $_POST["zone"];
-
     $plan = $_POST["plan"];
 
     $user_id = username_exists( $username );
@@ -266,11 +259,7 @@ function add_new_escort(){
 
     //nueva suscripcion gratis
     $subscription_id = add_new_subscription($escort_ad_id, $plan_name, $plan_type);
-
-    //AGREGAR SERVICIOS y ZONA A UN ANUNCIO
-    wp_set_object_terms( $escort_ad_id, $services, 'escorts_services');
-    wp_set_object_terms( $escort_ad_id, $zone , 'escorts_zones');
-
+  
     //OBTENEMOS EL POST COMO OBJETO PARA AGREGAR SUS CAMPOS EXTRA
     $escort_ad_object = get_post($escort_ad_id);
 
@@ -400,7 +389,8 @@ function update_escort_ad(){
 
        
     } else {
-        admin_save_escort($escort_ad, $escort_ad);
+
+        admin_save_escort($escort_ad_id, $escort_ad);
     }
 
     
