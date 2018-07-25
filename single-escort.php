@@ -14,7 +14,7 @@
             <div class="your-class">
                 <?php foreach ($media['images'] as $value) : ?>
                 <div>
-                    <img src="<?= $value['url'] ?>" alt="">
+                    <a href="<?= $value['url'] ?>" rel="lightbox[roadtrip]"><img src="<?= $value['url'] ?>"></a>
                 </div>
                 <?php endforeach; ?>
             </div>
@@ -25,7 +25,7 @@
     <div class="row">
 
         <div class="col-md-8 pt-4 pb-2 pl-0 pr-0">
-            <h2 class="single-escort-name"><?= $escort['name'] ?> <small style="color: #999;font-size:17px"><?= $escort['basic_info']['email'] ?></small></h2>
+            <h2 class="single-escort-name"><?= $escort['name'] ?> </h2>
             <?php if(count($escort['zone'])): ?>
                 <p class="single-escort-link"><a href="<?= $escort['zone'][0]['url'] ?>">Escorts en <strong><?= $escort['zone'][0]['name'] ?></strong></a></p>
             <?php else: ?>
@@ -34,7 +34,7 @@
         </div>
         <div class="col-md-4 pt-4 pb-2 pl-0 pr-0 text-right"> 
             <span class="single-escort-phone">
-                <?= ($escort['basic_info']['phone']['value']) ? $escort['basic_info']['phone']['value'] : 'N/A'; ?><span>MOSTRAR</span>
+                <?= ($escort['basic_info']['phone']['value']) ? $escort['basic_info']['phone']['value'] : 'N/A'; ?><
             </span>
 
             <br>
@@ -120,7 +120,7 @@
                     <li>Metodos de pago <span>
                     <?php foreach($paymethods as $i => $pay): ?>
 
-                        <?= ($i == 'others') ? $pay : $pay.', ' ?>
+                        <?= ($i != 'others') ? $pay : $pay.', ' ?>
 
                     <?php endforeach;?></span>
                     </li>     
@@ -145,7 +145,7 @@
     </div>
 </section>
 
-<?php prepare_escorts(['limit' => 5]); ?>
+<?php prepare_escorts(['limit' => 6]); ?>
 
 <?php get_template_part( 'template-parts/escort-list' ); ?>
 

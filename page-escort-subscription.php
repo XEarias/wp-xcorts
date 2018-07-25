@@ -205,6 +205,16 @@ $services = get_escorts_services();
                         </div>
                     </div>
 
+                    <div class="row" style="margin-top: 25px">
+                        <div class="col-md-12">
+                            <label>Video</label>
+                            <div class="custom-file">
+                                <input type="file" name="video" class="custom-file-input" id="video" lang="es">
+                                <label class="custom-file-label" for="video">Seleccionar video</label>
+                            </div>
+                        </div>
+                    </div>
+
                     <input type="button" data-step="2" name="previous" class="previous-step action-button" value="Anterior" />
                     <input type="button" data-step="3" name="next" class="next-step action-button" value="Siguiente" />
                 </fieldset>

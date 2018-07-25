@@ -4,17 +4,37 @@
 
     $subscription = get_or_set_subscription($post_id);
 
-    //print_r($subscription);
 ?>
 
 <form action="<?php echo admin_url('/admin-post.php'); ?>" method="POST" class="escort-form" id="escort-edit-info" novalidate>
     
-    <input type="hidden" name="action" value="update_escort_ad" />
+    <input type="hidden" name="action" value="#" />
     <input type="hidden" name="redirect_p" value="plan" />
 
     <fieldset>
 
         <h4>Plan</h4>
+
+        <div class="row" style="margin-top: 25px">
+            <div class="col-md-4">
+                <div style="background: #f44336; text-align: center; color: white; padding: 10px;">
+                    INICIO:
+                    <?= $subscription['pretty_date'] ?>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div style="background: #f44336; text-align: center; color: white; padding: 10px;">
+                    TIEMPO USADO:
+                    <?= $subscription['days']['used'] ?> dias
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div style="background: #f44336; text-align: center; color: white; padding: 10px;">
+                    TIEMPO RESTANTE:
+                    <?= $subscription['days']['left'] ?> dias
+                </div>
+            </div>
+        </div>
 
         <div class="row" style="margin-top: 25px">
             <?php foreach ($plans as $name => $plan): ?>
@@ -25,14 +45,14 @@
                         </div>
                         <div class="plan-box-body">
                             <div class="rates">
-                                <label for="<?= $name.'_weekly' ?>" data-price="<?= $plan['rates']['weekly'] ?>" class="l checked">
+                                <label for="<?= $name.'_weekly' ?>" data-price="<?= $plan['rates']['weekly'] ?>" class="l <?php if($subscription['plan']['name'] != $name): ?> checked <?php elseif($subscription['plan']['name'] == $name && $subscription['plan']['type'] == 'weekly'): ?> checked <?php endif; ?>">
                                     <?php if ($name == 'free'): ?>
                                         N/A
                                     <?php else: ?>
                                         SEMANAL
                                     <?php endif; ?>
                                 </label>
-                                <label for="<?= $name.'_monthly' ?>" data-price="<?= $plan['rates']['monthly'] ?>" class="r">
+                                <label for="<?= $name.'_monthly' ?>" data-price="<?= $plan['rates']['monthly'] ?>" class="r <?php if($subscription['plan']['name'] == $name && $subscription['plan']['type'] == 'monthly'): ?> checked <?php endif; ?>">
                                     <?php if ($name == 'free'): ?>
                                         N/A
                                     <?php else: ?>
@@ -46,7 +66,7 @@
                                         <?php if ($name == 'free'): ?>
                                             <span style="color: green">GRATIS</span>
                                         <?php else: ?>
-                                            <?= $plan['rates']['weekly'] ?> $
+                                            <?= $subscription['plan']['value'] ?> $
                                         <?php endif; ?>
                                     </h4>
                                 </div>
@@ -60,7 +80,13 @@
                                 </ul>
                             </div>
                             <div class="select-button">
-                                <label for="<?= $name ?>" class="<?php if ($name == 'free') { echo 'selected-plan'; } ?>">ESCOGER</label>
+                                <label for="<?= $name ?>" class="<?php if ($subscription['plan']['name'] == $name) { echo 'selected-plan'; } ?>" <?php if ($subscription['plan']['name'] == $name) { echo 'disabled'; } ?>>
+                                <?php if ($subscription['plan']['name'] == $name): ?>
+                                    ACTIVO
+                                <?php else: ?>
+                                    ESCOGER
+                                <?php endif; ?>
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -70,11 +96,11 @@
 
         <div style="visibility: hidden;">
             <?php foreach ($plans as $name => $plan): ?>
-                <input type="radio" id="<?= $name ?>" name="plan[name]" value="<?= $name ?>" <?php if ($name == 'free') { echo 'checked'; } ?>>
+                <input type="radio" id="<?= $name ?>" name="plan[name]" value="<?= $name ?>" <?php if ($subscription['plan']['name'] == $name) { echo 'checked'; } ?>>
             <?php endforeach; ?>
 
-            <input type="radio" id="weekly" name="plan[type]" value="weekly" checked>
-            <input type="radio" id="monthly" name="plan[type]" value="monthly">
+            <input type="radio" id="weekly" name="plan[type]" value="weekly" <?php if ($subscription['plan']['type'] == 'weekly') { echo 'checked'; } ?>>
+            <input type="radio" id="monthly" name="plan[type]" value="monthly" <?php if ($subscription['plan']['name'] == 'montly') { echo 'checked'; } ?>>
         </div>
 
         <input type="submit" value="Guardar" />
