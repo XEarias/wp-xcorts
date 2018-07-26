@@ -603,7 +603,7 @@ function admin_save_escort( $post_id, $post_object)
 
     }
     
-    //subir nuvas imagenes
+    //subir nuevas imagenes
     if(isset($_FILES["images"])){
 
         $uploaded_images = $_FILES["images"];
@@ -612,23 +612,22 @@ function admin_save_escort( $post_id, $post_object)
 
     }
 
-
-    print_r("hola");
-
     if(isset($_FILES["video"])){
 
-        $uploaded_video= $_FILES["video"];
+        $media = get_escort_ad_attachments($post_id);
+
+        if(count($media["videos"])){
+            $videos = $media["videos"];
+            foreach($videos as $video){
+                wp_delete_attachment( $video["ID"], true);
+            }
+        }
+
+        $uploaded_video = $_FILES["video"];
 
         $attach_id = handle_attachments_escorts_ads($post_id, $uploaded_video); 
 
-
     }
-
-    /*
-    if(){
-
-    }
-   */
 }
 
 add_action('post_updated', 'admin_save_escort', 10, 2);
