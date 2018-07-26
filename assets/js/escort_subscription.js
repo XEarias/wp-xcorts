@@ -80,7 +80,8 @@ var rules = [
             required: true,
             accept: "image/jpeg, image/pjpeg"
         },
-        images: { accept: "image/jpeg, image/pjpeg" }
+        images: { accept: "image/jpeg, image/pjpeg" },
+        video: { accept: "video/*" }
     },
     {
         'services[]': { minlength: 1 },
@@ -322,20 +323,6 @@ jQuery(document).ready(function () {
         }
 
     });
+
+    jQuery('a[rel="light"]').fancybox();
 });
-
-
-
-/*jQuery(document).ready(function () {
-    
-    jQuery('input.next-step, ')
-    jQuery('form#escort-subscription').validate({
-        errorClass: 'is-invalid',
-        validClass: 'is-valid',
-        rules: rules,
-        messages: messages,
-        submitHandler: function (form) {
-            form.submit();
-        }
-    })
-})*/

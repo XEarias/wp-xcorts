@@ -30,8 +30,11 @@ function adding_packages() {
     wp_register_style('slick-theme.css', get_template_directory_uri() . '/packages/slick-carousel/slick/slick.css');
     wp_enqueue_style('slick-theme-css');
 
-   wp_register_script('lb-js', get_template_directory_uri() . '/packages/jquery.lightbox.js');
-    wp_enqueue_script('lb-js');
+    wp_register_script('fancybox', get_template_directory_uri() . '/packages/fancybox/fancybox/jquery.fancybox-1.3.4.pack.js');
+    wp_enqueue_script('fancybox');
+
+    wp_register_style('fancybox-css', get_template_directory_uri() . '/packages/fancybox/fancybox/jquery.fancybox-1.3.4.css');
+    wp_enqueue_style('fancybox-css');
 
     /*CUSTOM*/
     wp_register_script('escort_item', get_template_directory_uri(). '/assets/js/escort_item.js');
