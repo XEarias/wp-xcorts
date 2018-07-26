@@ -68,7 +68,7 @@ function add_escort_type()
 			"exclude_from_search" => true,
 			'show_in_nav_menus' => true,
 			"show_in_admin_bar" => false,
-			"supports" => ["title", "thumbnail", "custom-fields", "editor", "the_excerpt"]
+			"supports" => ["title", "thumbnail", "custom-fields", "editor", "the_excerpt", "author"]
 		]
     );
 
@@ -360,6 +360,88 @@ function escort_rates_metabox_html($post){
 }
 
 
+
+function upload_attachments_escorts_ads($escort_ad_id, $file){
+
+    if ( !function_exists( 'wp_handle_upload' ) ) {
+        require_once( ABSPATH . 'wp-admin/includes/file.php' );
+    }
+    
+    $uploaded_file = $file;
+    
+    $upload_overrides = ['test_form' => false ];
+    
+    $moved_file = wp_handle_upload( $uploaded_file, $upload_overrides );
+    
+    if ( !$moved_file || isset( $moved_file['error'] ) ) {
+
+        return;
+    } 
+
+    $date = date_create();
+    $unix = date_timestamp_get($date);
+
+    $attachment = [
+        'guid'           => $moved_file["url"], 
+        'post_mime_type' => $moved_file['type'],
+        'post_title'     => "escort-".$unix,
+        'post_content'   => '',
+        'post_status'    => 'inherit'
+    ];
+
+    $attach_id = wp_insert_attachment( $attachment, $moved_file["file"], $escort_ad_id );
+
+    if(!$attach_id){
+        
+        return;
+    }
+
+        
+
+    require_once( ABSPATH . 'wp-admin/includes/image.php' );
+
+    $attach_data = wp_generate_attachment_metadata( $attach_id, $moved_file["file"] );
+
+    $updated_data = wp_update_attachment_metadata( $attach_id, $attach_data );
+
+    return $attach_id;
+
+}
+
+
+function handle_attachments_escorts_ads($escort_ad_id, $images, $multiple = false){
+
+
+    if($multiple){//multiples archivos
+
+        $attachs_ids = [];
+
+        $images = do_cleaner_array($images);
+
+        foreach($images as $image){
+            $attach_id = upload_attachments_escorts_ads($escort_ad_id, $image);
+
+            if($attach_id){
+                $attachs_ids[] = $attach_id;
+            }
+            
+        }       
+    
+        return $attachs_ids;
+
+    } else {//solo un archivo
+     
+        $attach_id = upload_attachments_escorts_ads($escort_ad_id, $images);
+    
+        $post_meta_id = set_post_thumbnail( $escort_ad_id, $attach_id );
+
+        return $post_meta_id;
+    
+    }    
+
+}
+
+
 /**** Actualizar Info de la escorts ***/
 function admin_save_escort( $post_id, $post_object)
 {
@@ -431,17 +513,19 @@ function admin_save_escort( $post_id, $post_object)
     }
 
     if(isset($_POST["rates"])){
-
         $rates = $_POST["rates"];
         update_post_meta($post_id, "escort_rates", $rates );
     }
 
     //actualizar formas de pago
     if(isset($_POST["payment_methods"])){
+        
         $payment_methods = [];
+        
         foreach($_POST["payment_methods"] as $key => $payment_method){
            $payment_methods[] = $key;
         }
+        
         update_post_meta($post_id, "escort_payment_methods", $payment_methods );
     }
 
@@ -453,9 +537,10 @@ function admin_save_escort( $post_id, $post_object)
         $subscription = get_post($subscription_id);
        
         if($subscription){
+            
             if ( ! wp_is_post_revision( $post_id ) ){
                
-                remove_action('post_updated', 'admin_save_escort');
+                remove_action(' post_updated', 'admin_save_escort');
 
                 $update_subscription_args = [
                     "ID" => $subscription_id,
@@ -470,7 +555,6 @@ function admin_save_escort( $post_id, $post_object)
 
     }
 
-
     //AGREGAR SERVICIOS y ZONA A UN ANUNCIO
     if(isset( $_POST["zone"])){
         $services_raw = $_POST["services"];
@@ -482,21 +566,69 @@ function admin_save_escort( $post_id, $post_object)
         wp_set_object_terms( $post_id, $services, 'escorts_services');
     
     }
+
     if(isset( $_POST["zone"])){
+
         $zone = (int) $_POST["zone"];
         
         wp_set_object_terms( $post_id, $zone , 'escorts_zones');
 
     }
+    
+    //eliminar imagenes viejas
+    if(isset($_POST["delete_images"])){
 
+        $old_images = $_POST["delete_images"];
 
-
-    /*
-    if(isset($_FILES["IMAGES"]) and){
+        foreach($old_images as $old_image){
+            wp_delete_attachment($old_image, true );
+        }
 
     }
-    */
-   
+
+    //subir imagen destacada
+    if(isset($_FILES["featured_image"]) && $_FILES["featured_image"]["name"]){
+
+        if(has_post_thumbnail($post_id)){
+            $thumbnail_id = get_post_thumbnail_id( $post_id );
+            wp_delete_attachment( $thumbnail_id, true);
+        }
+
+        //carga de imagen destacada
+        $uploaded_featured_image = $_FILES["featured_image"];
+        
+        $attach_id = handle_attachments_escorts_ads($post_id, $uploaded_featured_image);
+
+        $post_meta_id = set_post_thumbnail( $post_id, $attach_id );
+
+    }
+    
+    //subir nuvas imagenes
+    if(isset($_FILES["images"])){
+
+        $uploaded_images = $_FILES["images"];
+
+        $attachs_ids = handle_attachments_escorts_ads($post_id, $uploaded_images, true); 
+
+    }
+
+
+    print_r("hola");
+
+    if(isset($_FILES["video"])){
+
+        $uploaded_video= $_FILES["video"];
+
+        $attach_id = handle_attachments_escorts_ads($post_id, $uploaded_video); 
+
+
+    }
+
+    /*
+    if(){
+
+    }
+   */
 }
 
 add_action('post_updated', 'admin_save_escort', 10, 2);
@@ -508,6 +640,7 @@ function get_escort_ad_attachments($escort_ad_id){
 
     $escort_thumbnail_id = get_post_thumbnail_id( $escort_ad_id  ); 
 
+    //obtener todas las imagenes del anuncio
     $images_raw = get_attached_media("image/*", $escort_ad_id );
 
     $images = [];
@@ -527,10 +660,28 @@ function get_escort_ad_attachments($escort_ad_id){
 
         $images[] = $image;
     }
+    
+    //obtener videos del anuncio
+    $videos_raw = get_attached_media("video/*", $escort_ad_id );
+
+    $videos = [];
+
+    foreach($videos_raw as $video_raw){
+
+        $video_url = wp_get_attachment_url($video_raw->ID);
+
+        $video = [
+            "ID" => $video_raw->ID,
+            "url" => $video_url
+        ];
+
+        $videos[] = $video;
+    }
+
 
     $media = [
         "images" => $images,
-        "videos" => []
+        "videos" => $videos
     ];
 
     return $media;

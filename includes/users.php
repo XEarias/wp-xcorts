@@ -118,86 +118,6 @@ function do_cleaner_array(&$files) {
 
 
 
-function upload_attachments_escorts_ads($escort_ad_id, $file){
-
-    if ( !function_exists( 'wp_handle_upload' ) ) {
-        require_once( ABSPATH . 'wp-admin/includes/file.php' );
-    }
-    
-    $uploaded_file = $file;
-    
-    $upload_overrides = ['test_form' => false ];
-    
-    $moved_file = wp_handle_upload( $uploaded_file, $upload_overrides );
-    
-    if ( !$moved_file || isset( $moved_file['error'] ) ) {
-
-        return;
-    } 
-
-    $date = date_create();
-    $unix = date_timestamp_get($date);
-
-    $attachment = [
-        'guid'           => $moved_file["url"], 
-        'post_mime_type' => $moved_file['type'],
-        'post_title'     => "escort-image-".$unix,
-        'post_content'   => '',
-        'post_status'    => 'inherit'
-    ];
-
-    $attach_id = wp_insert_attachment( $attachment, $moved_file["file"], $escort_ad_id );
-
-    if(!$attach_id){
-        
-        return;
-    }
-
-        
-
-    require_once( ABSPATH . 'wp-admin/includes/image.php' );
-
-    $attach_data = wp_generate_attachment_metadata( $attach_id, $moved_file["file"] );
-
-    $updated_data = wp_update_attachment_metadata( $attach_id, $attach_data );
-
-    return $attach_id;
-
-}
-
-
-function handle_attachments_escorts_ads($escort_ad_id, $images, $multiple = false){
-
-
-    if($multiple){//multiples archivos
-
-        $attachs_ids = [];
-
-        $images = do_cleaner_array($images);
-
-        foreach($images as $image){
-            $attach_id = upload_attachments_escorts_ads($escort_ad_id, $image);
-
-            if($attach_id){
-                $attachs_ids[] = $attach_id;
-            }
-            
-        }       
-    
-        return $attachs_ids;
-
-    } else {//solo un archivo
-     
-        $attach_id = upload_attachments_escorts_ads($escort_ad_id, $images);
-    
-        $post_meta_id = set_post_thumbnail( $escort_ad_id, $attach_id );
-
-        return $post_meta_id;
-    
-    }    
-
-}
-
 
 function add_new_escort(){
   //print_r($_POST);
@@ -264,26 +184,6 @@ function add_new_escort(){
     $escort_ad_object = get_post($escort_ad_id);
 
     admin_save_escort($escort_ad_id,$escort_ad_object );
-
-    if ( !function_exists( 'wp_handle_upload' ) ) {
-        require_once( ABSPATH . 'wp-admin/includes/file.php' );
-    }
-    
-    //carga de imagen destacada
-    $uploaded_featured_image = $_FILES["featured_image"];
-    
-    $attach_id = handle_attachments_escorts_ads($escort_ad_id, $uploaded_featured_image);
-
-    $post_meta_id = set_post_thumbnail( $escort_ad_id, $attach_id );
-    /*
-    if(!$post_meta_id){
-        echo "error al setear post thumbnail";
-        return;
-    };*/
-
-    $uploaded_images = $_FILES["images"];
-
-    $attachs_ids = handle_attachments_escorts_ads($escort_ad_id, $uploaded_images, true); 
 
     escort_page_redirect($login_slug);
 
@@ -393,7 +293,6 @@ function update_escort_ad(){
         admin_save_escort($escort_ad_id, $escort_ad);
     }
 
-    
     escort_page_redirect($account_slug, $query_var);
     
 
