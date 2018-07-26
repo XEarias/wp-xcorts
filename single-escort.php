@@ -14,7 +14,7 @@
             <div class="your-class">
                 <?php foreach ($media['images'] as $value) : ?>
                 <div>
-                    <a href="<?= $value['url'] ?>" rel="lightbox[roadtrip]"><img src="<?= $value['url'] ?>"></a>
+                    <a href="<?= $value['url'] ?>" rel="light"><img src="<?= $value['url'] ?>"></a>
                 </div>
                 <?php endforeach; ?>
             </div>
@@ -34,7 +34,7 @@
         </div>
         <div class="col-md-4 pt-4 pb-2 pl-0 pr-0 text-right"> 
             <span class="single-escort-phone">
-                <?= ($escort['basic_info']['phone']['value']) ? $escort['basic_info']['phone']['value'] : 'N/A'; ?><
+                <?= ($escort['basic_info']['phone']['value']) ? $escort['basic_info']['phone']['value'] : 'N/A'; ?>
             </span>
 
             <br>

@@ -372,7 +372,7 @@ form#loginform p input[type=submit] {
 .escort-form fieldset {
 	background: white;
 	border: 0 none;
-	border-radius: 3px;
+	border-radius: 1px;
 	box-shadow: 0px 2px 4px 2px #d4d4d4;
 	padding: 20px 30px;
 	box-sizing: border-box;
@@ -630,4 +630,8 @@ label.hidden {
 
 .form-check-input.is-valid~.form-check-label, .was-validated .form-check-input:valid~.form-check-label {
     color: black !important;
+}
+
+.custom-file-label::after {
+    content: "Buscar" !important;
 }
