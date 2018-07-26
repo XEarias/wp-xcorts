@@ -8,7 +8,7 @@
 
 <form action="<?php echo admin_url('/admin-post.php'); ?>" method="POST" class="escort-form" id="escort-edit-info" novalidate>
     
-    <input type="hidden" name="action" value="#" />
+    <input type="hidden" name="action" value="update_escort_ad" />
     <input type="hidden" name="redirect_p" value="plan" />
 
     <fieldset>
