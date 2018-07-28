@@ -267,8 +267,20 @@ function update_escort_ad(){
     $escort_ad = $escort_ads[0];
 
     $escort_ad_id = $escort_ad->ID;
-    
-    if(isset($_POST['display_name']) || isset($_POST['description'])) {
+
+    if(isset($_POST['new_subscription'])){
+
+        $new_subscription = $_POST['new_subscription'];
+
+        $old_subscription = get_or_set_subscription($escort_ad_id );
+
+        if($old_subscription['status'] == 'paid' || $old_subscription['status'] == 'finished'){
+
+            add_new_subscription($escort_ad_id, $new_subscription['plan'], $new_subscription['type']);
+       
+        }
+
+    } else if(isset($_POST['display_name']) || isset($_POST['description'])) {
 
         $escort_ad_data = ['ID' => $escort_ad_id];
 
@@ -294,8 +306,6 @@ function update_escort_ad(){
     }
 
     escort_page_redirect($account_slug, $query_var);
-    
-
     
     
 }
