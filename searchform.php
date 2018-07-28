@@ -7,10 +7,12 @@
 
 <section class="filterbar-container container">
     <form action="<?php echo home_url();?>" method="GET">
+
+        <input name="s" value=" " type="hidden"/>
         <div class="row" style="margin-top: 25px">
             <div class="col-md-2 form-group">
                 <select name="basic_info[hair_color]" id="hair_color" class="form-control">
-                    <option selected>Color de cabello</option>
+                    <option selected value="">Color de cabello</option>
                     <?php foreach($hair_colors as $hair_color):?>
                         <option value="<?= $hair_color ?>"><?= $hair_color ?></option>
                     <?php endforeach;?>
@@ -18,7 +20,7 @@
             </div>
             <div class="col-md-2 form-group">
                 <select name="basic_info[skin_color]" id="skin_color" class="form-control">
-                    <option selected>Color de piel</option>
+                    <option selected value="">Color de piel</option>
                     <?php foreach($skin_colors as $skin_color):?>
                         <option value="<?= $skin_color ?>"><?= $skin_color ?></option>
                     <?php endforeach;?>
@@ -26,13 +28,13 @@
             </div>
             <div class="col-md-2 form-group">
                 <select name="basic_info[complexion]" id="complexion" class="form-control">
-                    <option selected>Complexion</option>
+                    <option selected value="">Complexion</option>
                     <option>Delgada</option>
                 </select>
             </div>
             <div class="col-md-2 form-group">
                 <select name="basic_info[stature]" id="stature" class="form-control">
-                    <option selected>Estatura</option>
+                    <option selected value="">Estatura</option>
                     <option>Baja</option>
                 </select>
             </div>
@@ -49,16 +51,16 @@
                     <div style="width:100%; height: 1px; background-color:#999; margin: 10px 0;"></div>
                     <div class="row text-center">
                         <div class="col-md-2 offset-md-4 form-group">
-                            <select name="basic_info[skin_color]" id="skin_color" class="form-control">
-                                <option selected>Edad</option>
+                            <select name="basic_info[age]" id="skin_color" class="form-control">
+                                <option selected value="">Edad</option>
                                 <?php foreach($ages as $age):?>
                                     <option value="<?= $age ?>"><?= $age ?></option>
                                 <?php endforeach;?>
                             </select>
                         </div>
                         <div class="col-md-2 form-group">
-                            <select class="form-control" id="zone" name="basic_info[zone]">
-                                <option selected>Ciudad</option>
+                            <select class="form-control" id="zone" name="zone">
+                                <option selected value="">Ciudad</option>
                                 <?php foreach($zones as $zone):?>
                                     <?php if(count($zone["childs"])): ?>
                                         <?php $child_zones = $zone["childs"]; ?>

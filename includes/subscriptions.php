@@ -309,13 +309,6 @@ function update_escort_status() {
 add_action( 'update_escort_status', 'update_escort_status' );
 
 
-function test(){
-	print_r(get_escorts());
-}
-
-add_action( 'admin_post_nopriv_xxx', 'test' );
-add_action( 'admin_post_priv_xxx', 'test' );
-
 
 
 ?>

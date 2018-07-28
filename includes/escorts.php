@@ -868,20 +868,82 @@ function get_escorts($options = []){
 
     if($options){
         
+
+        $tax_query = [];
+        $meta_query = [];
+
+        //busquedas de un termino especifico en una taxonomia
         if(isset($options["taxonomy"]) && isset($options["term"])){
+
             $taxonomy = $options["taxonomy"];
             $term = $options["term"];
             
-            $args['tax_query'] = [
-                [
-                    'taxonomy' => $taxonomy,
-                    'field' => 'slug',
-                    'terms' => $term,
-                    'include_children' => false
-                ]
+            $tax_query[] = [
+                'taxonomy' => $taxonomy,
+                'field' => 'slug',
+                'terms' => $term
+                //'include_children' => false
             ];
         }
 
+
+        //busquedas de serivicios especificos por su ID
+        if(isset($options["services"])){
+
+            $services_id = $options["services"];
+
+            foreach($services_id as $service_id){
+                $tax_query[] = [
+                    'taxonomy' => 'escorts_services',
+                    'field' => 'term_id',
+                    'terms' => $service_id
+                ];
+            }
+        }
+
+        //busquedas de zonas especificos por su ID
+        if(isset($options["zone"])){
+
+            $zone_id = $options["zone"];
+          
+            $tax_query[] = [
+                'taxonomy' => 'escorts_zones',
+                'field' => 'term_id',
+                'terms' => $zone_id
+            ];
+        }
+
+
+        //busqueda por caracteristicas
+
+        if(isset($options["basic_info"])){
+            
+            $basic_info = $options["basic_info"];
+
+            foreach($basic_info as $key => $info){
+                
+                switch ($key){
+
+                    case "skin_color": 
+                    case "hair_color":
+                    case "age":
+
+                        $meta_query[] = [
+                            "key" => "escort_".$key,
+                            "value" => $info,
+                            "compare" => "="
+                        ];
+                        break;
+                }
+
+            }            
+
+        }
+
+        $args['meta_query'] = $meta_query;
+        $args['tax_query'] = $tax_query;
+
+        //limite
         if(isset($options["limit"])){
 
             $limit = $options["limit"];
@@ -1029,5 +1091,62 @@ function get_escorts_services(){
 
 
 }
+
+function prepare_escorts_by_custom_search (){
+
+    //$meta_search = [];
+    //$tax_search = [];
+
+    $custom_options = [];
+
+
+    if(isset($_GET["services"])){
+
+        $services = $_GET["services"];
+        $custom_options["services"] = $services;
+
+    }
+
+    if(isset($_GET["zone"]) && $_GET["zone"]){
+
+        $zone = $_GET["zone"];
+        $custom_options["zone"] = $zone;
+
+    }
+
+    if(isset($_GET["basic_info"])){
+
+        $basic_info = [];
+
+        $data = $_GET["basic_info"];
+
+        foreach($data as $key => $info){
+            
+            if($info){
+                $basic_info[$key] = $info;
+            }
+
+        }
+
+        if($basic_info){
+            $custom_options["basic_info"] = $basic_info;
+        }
+        
+
+    }
+
+    $escorts = get_escorts($custom_options);
+
+    set_query_var( 'escorts', $escorts );
+}
+
+
+function test(){
+    prepare_escorts_by_custom_search();
+}
+
+add_action( 'admin_post_nopriv_xxx', 'test' );
+add_action( 'admin_post_priv_xxx', 'test' );
+
 
 ?>
