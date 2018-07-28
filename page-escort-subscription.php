@@ -19,7 +19,7 @@ $services = get_escorts_services();
             </ul>
         </div>
         <div class="col-md-10 offset-md-1">
-            <form action="<?php echo admin_url('/admin-post.php'); ?>" method="POST" target="_blank" enctype="multipart/form-data" class="escort-form" id="escort-subscription" novalidate>
+            <form action="<?php echo admin_url('/admin-post.php'); ?>" method="POST" enctype="multipart/form-data" class="escort-form" id="escort-subscription" novalidate>
 
                 <fieldset>
 
@@ -82,14 +82,14 @@ $services = get_escorts_services();
 
                     <div class="row" style="margin-top: 25px">
                         <div class="col-md-4 form-group">
-                            <label for="visible_name">Nombre visible en el sitio (*)</label>
+                            <label for="visible_name">Nombre con el cual deseas ser publicada (*)</label>
                             <input type="text" class="form-control" id="visible_name" name="visible_name" placeholder="Nombre visible en el sitio">
                         </div>
                         <div class="col-md-4 form-group">
                             <label for="age">Elige tu edad</label>
                             <select class="form-control" id="age" name="age">
                                 <?php foreach($ages as $age):?>
-                                    <option><?php echo $age;?></option>
+                                    <option value="<?php echo $age;?>"><?php echo $age;?></option>
                                 <?php endforeach;?>
                             </select>
                         </div>
@@ -105,20 +105,13 @@ $services = get_escorts_services();
 
                     <div class="row">
                         <div class="col-md-12 form-group">
-                            <label for="profession">Profesion</label>
-                            <input type="text" class="form-control" id="profession" name="profession" placeholder="Profesion">
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12 form-group">
-                            <label for="description">Descripción (*)</label>
+                            <label for="description">Texto que aparecerá en tu anuncio (*)</label>
                             <textarea class="form-control" id="description" name="description" placeholder="Descripcion"></textarea>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-4 form-group">
+                        <div class="col-md-3 form-group">
                             <label for="age">Que idiomas hablas</label>
                             <?php foreach($langs as $key => $lang):?>
                                 <div class="form-check">
@@ -129,19 +122,62 @@ $services = get_escorts_services();
                                 </div>
                             <?php endforeach;?>
                         </div>
-                        <div class="col-md-4 form-group">
-                            <label for="hair_color">Color de cabello</label>
-                            <select class="form-control" id="hair_color" name="hair_color">
-                                <?php foreach($hair_colors as $hair_color):?>
-                                    <option><?php echo $hair_color;?></option>
+                        <div class="col-md-3 form-group">
+                            <label for="origin">Que nacionalidad tienes?</label>
+                            <select class="form-control" id="origin" name="origin">
+                                <?php foreach($countries as $country):?>
+                                    <option value="<?= $country ?>"><?= $country ?></option>
                                 <?php endforeach;?>
                             </select>
                         </div>
-                        <div class="col-md-4 form-group">
+                        <div class="col-md-3 form-group">
+                            <label for="hair_color">Color de cabello</label>
+                            <select class="form-control" id="hair_color" name="hair_color">
+                                <?php foreach($hair_colors as $hair_color):?>
+                                    <option value="<?php echo $hair_color;?>"><?php echo $hair_color;?></option>
+                                <?php endforeach;?>
+                            </select>
+                        </div>
+                        <div class="col-md-3 form-group">
                             <label for="skin_color">Color de piel</label>
                             <select class="form-control" id="skin_color" name="skin_color">
                                 <?php foreach($skin_colors as $skin_color):?>
-                                    <option><?php echo $skin_color;?></option>
+                                    <option value="<?php echo $skin_color;?>"><?php echo $skin_color;?></option>
+                                <?php endforeach;?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <label for="eyes_color">Color de ojos</label>
+                            <select class="form-control" id="eyes_color" name="eyes_color">
+                                <?php foreach($eyes_colors as $eyes_color):?>
+                                    <option value="<?php echo $eyes_color;?>"><?php echo $eyes_color;?></option>
+                                <?php endforeach;?>
+                            </select>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label for="sexual_orientation">Orientación Sexual</label>
+                            <select class="form-control" id="sexual_orientation" name="sexual_orientation">
+                                <?php foreach($sexual_orientations as $sexual_orientation):?>
+                                    <option value="<?= $sexual_orientation ?>"><?= $sexual_orientation ?></option>
+                                <?php endforeach;?>
+                            </select>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label for="complexion">Complexión</label>
+                            <select class="form-control" id="complexion" name="complexion">
+                                <?php foreach($complexions as $complexion):?>
+                                    <option value="<?php echo $complexion;?>"><?php echo $complexion;?></option>
+                                <?php endforeach;?>
+                            </select>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label for="depilation">Depilación</label>
+                            <select class="form-control" id="depilation" name="depilation">
+                                <?php foreach($depilations as $depilation):?>
+                                    <option value="<?php echo $depilation;?>"><?php echo $depilation;?></option>
                                 <?php endforeach;?>
                             </select>
                         </div>
@@ -151,13 +187,13 @@ $services = get_escorts_services();
                         <div class="col-md-12">
                             <label for="chest">Medidas</label>
                         </div>
-                        <div class="col-md-4 form-group">
+                        <div class="col-md-3 form-group">
                             <input type="text" class="form-control" id="chest" name="measure[chest]" placeholder="Pechos">
                         </div>
-                        <div class="col-md-4 form-group">
+                        <div class="col-md-3 form-group">
                             <input type="text" class="form-control" id="waist" name="measure[waist]" placeholder="Cintura">
                         </div>
-                        <div class="col-md-4 form-group">
+                        <div class="col-md-3 form-group">
                             <input type="text" class="form-control" id="hip" name="measure[hip]" placeholder="Caderas">
                         </div>
                     </div>
@@ -256,6 +292,9 @@ $services = get_escorts_services();
                     <div class="row" style="margin-top: 25px">
                         <div class="col-md-12">
                             <h5 class="text-center">Tarifas</h5>
+                            <small>Los campos que dejes vacíos se pondrá a "consultar"</small>
+                            <br>
+                            <br>
                         </div>
                     </div>
                     <?php $i = 1; ?>
@@ -265,12 +304,12 @@ $services = get_escorts_services();
                                 <label for="<?php echo $rate; ?>"><?php echo $rate; ?></label>
                                 <input type="text" class="form-control" id="<?php echo $rate; ?>" name="rates[<?php echo $key; ?>]" placeholder="<?php echo $rate; ?>">
                             </div>
-                        <?php if ($i == 3) { $i = 1; echo '</div>'; } else { $i++; } ?>
+                        <?php if ($i == 3 || $rate == "Viajes") { $i = 1; echo '</div>'; } else { $i++; } ?>
                     <?php endforeach;?>
                     
                     <div class="row">
                         <div class="col-md-4 form-group">
-                            <label for="">Metódos de pago (*)</label>
+                            <label for="">Que Metódos de pago aceptas? (*)</label>
                             <?php foreach($payment_methods as $key => $payment_method): ?>
                                 <div class="form-check">
                                     <input class="form-check-input"type="checkbox" name="payment_methods[<?php echo $key;?>]" id="<?php echo $payment_method;?>">
