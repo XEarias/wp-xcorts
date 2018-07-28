@@ -846,11 +846,11 @@ function get_escort_extra_info($id, &$data){
     $meta_phone = (get_post_meta($id, "escort_phone", true)) ? get_post_meta($id, "escort_phone", true) : [];
 
 
-    $meta_eyes_color = get_post_meta($post_id, "escort_eyes_color", true);
-    $meta_complexion = get_post_meta($post_id, "escort_complexion", true);
-    $meta_origin = get_post_meta($post_id, "escort_origin", true);
-    $meta_sexual_orientation = get_post_meta($post_id, "escort_sexual_orientation", true);
-    $meta_working_days = get_post_meta($post_id, "escort_working_days", true);
+    $meta_eyes_color = get_post_meta($id, "escort_eyes_color", true);
+    $meta_complexion = get_post_meta($id, "escort_complexion", true);
+    $meta_origin = get_post_meta($id, "escort_origin", true);
+    $meta_sexual_orientation = get_post_meta($id, "escort_sexual_orientation", true);
+    $meta_working_days = get_post_meta($id, "escort_working_days", true);
 
     //TELEFONO
     $phone = [
@@ -1057,7 +1057,11 @@ function get_escorts($options = []){
 
                     case "skin_color": 
                     case "hair_color":
+                    case "eyes_color":
+                    case "sexual_orientation":
+                    case "complexion":
                     case "age":
+                    case "working_days":
 
                         $meta_query[] = [
                             "key" => "escort_".$key,
@@ -1065,6 +1069,31 @@ function get_escorts($options = []){
                             "compare" => "="
                         ];
                         break;
+
+                    case "stature":
+
+                        switch ((int) $info){
+                            case 1:
+                                $value = 160;
+                                $operator = "<=";
+                                break;
+                            case 2:
+                                $value = 170;
+                                $operator = "<=";
+                                break;
+                            case 3:
+                                $value = 170;
+                                $operator = ">=";
+                                break;
+                        }
+
+
+                        $meta_query[] = [
+                            "key" => "escort_".$key,
+                            "value" => $value,
+                            "compare" => $operator,
+                            "type" => "NUMERIC"
+                        ];
                 }
 
             }            
@@ -1225,9 +1254,6 @@ function get_escorts_services(){
 
 function prepare_escorts_by_custom_search (){
 
-    //$meta_search = [];
-    //$tax_search = [];
-
     $custom_options = [];
 
 
@@ -1271,13 +1297,13 @@ function prepare_escorts_by_custom_search (){
     set_query_var( 'escorts', $escorts );
 }
 
-
+/*
 function test(){
     prepare_escorts_by_custom_search();
 }
 
 add_action( 'admin_post_nopriv_xxx', 'test' );
 add_action( 'admin_post_priv_xxx', 'test' );
-
+*/
 
 ?>

@@ -1,5 +1,5 @@
 <?php
-    GLOBAL $hair_colors, $skin_colors, $ages; 
+    GLOBAL $hair_colors, $skin_colors, $eyes_colors, $ages, $complexions, $countries, $sexual_orientations, $working_days; 
 
     $zones = get_escorts_zones(); 
     $services = get_escorts_services(); 
@@ -29,7 +29,9 @@
             <div class="col-md-2 form-group">
                 <select name="basic_info[complexion]" id="complexion" class="form-control">
                     <option selected value="">Complexion</option>
-                    <option>Delgada</option>
+                    <?php foreach($complexions as $complexion):?>
+                        <option value="<?= $complexion ?>"><?= $complexion ?></option>
+                    <?php endforeach;?>
                 </select>
             </div>
             <div class="col-md-2 form-group">
