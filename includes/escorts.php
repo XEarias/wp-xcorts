@@ -7,7 +7,6 @@ $rates = [
     "1 Hora y media",
     "2 Horas",
     "3 Horas",
-    "Salidas",
     "Toda la noche",
     "Viajes"
 ];
@@ -34,19 +33,57 @@ $langs = [
     "ES" => "Español",
     "PR" => "Portugués",
     "FR" => "Francés",
-    "IT" => "Italiano"
+    "IT" => "Italiano",
+    "RU" => "Ruso",
+    "AR" => "Árabe",
+    "WE" => "Otro"
 ];
 
 $payment_methods = [
     "efective" => "Efectivo",
     "bank_transfer" => "Transferencia bancaria",
-    "others" => "Otros"
+    "cards" => "Tarjetas"
 ];
 
 $phone_permissions = [
     "calls" => "Solo llamadas",
     "whatsapps" => "Solo whatsapp",
     "all" => "Llamadas y whatsapp"
+];
+
+$countries = ["Afganistán","Albania","Alemania","Andorra","Angola","Antigua y Barbuda","Arabia Saudita","Argelia","Argentina","Armenia","Australia","Austria","Azerbaiyán","Bahamas","Bangladés","Barbados","Baréin","Bélgica","Belice","Benín","Bielorrusia","Birmania","Bolivia","Bosnia y Herzegovina","Botsuana","Brasil","Brunéi","Bulgaria","Burkina Faso","Burundi","Bután","Cabo Verde","Camboya","Camerún","Canadá","Catar","Chad","Chile","China","Chipre","Ciudad del Vaticano","Colombia","Comoras","Corea del Norte","Corea del Sur","Costa de Marfil","Costa Rica","Croacia","Cuba","Dinamarca","Dominica","Ecuador","Egipto","El Salvador","Emiratos Árabes Unidos","Eritrea","Eslovaquia","Eslovenia","España","Estados Unidos","Estonia","Etiopía","Filipinas","Finlandia","Fiyi","Francia","Gabón","Gambia","Georgia","Ghana","Granada","Grecia","Guatemala","Guyana","Guinea","Guinea ecuatorial","Guinea-Bisáu","Haití","Honduras","Hungría","India","Indonesia","Irak","Irán","Irlanda","Islandia","Islas Marshall","Islas Salomón","Israel","Italia","Jamaica","Japón","Jordania","Kazajistán","Kenia","Kirguistán","Kiribati","Kuwait","Laos","Lesoto","Letonia","Líbano","Liberia","Libia","Liechtenstein","Lituania","Luxemburgo","Madagascar","Malasia","Malaui","Maldivas","Malí","Malta","Marruecos","Mauricio","Mauritania","México","Micronesia","Moldavia","Mónaco","Mongolia","Montenegro","Mozambique","Namibia","Nauru","Nepal","Nicaragua","Níger","Nigeria","Noruega","Nueva Zelanda","Omán","Países Bajos","Pakistán","Palaos","Panamá","Papúa Nueva Guinea","Paraguay","Perú","Polonia","Portugal","Reino Unido","República Centroafricana","República Checa","República de Macedonia","República del Congo","República Democrática del Congo","República Dominicana","República Sudafricana","Ruanda","Rumanía","Rusia","Samoa","San Cristóbal y Nieves","San Marino","San Vicente y las Granadinas","Santa Lucía","Santo Tomé y Príncipe","Senegal","Serbia","Seychelles","Sierra Leona","Singapur","Siria","Somalia","Sri Lanka","Suazilandia","Sudán","Sudán del Sur","Suecia","Suiza","Surinam","Tailandia","Tanzania","Tayikistán","Timor Oriental","Togo","Tonga","Trinidad y Tobago","Túnez","Turkmenistán","Turquía","Tuvalu","Ucrania","Uganda","Uruguay","Uzbekistán","Vanuatu","Venezuela","Vietnam","Yemen","Yibuti","Zambia","Zimbabue"];
+
+$complexions = [
+    "Delgada",
+    "Media/Normal",
+    "Media/Gruesa",
+    "Muy delgada",
+    "Rellenita",
+    "Tonificada",
+    "Voluptuosa"
+];
+
+$working_days = [
+    "Full time",
+    "Fines de semana",
+    "Días de semana"
+];
+
+$sexual_orientations = [
+    "Heterosexual",
+    "Homosexual",
+    "Bisexual activa",  
+    "Bisexual pasiva",  
+    "Bisexual interactiva"
+];
+
+$eyes_colors = [
+    "Cafés",
+    "Miel",
+    "Negros", 
+    "Verdes",
+    "Azules", 
+    "Grises"
 ];
 
 /******** Escorts ********/
@@ -229,7 +266,7 @@ function escort_basic_metabox_html($post){
 
     /***** Global Values ****/
     
-    GLOBAL $ages, $hair_colors, $skin_colors, $langs, $phone_permissions;
+    GLOBAL $ages, $hair_colors, $skin_colors, $langs, $phone_permissions, $countries, $eyes_colors, $complexions, $sexual_orientations;
     
 
     $post_id = $post->ID;
@@ -241,9 +278,16 @@ function escort_basic_metabox_html($post){
     $meta_langs = (get_post_meta($post_id, "escort_langs", true)) ? get_post_meta($post_id, "escort_langs", true) : [] ;
     $meta_skin_color = get_post_meta($post_id, "escort_skin_color", true);
     $meta_hair_color = get_post_meta($post_id, "escort_hair_color", true);
-    $meta_profession = get_post_meta($post_id, "escort_profession", true);
+    //$meta_profession = get_post_meta($post_id, "escort_profession", true);
     $meta_measure = (get_post_meta($post_id, "escort_measure", true)) ? get_post_meta($post_id, "escort_measure", true) : [];
     $meta_phone = (get_post_meta($post_id, "escort_phone", true)) ? get_post_meta($post_id, "escort_phone", true) : [];
+
+    //nuevos campos
+    $meta_eyes_color = get_post_meta($post_id, "escort_eyes_color", true);
+    $meta_complexion = get_post_meta($post_id, "escort_complexion", true);
+    $meta_origin = get_post_meta($post_id, "escort_origin", true);
+    $meta_sexual_orientation = get_post_meta($post_id, "escort_sexual_orientation", true);
+  
 
 
     ?> 
@@ -312,17 +356,50 @@ function escort_basic_metabox_html($post){
     </select>
     <br>
 
-    <!-- PROFESION -->
-    <label for="profession"><b>Profesión:</b></label>
-    <input type="text" placeholder="Profesión" name="profession" value="<?php echo $meta_profession;?>"/>
-    <br>
-
     <!-- MEDIDAS -->
     <label><b>Medidas:</b></label>
     <input type="text" placeholder="Pecho" name="measure[chest]" value="<?php echo ($meta_measure && isset($meta_measure['chest'])) ? $meta_measure['chest'] : "" ?>">
     <input type="text" placeholder="Cintura" name="measure[waist]" value="<?php echo ($meta_measure && isset($meta_measure['waist'])) ? $meta_measure['waist'] : "" ?>">
     <input type="text" placeholder="Caderas" name="measure[hip]" value="<?php echo ($meta_measure && isset($meta_measure['hip'])) ? $meta_measure['hip'] : "" ?>">
     <br>
+
+
+    <!-- ORIENTACION SEXUAL -->
+    <label for="orientacion"><b>Orientacion Sexual:</b></label>
+    <select id="orientacion" name="sexual_orientation">
+    <?php foreach($sexual_orientations as $sexual_orientation):?>
+        <option <?php echo ($meta_sexual_orientation == $sexual_orientation) ?  "selected='selected'" : "" ?>><?php echo $sexual_orientation;?></option>
+    <?php endforeach;?>
+    </select>
+    <br>
+
+    <!-- COLOR DE OJOS -->
+    <label for="ojos"><b>Color de Ojos:</b></label>
+    <select id="ojos" name="eyes_color">
+    <?php foreach($eyes_colors as $eyes_color):?>
+        <option <?php echo ($meta_eyes_color == $eyes_color) ?  "selected='selected'" : "" ?>><?php echo $eyes_color;?></option>
+    <?php endforeach;?>
+    </select>
+    <br>
+
+    <!-- ORIGIN -->
+    <label for="nacionalidad"><b>Nacionalidad:</b></label>
+    <select id="nacionalidad" name="origin">
+    <?php foreach($countries as $country):?>
+        <option <?php echo ($meta_origin == $country) ?  "selected='selected'" : "" ?>><?php echo $country;?></option>
+    <?php endforeach;?>
+    </select>
+    <br>
+
+    <!-- COMPLEXION -->
+    <label for="nacionalidad"><b>Complexión:</b></label>
+    <select id="nacionalidad" name="complexion">
+    <?php foreach($complexions as $complexion):?>
+        <option <?php echo ($meta_complexion == $complexion) ?  "selected='selected'" : "" ?>><?php echo $complexion;?></option>
+    <?php endforeach;?>
+    </select>
+    <br>
+
 
     <?php
 
@@ -331,11 +408,14 @@ function escort_basic_metabox_html($post){
 /****  META BOX de TARIFAS ***/
 function escort_rates_metabox_html($post){
 
-    GLOBAL $rates, $payment_methods;
+    GLOBAL $rates, $payment_methods, $working_days;
 
     $post_id = $post->ID;
     $meta_rates = (get_post_meta($post_id, "escort_rates", true)) ? get_post_meta($post_id, "escort_rates", true) : [];
     $meta_payment_methods = (get_post_meta($post_id, "escort_payment_methods", true)) ? get_post_meta($post_id, "escort_payment_methods", true) : [] ;
+    $meta_working_days = get_post_meta($post_id, "escort_working_days", true);
+
+
     ?>
 
     <div>
@@ -355,6 +435,16 @@ function escort_rates_metabox_html($post){
             <input type="checkbox" name="payment_methods[<?php echo $key;?>]" <?php echo (in_array($key, $meta_payment_methods)) ? "checked='checked'" : ""; ?>/>
         <?php endforeach; ?>
     </div>
+
+    <!-- WORKING DAYS -->
+    <label for="habiles"><b>Dias de Atención:</b></label>
+    <select id="habiles" name="working_days">
+    <?php foreach($working_days as $working_day):?>
+        <option <?php echo ($meta_working_days == $working_day) ?  "selected='selected'" : "" ?>><?php echo $working_day;?></option>
+    <?php endforeach;?>
+    </select>
+    <br>
+
     <?php
    
 }
@@ -492,10 +582,38 @@ function admin_save_escort( $post_id, $post_object)
         update_post_meta($post_id, "escort_hair_color", $hair_color );
     }
 
+    if(isset($_POST["eyes_color"])){
+        $eyes_color = $_POST["eyes_color"];
+        update_post_meta($post_id, "escort_eyes_color", $eyes_color );
+    }
+
+    if(isset($_POST["sexual_orientation"])){
+        $sexual_orientation = $_POST["sexual_orientation"];
+        update_post_meta($post_id, "escort_sexual_orientation", $sexual_orientation );
+    }
+
+    if(isset($_POST["origin"])){
+        $origin = $_POST["origin"];
+        update_post_meta($post_id, "escort_origin", $origin );
+    }
+
+    if(isset($_POST["complexion"])){
+        $complexion = $_POST["complexion"];
+        update_post_meta($post_id, "escort_complexion", $complexion );
+    }
+
+    if(isset($_POST["working_days"])){
+        $working_days = $_POST["working_days"];
+        update_post_meta($post_id, "escort_working_days", $working_days );
+    }
+
+    /*
+
+    /*
     if(isset($_POST["profession"])){
         $profession = $_POST["profession"];
         update_post_meta($post_id, "escort_profession", $profession );
-    }
+    }*/
 
     if(isset($_POST["measure"])){
         $measure = $_POST["measure"];
@@ -723,9 +841,16 @@ function get_escort_extra_info($id, &$data){
     $meta_langs = (get_post_meta($id, "escort_langs", true)) ? get_post_meta($id, "escort_langs", true) : [] ;
     $meta_skin_color = get_post_meta($id, "escort_skin_color", true);
     $meta_hair_color = get_post_meta($id, "escort_hair_color", true);
-    $meta_profession = get_post_meta($id, "escort_profession", true);
+    //$meta_profession = get_post_meta($id, "escort_profession", true);
     $meta_measure = (get_post_meta($id, "escort_measure", true)) ? get_post_meta($id, "escort_measure", true) : [];
     $meta_phone = (get_post_meta($id, "escort_phone", true)) ? get_post_meta($id, "escort_phone", true) : [];
+
+
+    $meta_eyes_color = get_post_meta($post_id, "escort_eyes_color", true);
+    $meta_complexion = get_post_meta($post_id, "escort_complexion", true);
+    $meta_origin = get_post_meta($post_id, "escort_origin", true);
+    $meta_sexual_orientation = get_post_meta($post_id, "escort_sexual_orientation", true);
+    $meta_working_days = get_post_meta($post_id, "escort_working_days", true);
 
     //TELEFONO
     $phone = [
@@ -807,16 +932,22 @@ function get_escort_extra_info($id, &$data){
             "hair_color" => $meta_hair_color,
             "measure" => $meta_measure,
             "langs" => $langs_with_labels,
-            "profession" => $meta_profession,
+            //"profession" => $meta_profession,
             "weight" => $meta_weight,
             "age" => $meta_age,
             "stature" => $meta_stature,
             "phone" => $phone,
-            "email" => $meta_email
+            "email" => $meta_email,
+            "eyes_color" => $meta_eyes_color,
+            "complexion" => $meta_complexion,
+            "origin" => $meta_origin,
+            "sexual_orientation" => $meta_sexual_orientation
+
         ],
         "rates" => $rates_with_labels,
         "principal_rate" => $rates_with_labels[2],
         "payment_methods" => $payment_methods_with_labels,
+        "working_days" => $meta_working_days,
         "services" => $services,
         "zone" => $zones,
         "subscription" => $subscription

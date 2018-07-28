@@ -35,7 +35,9 @@
             <div class="col-md-2 form-group">
                 <select name="basic_info[stature]" id="stature" class="form-control">
                     <option selected value="">Estatura</option>
-                    <option>Baja</option>
+                    <option value="1">Hasta 1,60 mts</option>
+                    <option value="2">Hasta 1,70 mts.</option>
+                    <option value="3">Sobre 1,70 mts.</option>
                 </select>
             </div>
             <div class="col-md-4 form-group text-right">
