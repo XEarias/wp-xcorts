@@ -1,5 +1,5 @@
 <?php 
-GLOBAL $subscription_slug, $account_slug;
+GLOBAL $subscription_slug, $account_slug, $login_slug;
 
 $menu_items = get_single_menu("principal-menu");
 
@@ -8,6 +8,9 @@ $subscription_url = get_page_link($subscription_page->ID);
 
 $account_page = get_page_by_path($account_slug);
 $account_url = get_page_link($account_page->ID);
+
+$login_page = get_page_by_path($login_slug);
+$login_url = get_page_link($login_page->ID);
 
 ?>
 
@@ -48,6 +51,10 @@ $account_url = get_page_link($account_page->ID);
         <button class="btn my-2 my-sm-0" style="background-color: rgb(255, 51, 153) !important; color: white; font-size: 14px; font-weight: bold;">MI CUENTA</button>
         </a>
     <?php else: ?>
+        <a href="<?php echo $login_url; ?>">
+            <button class="btn my-2 my-sm-0" style="background-color: white !important; color: black; font-size: 14px; font-weight: bold;margin-right: 5px;">INGRESA</button>
+        </a>
+
         <a href="<?php echo $subscription_url; ?>">
         <button class="btn my-2 my-sm-0" style="background-color: rgb(255, 51, 153) !important; color: white; font-size: 14px; font-weight: bold;">ANUNCIATE</button>
         </a>

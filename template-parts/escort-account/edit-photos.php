@@ -74,7 +74,6 @@
 <input type="file" name="video">
 </div>
 </div>
-<!--
 
         <div class="row" style="margin-top: 25px">
             <div class="col-md-12">
@@ -84,16 +83,16 @@
                     <label class="custom-file-label" for="video">Seleccionar video</label>
                 </div>
                 <?php if(count($media['videos'])): ?>
-                <div>
+                <div style="text-align: center;margin-top: 5px;">
                     <video width="400" controls>
-                        <source src="<?= $media['videos']['url'] ?>" type="video/mp4">
+                        <source src="<?= $media['videos'][0]['url'] ?>" type="video/mp4">
                         Tu navegador no soporta HTML5 video
                     </video>
                 </div>
                 <?php endif; ?>
             </div>
         </div>
--->
+
         <input type="submit" value="Guardar" />
 
     </fieldset>

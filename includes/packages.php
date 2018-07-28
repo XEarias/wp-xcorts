@@ -46,6 +46,9 @@ function adding_packages() {
     wp_register_script('escort_subscription', get_template_directory_uri(). '/assets/js/escort_subscription.js');
     wp_enqueue_script('escort_subscription');
 
+    wp_register_script('escort_rangeinput', get_template_directory_uri(). '/assets/js/escort_sliderrangeinput.js');
+    wp_enqueue_script('escort_rangeinput');
+
     wp_enqueue_style( 'fmp-style', get_stylesheet_uri() );
 
 
