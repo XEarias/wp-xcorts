@@ -86,6 +86,12 @@ $eyes_colors = [
     "Grises"
 ];
 
+$depilations = [
+    "Completa",
+    "Area de Bikini",
+    "Sin depilar"
+];
+
 /******** Escorts ********/
 
 function add_escort_type()
@@ -266,7 +272,7 @@ function escort_basic_metabox_html($post){
 
     /***** Global Values ****/
     
-    GLOBAL $ages, $hair_colors, $skin_colors, $langs, $phone_permissions, $countries, $eyes_colors, $complexions, $sexual_orientations;
+    GLOBAL $ages, $hair_colors, $skin_colors, $langs, $phone_permissions, $countries, $eyes_colors, $complexions, $sexual_orientations, $depilations;
     
 
     $post_id = $post->ID;
@@ -287,6 +293,7 @@ function escort_basic_metabox_html($post){
     $meta_complexion = get_post_meta($post_id, "escort_complexion", true);
     $meta_origin = get_post_meta($post_id, "escort_origin", true);
     $meta_sexual_orientation = get_post_meta($post_id, "escort_sexual_orientation", true);
+    $meta_depilation = get_post_meta($post_id, "escort_depilation", true);
   
 
 
@@ -396,6 +403,15 @@ function escort_basic_metabox_html($post){
     <select id="nacionalidad" name="complexion">
     <?php foreach($complexions as $complexion):?>
         <option <?php echo ($meta_complexion == $complexion) ?  "selected='selected'" : "" ?>><?php echo $complexion;?></option>
+    <?php endforeach;?>
+    </select>
+    <br>
+
+    <!-- DEPILATION -->
+    <label for="depilation"><b>Complexión:</b></label>
+    <select id="depilation" name="depilation">
+    <?php foreach($depilations as $depilation):?>
+        <option <?php echo ($meta_depilation == $depilation) ?  "selected='selected'" : "" ?>><?php echo $depilation;?></option>
     <?php endforeach;?>
     </select>
     <br>
@@ -607,9 +623,12 @@ function admin_save_escort( $post_id, $post_object)
         update_post_meta($post_id, "escort_working_days", $working_days );
     }
 
-    /*
+    if(isset($_POST["depilation"])){
+        $depilation = $_POST["depilation"];
+        update_post_meta($post_id, "escort_depilation", $depilation );
+    }
 
-    /*
+      /*
     if(isset($_POST["profession"])){
         $profession = $_POST["profession"];
         update_post_meta($post_id, "escort_profession", $profession );
