@@ -6,10 +6,14 @@
 
     if (isset($_GET['s'])) {
         $hair_color_g = $_GET['basic_info']['hair_color'];
+        $eyes_color_g = $_GET['basic_info']['eyes_color'];
         $skin_color_g = $_GET['basic_info']['skin_color'];
         $complexion_g = $_GET['basic_info']['complexion'];
+        $sexual_orientation_g = $_GET['basic_info']['sexual_orientation'];
+        $working_day_g = $_GET['basic_info']['working_day'];
         $stature_g = $_GET['basic_info']['stature'];
         $age_g = $_GET['basic_info']['age'];
+        $origin_g = $_GET['origin'];
         $zone_g = $_GET['zone'];
         $services_g = $_GET['services'];
     } else {
