@@ -120,7 +120,7 @@ function do_cleaner_array(&$files) {
 
 
 function add_new_escort(){
-  //print_r($_POST);
+    
 
     GLOBAL $subscription_slug, $login_slug;
 
@@ -313,41 +313,6 @@ function update_escort_ad(){
 add_action( 'admin_post_nopriv_update_escort_ad', 'update_escort_ad' );
 add_action( 'admin_post_update_escort_ad', 'update_escort_ad' );
 
-/*
-
-function verify_email(){
-    print_r($_POST);
-    $email = $_POST["email"];
-
-    $user_id = username_exists($email);
-    
-    if($user_id){
-        wp_send_json( "false");
-        return;
-    }
-
-    wp_send_json( "true");
-
-}
-
-
-add_action( 'wp_ajax_nopriv_verify_email', 'verify_email' );
-add_action( 'wp_ajax_verify_email', 'verify_email' );
-
-
-
-function verify_username(){
-
-
-    
-
-}
-
-
-add_action( 'admin_post_nopriv_verify_email', 'verify_username' );
-add_action( 'admin_post_verify_email', 'verify_username' );
-*/
-
 
 
 function verify_username(WP_REST_Request $request){
@@ -398,6 +363,30 @@ add_action( 'rest_api_init', function () {
     ]) ;
 
 } );
+
+add_filter('login_redirect', 'my_login_redirect', 10, 3);
+function my_login_redirect($redirect_to, $requested_redirect_to, $user) {
+    if (is_wp_error($user)) {
+
+        GLOBAL $login_slug;
+
+        //Login failed, find out why...
+        $error_types = array_keys($user->errors);
+        //Error type seems to be empty if none of the fields are filled out
+        $error_type = 'both_empty';
+        //Otherwise just get the first error (as far as I know there
+        //will only ever be one)
+        if (is_array($error_types) && !empty($error_types)) {
+            $error_type = $error_types[0];
+        }
+        escort_page_redirect($login_slug, "?login=failed&reason=" . $error_type);
+        return;
+    } 
+
+    //Login OK - redirect to another page?
+    return $requested_redirect_to;
+    
+}
 
 
 ?>
