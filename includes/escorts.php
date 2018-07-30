@@ -1094,7 +1094,7 @@ function get_escorts($options = []){
                     case "sexual_orientation":
                     case "complexion":
                     case "age":
-                    case "working_days":
+                    case "depilation":
 
                         $meta_query[] = [
                             "key" => "escort_".$key,
