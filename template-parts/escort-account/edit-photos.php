@@ -7,7 +7,7 @@
 
 ?>
 
-<form action="<?php echo admin_url('/admin-post.php'); ?>" method="POST" class="escort-form" id="escort-edit-info" enctype="multipart/form-data" novalidate>
+<form action="<?php echo admin_url('/admin-post.php'); ?>" method="POST" class="escort-form" id="escort-edit-photos" enctype="multipart/form-data" novalidate>
     
     <input type="hidden" name="action" value="update_escort_ad" />
     <input type="hidden" name="redirect_p" value="photos" />
@@ -67,13 +67,6 @@
                 </div>
             </div>
         </div>
-
-
- <div class="row" style="margin-top: 25px">
-            <div class="col-md-12">
-<input type="file" name="video">
-</div>
-</div>
 
         <div class="row" style="margin-top: 25px">
             <div class="col-md-12">

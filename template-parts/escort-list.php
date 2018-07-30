@@ -16,7 +16,15 @@
                 <div class="escort-item-internal">
                     <!--IMAGEN DE PLAN-->
                     <?php if($escort["subscription"]["plan"]["badge"]): ?>
-                    <img style="position: absolute;width: 40%;left: 30%;bottom: 25%;"  src="<?php echo $escort["subscription"]["plan"]["badge"]; ?>"/>
+                    <img style="position: absolute;width: 25%;right: 4%;bottom: 84%;"  src="<?php echo $escort["subscription"]["plan"]["badge"]; ?>"/>
+                    <?php endif;?>
+
+                    <?php if($escort["is_new"]): ?>
+                    <img style="position: absolute;width: 25%;right: 4%;bottom: 68%;"  src="<?php echo get_template_directory_uri() . '/assets/img/badges/new.png'; ?>"/>
+                    <?php endif;?>
+
+                    <?php if(count($escort["videos"])): ?>
+                    <img style="position: absolute;width: 25%;right: 4%;bottom: 52%;"  src="<?php echo get_template_directory_uri() . '/assets/img/badges/video.png'; ?>"/>
                     <?php endif;?>
 
                     <?php 

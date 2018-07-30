@@ -3,7 +3,27 @@ var current_fs, next_fs, previous_fs; //fieldsets
 var left, opacity, scale; //fieldset properties which we will animate
 var animating; //flag to prevent quick multi-click glitches
 
-function isOneChecked() {
+function isOneCheckedS() {
+    var valid = true;
+    jQuery('input[name^="services"]').each(function (index) {
+        console.log('index', index)
+        if (jQuery(this).is(':checked')) {
+            valid = false;
+        }
+    })
+
+    if (valid) {
+        jQuery('label#services_error').removeClass('hidden');
+        jQuery('label#services_error').addClass('is-invalid');
+    } else {
+        jQuery('label#services_error').removeClass('is-invalid');
+        jQuery('label#services_error').addClass('hidden');
+    }
+
+    return valid;
+}
+
+function isOneCheckedMP() {
     var valid = true;
     jQuery('input[name^="payment_methods"]').each(function (index) {
         console.log('index', index)
@@ -78,16 +98,16 @@ var rules = [
     {
         featured_image: {
             required: true,
-            accept: "image/jpeg, image/pjpeg"
+            accept: "image/jpeg, image/pjpeg, image/png"
         },
-        images: { accept: "image/jpeg, image/pjpeg" },
-        video: { accept: "video/*" }
+        images: { accept: "image/jpeg, image/pjpeg, image/png" },
+        video: { accept: "video/mp4, video/3pg, video/mkv"  }
     },
     {
-        'services[]': { minlength: 1 },
-        'payment_methods[efective]': { required: isOneChecked },
-        'payment_methods[bank_transfer]': { required: isOneChecked },
-        'payment_methods[others]': { required: isOneChecked }
+        'services[]': { required: isOneCheckedS },
+        'payment_methods[efective]': { required: isOneCheckedMP },
+        'payment_methods[bank_transfer]': { required: isOneCheckedMP },
+        'payment_methods[others]': { required: isOneCheckedMP }
     },
     {
 
@@ -97,17 +117,57 @@ var rules = [
 var messages = [
     {
         username: {
-            required: 'El nombre de usuario es obligatorio',
-            remote: 'El usuario existe'
+            maxlength: "El usuario no puede contener mas de 50 caracteres",
+            required: 'El usuario es obligatorio',
+            remote: 'El usuario ya se encuentra en uso'
+        },
+        password: {
+            maxlength: "La contraseña no puede contener mas de 10 caracteres",
+            minlength: "La contraseña no puede contener menos de 6 caracteres",
+            required: "La contraseña es obligatoria"
+        },
+        password_repeat: {
+            equalTo: "La confirmacion de contraseña debe coincidir con la contraseña",
+            maxlength: "La confirmacion de contraseña no puede contener mas de 10 caracteres",
+            minlength: "La confirmacion de contraseña no puede contener menos de 6 caracteres",
+            required: "La confirmacion de contraseña es obligatoria"
+        },
+        first_name: { required: "Los nombres son obligatorios" },
+        last_name: { required: "Los apellidos son obligatorios" },
+        email: {
+            email: "El formato no es correcto",
+            required: "El email es obligatorio",
+            remote: "El email ya se encuentra en uso"
+        },
+        'phone[value]': { required: "El telefono es obligatorio" }
+    },
+    {
+        visible_name: {
+            required: "El nombre para mostrar en el anuncio es obligatorio"
+        },
+        stature: {
+            required: "La estatura es obligatoria",
+            number: "La estatura solo puede contener numeros"
+        },
+        weight: {
+            required: "El peso es obligatorio",
+            number: "El peso solo puede contener numeros"
+        },
+        description: {
+            required: "El texto del anuncio es obligatorio",
+            maxlength: "El texto del anuncio no puede contener mas de 1000 caracteres"
         }
     },
     {
-
+        featured_image: {
+            required: "La imagen destacada es obligatoria",
+            accept: "El formato del archivo es incorrecto, solo se aceptan imagenes (.jpg, .png)"
+        },
+        images: { accept: "El formato del archivo es incorrecto, solo se aceptan imagenes (.jpg, .png)" },
+        video: { accept: "El formato del archivo es incorrecto, solo se aceptan videos" }
     },
     {
-
-    },
-    {
+        'services[]': { required: '' },
         'payment_methods[efective]': { required: '' },
         'payment_methods[bank_transfer]': { required: '' },
         'payment_methods[others]': { required: '' }
@@ -117,6 +177,23 @@ var messages = [
 
 
 jQuery(document).ready(function () {
+
+    if (jQuery('form#escort-subscription')) {
+
+        var rulesStep = rules[0];
+        var messagesStep = messages[0];
+
+        var form = jQuery('form#escort-subscription');
+
+        var validator = form.validate({
+            errorClass: 'is-invalid',
+            validClass: 'is-valid',
+            rules: rulesStep,
+            messages: messagesStep,
+        });
+
+    }
+
     jQuery(".next-step").click(function () {
 
         var rulesStep = rules[parseInt(jQuery(this).data('step')) - 1];
@@ -325,4 +402,111 @@ jQuery(document).ready(function () {
     });
 
     jQuery('a[rel="light"]').fancybox();
+
+
+    if(jQuery('form#escort-edit-info')) {
+
+        console.log('info')
+        jQuery('form#escort-edit-info').validate({
+            errorClass: 'is-invalid',
+            validClass: 'is-valid',
+            rules: {
+                'phone[value]': { required: true },
+                visible_name: {
+                    required: true
+                },
+                stature: {
+                    required: true,
+                    number: true
+                },
+                weight: {
+                    required: true,
+                    number: true
+                },
+                description: {
+                    required: true,
+                    maxlength: 1000
+                }
+            },
+            messages: {
+                'phone[value]': { required: "El telefono es obligatorio" },
+                visible_name: {
+                    required: "El nombre para mostrar en el anuncio es obligatorio"
+                },
+                stature: {
+                    required: "La estatura es obligatoria",
+                    number: "La estatura solo puede contener numeros"
+                },
+                weight: {
+                    required: "El peso es obligatorio",
+                    number: "El peso solo puede contener numeros"
+                },
+                description: {
+                    required: "El texto del anuncio es obligatorio",
+                    maxlength: "El texto del anuncio no puede contener mas de 1000 caracteres"
+                }
+            },
+        });
+    }
+
+
+    if (jQuery('form#escort-edit-photos')) {
+
+        console.log('info')
+        jQuery('form#escort-edit-photos').validate({
+            errorClass: 'is-invalid',
+            validClass: 'is-valid',
+            rules: {
+                featured_image: {
+                    required: true,
+                    accept: "image/jpeg, image/pjpeg, image/png"
+                },
+                images: { accept: "image/jpeg, image/pjpeg, image/png" },
+                video: { accept: "video/mp4, video/3pg, video/mkv" }
+            },
+            messages: {
+                featured_image: {
+                    required: "La imagen destacada es obligatoria",
+                    accept: "El formato del archivo es incorrecto, solo se aceptan imagenes (.jpg, .png)"
+                },
+                images: { accept: "El formato del archivo es incorrecto, solo se aceptan imagenes (.jpg, .png)" },
+                video: { accept: "El formato del archivo es incorrecto, solo se aceptan videos" }
+            },
+        });
+    }
+
+    if (jQuery('form#escort-edit-rates')) {
+
+        console.log('info')
+        jQuery('form#escort-edit-rates').validate({
+            errorClass: 'is-invalid',
+            validClass: 'is-valid',
+            rules: {
+                'payment_methods[efective]': { required: isOneCheckedMP },
+                'payment_methods[bank_transfer]': { required: isOneCheckedMP },
+                'payment_methods[others]': { required: isOneCheckedMP }
+            },
+            messages: {
+                'payment_methods[efective]': { required: '' },
+                'payment_methods[bank_transfer]': { required: '' },
+                'payment_methods[others]': { required: '' }
+            },
+        });
+    }
+
+
+    if (jQuery('form#escort-edit-services')) {
+
+        console.log('info')
+        jQuery('form#escort-edit-services').validate({
+            errorClass: 'is-invalid',
+            validClass: 'is-valid',
+            rules: {
+                'services[]': { required: isOneCheckedS }
+            },
+            messages: {
+                'services[]': { required: '' }
+            },
+        });
+    }
 });

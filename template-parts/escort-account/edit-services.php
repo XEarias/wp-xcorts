@@ -7,7 +7,7 @@
 ?>
 
 
-<form action="<?php echo admin_url('/admin-post.php'); ?>" method="POST" class="escort-form" id="escort-edit-info" novalidate>
+<form action="<?php echo admin_url('/admin-post.php'); ?>" method="POST" class="escort-form" id="escort-edit-services" novalidate>
     
     <input type="hidden" name="action" value="update_escort_ad" />
     <input type="hidden" name="redirect_p" value="services" />
@@ -29,6 +29,15 @@
                             <?php endforeach;?>
                         </optgroup>
                         <?php endif;?>
+                    <?php endforeach;?>
+                </select>
+            </div>
+
+            <div class="col-md-4 form-group">
+                <label for="zone">Dias de atención</label>
+                <select class="form-control" id="working_days" name="working_days">
+                    <?php foreach($working_days as $working_day):?>
+                        <option value="<?php echo $working_day;?>"><?php echo $working_day;?></option>
                     <?php endforeach;?>
                 </select>
             </div>

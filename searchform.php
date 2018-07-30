@@ -3,6 +3,25 @@
 
     $zones = get_escorts_zones(); 
     $services = get_escorts_services(); 
+
+    if (isset($_GET['s'])) {
+        $hair_color_g = $_GET['basic_info']['hair_color'];
+        $skin_color_g = $_GET['basic_info']['skin_color'];
+        $complexion_g = $_GET['basic_info']['complexion'];
+        $stature_g = $_GET['basic_info']['stature'];
+        $age_g = $_GET['basic_info']['age'];
+        $zone_g = $_GET['zone'];
+        $services_g = $_GET['services'];
+    } else {
+        $hair_color_g = false;
+        $skin_color_g = false;
+        $complexion_g = false;
+        $stature_g = false;
+        $age_g = false;
+        $age_g = false;
+        $services_g = false;
+    }
+
 ?>
 
 <section class="filterbar-container container">
@@ -12,34 +31,34 @@
         <div class="row" style="margin-top: 25px">
             <div class="col-md-2 form-group">
                 <select name="basic_info[hair_color]" id="hair_color" class="form-control">
-                    <option selected value="">Color de cabello</option>
+                    <option <?php if($hair_color_g == ''): ?>selected<?php endif; ?> value="">Color de cabello</option>
                     <?php foreach($hair_colors as $hair_color):?>
-                        <option value="<?= $hair_color ?>"><?= $hair_color ?></option>
+                        <option value="<?= $hair_color ?>" <?php if($hair_color_g == $hair_color): ?>selected<?php endif; ?>><?= $hair_color ?></option>
                     <?php endforeach;?>
                 </select>
             </div>
             <div class="col-md-2 form-group">
                 <select name="basic_info[skin_color]" id="skin_color" class="form-control">
-                    <option selected value="">Color de piel</option>
+                    <option <?php if($skin_color_g == ''): ?>selected<?php endif; ?> value="">Color de piel</option>
                     <?php foreach($skin_colors as $skin_color):?>
-                        <option value="<?= $skin_color ?>"><?= $skin_color ?></option>
+                        <option value="<?= $skin_color ?>" <?php if($skin_color_g == $skin_color): ?>selected<?php endif; ?>><?= $skin_color ?></option>
                     <?php endforeach;?>
                 </select>
             </div>
             <div class="col-md-2 form-group">
                 <select name="basic_info[complexion]" id="complexion" class="form-control">
-                    <option selected value="">Complexion</option>
+                    <option <?php if($complexion_g == ''): ?>selected<?php endif; ?> value="">Complexion</option>
                     <?php foreach($complexions as $complexion):?>
-                        <option value="<?= $complexion ?>"><?= $complexion ?></option>
+                        <option value="<?= $complexion ?>" <?php if($complexion_g == $complexion): ?>selected<?php endif; ?>><?= $complexion ?></option>
                     <?php endforeach;?>
                 </select>
             </div>
             <div class="col-md-2 form-group">
                 <select name="basic_info[stature]" id="stature" class="form-control">
-                    <option selected value="">Estatura</option>
-                    <option value="1">Hasta 1,60 mts</option>
-                    <option value="2">Hasta 1,70 mts.</option>
-                    <option value="3">Sobre 1,70 mts.</option>
+                    <option <?php if($stature_g == ''): ?>selected<?php endif; ?> value="">Estatura</option>
+                    <option <?php if($stature_g == 1): ?>selected<?php endif; ?> value="1">Hasta 1,60 mts</option>
+                    <option <?php if($stature_g == 2): ?>selected<?php endif; ?> value="2">Hasta 1,70 mts.</option>
+                    <option <?php if($stature_g == 3): ?>selected<?php endif; ?> value="3">Sobre 1,70 mts.</option>
                 </select>
             </div>
             <div class="col-md-4 form-group text-right">
@@ -56,21 +75,21 @@
                     <div class="row text-center">
                         <div class="col-md-2 offset-md-4 form-group">
                             <select name="basic_info[age]" id="skin_color" class="form-control">
-                                <option selected value="">Edad</option>
+                                <option <?php if($zone_g == ''): ?>selected<?php endif; ?> value="">Edad</option>
                                 <?php foreach($ages as $age):?>
-                                    <option value="<?= $age ?>"><?= $age ?></option>
+                                    <option value="<?= $age ?>" <?php if($age_g == $age): ?>selected<?php endif; ?>><?= $age ?></option>
                                 <?php endforeach;?>
                             </select>
                         </div>
                         <div class="col-md-2 form-group">
                             <select class="form-control" id="zone" name="zone">
-                                <option selected value="">Ciudad</option>
+                                <option <?php if($zone_g == ''): ?>selected<?php endif; ?> value="">Ciudad</option>
                                 <?php foreach($zones as $zone):?>
                                     <?php if(count($zone["childs"])): ?>
                                         <?php $child_zones = $zone["childs"]; ?>
                                         <optgroup label="<?php echo $zone["name"]; ?>">
                                             <?php foreach($child_zones as $child_zone):?>
-                                            <option value="<?php echo $child_zone["ID"];?>"><?php echo $child_zone["name"];?></option>
+                                            <option value="<?php echo $child_zone["ID"];?>" <?php if($zone_g == $child_zone["ID"]): ?>selected<?php endif; ?>><?php echo $child_zone["name"];?></option>
                                             <?php endforeach;?>
                                         </optgroup>
                                     <?php endif;?>
@@ -79,14 +98,12 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 text-right form-group" style="display:flex; justify-content: flex-end; align-items: center">
-                            Tarifa:
-                            <input type="text" id="" name="" class="form-control" placeholder="Min" style="width:100px;margin-left:4px;margin-right:4px"> - <input type="text" id="" name="" class="form-control" placeholder="Max" style="width:100px;;margin-left:4px">
+                        <div class="col-md-6 text-right">
                         </div>
                         <div class="col-md-6 form-group">
                             <?php foreach($services as $service):?>
                                 <div class="form-check">
-                                    <input class="form-check-input"type="checkbox" name="services[]" id="<?php echo $service["name"];?>" value="<?php echo $service["ID"];?>">
+                                    <input class="form-check-input"type="checkbox" name="services[]" id="<?php echo $service["name"];?>" value="<?php echo $service["ID"];?>" <?php if($services_g) { echo (in_array($service["ID"], $services_g)) ? "checked='checked'" : ""; } ?>>
                                     <label class="form-check-label" for="<?php echo $service["name"];?>">
                                         <?php echo $service["name"];?>
                                     </label>

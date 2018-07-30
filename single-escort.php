@@ -4,14 +4,16 @@
 
     <?php $escort = get_escort($post->ID); ?>
     <?php $media = get_escort_ad_attachments($post->ID); ?>
-
 <?php endwhile;?>
 
 <section class="single-escort-container container pt-5">
     <div class="row">
 
-        <div class="col-md-12 pt-5 pb-5">
+        <div class="col-md-12 pt-5 pb-5" style="background-color: beige;">
             <div class="your-class">
+                <div>
+                    <a href="<?= $escort['image'] ?>" rel="light"><img src="<?= $escort['image'] ?>"></a>
+                </div>
                 <?php foreach ($media['images'] as $value) : ?>
                 <div>
                     <a href="<?= $value['url'] ?>" rel="light"><img src="<?= $value['url'] ?>"></a>
@@ -19,13 +21,39 @@
                 <?php endforeach; ?>
             </div>
         </div>
+
+        <?php if(count($media['videos'])): ?>
+        <div class="col-md-12" style="text-align: center;margin-top: 5px;">
+            <video width="400" controls>
+                <source src="<?= $media['videos'][0]['url'] ?>" type="video/mp4">
+                Tu navegador no soporta HTML5 video
+            </video>
+        </div>
+        <?php endif; ?>
     
     </div>
+
+    <!--<div class="row">
+        <div class="col-md-12 pt-5 pb-5">
+            <?php if($escort["subscription"]["plan"]["badge"]): ?>
+            <img style=""  src="<?php echo $escort["subscription"]["plan"]["badge"]; ?>"/>
+            <?php endif;?>
+
+            <?php if($escort["is_new"]): ?>
+            <img style=""  src="<?php echo get_template_directory_uri() . '/assets/img/badges/new.png'; ?>"/>
+            <?php endif;?>
+
+            <?php if(count($escort["videos"])): ?>
+            <img style=""  src="<?php echo get_template_directory_uri() . '/assets/img/badges/video.png'; ?>"/>
+            <?php endif;?>
+        </div>
+    </div>-->
 
     <div class="row">
 
         <div class="col-md-8 pt-4 pb-2 pl-0 pr-0">
             <h2 class="single-escort-name"><?= $escort['name'] ?> </h2>
+            <h1 class="single-escort-name" style="visibility:hidden;height: 0;margin: 0;">Escort <?= $escort['name'] ?><?php if(count($escort['zone'])): ?>, <?= $escort['zone'][0]['name'] ?><?php endif; ?>, <?= $escort['basic_info']['age'] ?> años </h1>
             <?php if(count($escort['zone'])): ?>
                 <p class="single-escort-link"><a href="<?= $escort['zone'][0]['url'] ?>">Escorts en <strong><?= $escort['zone'][0]['name'] ?></strong></a></p>
             <?php else: ?>
@@ -57,6 +85,7 @@
                 <div class="single-escort-info-card-header">INFORMACION Y DATOS</div>
                 <ul>
                     <li>Edad <span><?= $escort['basic_info']['age'] ?> años</span></li>
+                    <li>Pais de origen <span><?= $escort['basic_info']['origin'] ?></span></li>
                     <li>
                         Idiomas 
                         <span>
@@ -72,8 +101,11 @@
                             <?php endforeach;?>    
                         </span>
                     </li>
+                    <li>Orientación sexual <span><?= $escort['basic_info']['sexual_orientation'] ?></span></li>
                     <li>Color de pelo <span><?= $escort['basic_info']['hair_color'] ?></span></li>
-                    <li>Color de ojos <span><?= $escort['basic_info']['skin_color'] ?></span></li>
+                    <li>Color de ojos <span><?= $escort['basic_info']['eyes_color'] ?></span></li>
+                    <li>Color de piel <span><?= $escort['basic_info']['skin_color'] ?></span></li>
+                    <li>Complexión <span><?= $escort['basic_info']['complexion'] ?></span></li>
                     <li>Estatura <span><?= $escort['basic_info']['stature'] ?></span></li>
                     <li>Peso <span><?= $escort['basic_info']['weight'] ?></span></li>
                     <li>
@@ -115,6 +147,8 @@
 
                     <?php endforeach;?>     
                     
+                    <li>Dias disponibles<span><?= $escort['working_days'] ?></span></li>
+
                     <?php $paymethods = $escort["payment_methods"]; ?>
                     
                     <li>Metodos de pago <span>

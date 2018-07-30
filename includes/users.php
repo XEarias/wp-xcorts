@@ -268,15 +268,15 @@ function update_escort_ad(){
 
     $escort_ad_id = $escort_ad->ID;
 
-    if(isset($_POST['new_subscription'])){
+    if(isset($_POST['new_plan'])){
 
-        $new_subscription = $_POST['new_subscription'];
+        $new_subscription = $_POST['new_plan'];
 
         $old_subscription = get_or_set_subscription($escort_ad_id );
 
         if($old_subscription['status'] == 'paid' || $old_subscription['status'] == 'finished'){
 
-            add_new_subscription($escort_ad_id, $new_subscription['plan'], $new_subscription['type']);
+            add_new_subscription($escort_ad_id, $new_subscription['name'], $new_subscription['type']);
        
         }
 

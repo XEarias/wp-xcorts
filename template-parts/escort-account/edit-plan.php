@@ -6,7 +6,7 @@
 
 ?>
 
-<form action="<?php echo admin_url('/admin-post.php'); ?>" method="POST" class="escort-form" id="escort-edit-info" novalidate>
+<form action="<?php echo admin_url('/admin-post.php'); ?>" method="POST" class="escort-form" id="escort-edit-plan" novalidate>
     
     <input type="hidden" name="action" value="update_escort_ad" />
     <input type="hidden" name="redirect_p" value="plan" />
@@ -106,11 +106,11 @@
 
         <div style="visibility: hidden;">
             <?php foreach ($plans as $name => $plan): ?>
-                <input type="radio" id="<?= $name ?>" name="plan[name]" value="<?= $name ?>" <?php if ($subscription['plan']['name'] == $name) { echo 'checked'; } ?>>
+                <input type="radio" id="<?= $name ?>" name="new_plan[name]" value="<?= $name ?>" <?php if ($subscription['plan']['name'] == $name) { echo 'checked'; } ?>>
             <?php endforeach; ?>
 
-            <input type="radio" id="weekly" name="plan[type]" value="weekly" <?php if ($subscription['plan']['type'] == 'weekly') { echo 'checked'; } ?>>
-            <input type="radio" id="monthly" name="plan[type]" value="monthly" <?php if ($subscription['plan']['name'] == 'montly') { echo 'checked'; } ?>>
+            <input type="radio" id="weekly" name="new_plan[type]" value="weekly" <?php if ($subscription['plan']['type'] == 'weekly') { echo 'checked'; } ?>>
+            <input type="radio" id="monthly" name="new_plan[type]" value="monthly" <?php if ($subscription['plan']['name'] == 'montly') { echo 'checked'; } ?>>
         </div>
 
         <input type="submit" value="Guardar" />

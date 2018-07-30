@@ -10,7 +10,14 @@
     $meta_hair_color = get_post_meta($post_id, "escort_hair_color", true);
     $meta_profession = get_post_meta($post_id, "escort_profession", true);
     $meta_measure = get_post_meta($post_id, "escort_measure", true) ? get_post_meta($post_id, "escort_measure", true) : [];
-    $meta_phone = get_post_meta($post_id, "escort_phone", true) ? get_post_meta($post_id, "escort_phone", true) : []; 
+    $meta_phone = get_post_meta($post_id, "escort_phone", true) ? get_post_meta($post_id, 
+    "escort_phone", true) : []; 
+
+    $meta_eyes_color = get_post_meta($post_id, "escort_eyes_color", true);
+    $meta_complexion = get_post_meta($post_id, "escort_complexion", true);
+    $meta_origin = get_post_meta($post_id, "escort_origin", true);
+    $meta_sexual_orientation = get_post_meta($post_id, "escort_sexual_orientation", true);
+    $meta_depilation = get_post_meta($post_id, "escort_depilation", true);
 
 ?>
 
@@ -64,20 +71,13 @@
 
         <div class="row">
             <div class="col-md-12 form-group">
-                <label for="profession">Profesion</label>
-                <input type="text" class="form-control" id="profession" name="profession" placeholder="Profesion" value="<?php echo ($meta_profession) ? $meta_profession : ''; ?>">
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12 form-group">
                 <label for="description">Descripción (*)</label>
                 <textarea class="form-control" id="description" name="description" placeholder="Descripcion"><?= $user['ad']['description'] ?></textarea>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-4 form-group">
+            <div class="col-md-3 form-group">
                 <label for="age">Que idiomas hablas</label>
                 <?php foreach($langs as $key => $lang):?>
                     <div class="form-check">
@@ -88,7 +88,15 @@
                     </div>
                 <?php endforeach;?>
             </div>
-            <div class="col-md-4 form-group">
+            <div class="col-md-3 form-group">
+                <label for="origin">Que nacionalidad tienes?</label>
+                <select class="form-control" id="origin" name="origin">
+                    <?php foreach($countries as $country):?>
+                        <option value="<?= $country ?>" <?php echo ($meta_origin == $country) ?  "selected='selected'" : "" ?>><?= $country ?></option>
+                    <?php endforeach;?>
+                </select>
+            </div>
+            <div class="col-md-3 form-group">
                 <label for="hair_color">Color de cabello</label>
                 <select class="form-control" id="hair_color" name="hair_color">
                     <?php foreach($hair_colors as $hair_color):?>
@@ -96,7 +104,7 @@
                     <?php endforeach;?>
                 </select>
             </div>
-            <div class="col-md-4 form-group">
+            <div class="col-md-3 form-group">
                 <label for="skin_color">Color de piel</label>
                 <select class="form-control" id="skin_color" name="skin_color">
                     <?php foreach($skin_colors as $skin_color):?>
@@ -107,16 +115,51 @@
         </div>
 
         <div class="row">
+            <div class="col-md-3 form-group">
+                <label for="eyes_color">Color de ojos</label>
+                <select class="form-control" id="eyes_color" name="eyes_color">
+                    <?php foreach($eyes_colors as $eyes_color):?>
+                        <option value="<?php echo $eyes_color;?>" <?php echo ($meta_eyes_color == $eyes_color) ?  "selected='selected'" : "" ?>><?php echo $eyes_color;?></option>
+                    <?php endforeach;?>
+                </select>
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="sexual_orientation">Orientación Sexual</label>
+                <select class="form-control" id="sexual_orientation" name="sexual_orientation">
+                    <?php foreach($sexual_orientations as $sexual_orientation):?>
+                        <option value="<?= $sexual_orientation ?>" <?php echo ($meta_sexual_orientation == $sexual_orientation) ?  "selected='selected'" : "" ?>><?= $sexual_orientation ?></option>
+                    <?php endforeach;?>
+                </select>
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="complexion">Complexión</label>
+                <select class="form-control" id="complexion" name="complexion">
+                    <?php foreach($complexions as $complexion):?>
+                        <option value="<?php echo $complexion;?>" <?php echo ($meta_complexion == $complexion) ?  "selected='selected'" : "" ?>><?php echo $complexion;?></option>
+                    <?php endforeach;?>
+                </select>
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="depilation">Depilación</label>
+                <select class="form-control" id="depilation" name="depilation">
+                    <?php foreach($depilations as $depilation):?>
+                        <option value="<?php echo $depilation;?>" <?php echo ($meta_depilation == $depilation) ?  "selected='selected'" : "" ?>><?php echo $depilation;?></option>
+                    <?php endforeach;?>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col-md-12">
                 <label for="chest">Medidas</label>
             </div>
-            <div class="col-md-4 form-group">
+            <div class="col-md-3 form-group">
                 <input type="text" class="form-control" id="chest" name="measure[chest]" placeholder="Pechos" value="<?php echo ($meta_measure && isset($meta_measure['chest'])) ? $meta_measure['chest'] : "" ?>">
             </div>
-            <div class="col-md-4 form-group">
+            <div class="col-md-3 form-group">
                 <input type="text" class="form-control" id="waist" name="measure[waist]" placeholder="Cintura" value="<?php echo ($meta_measure && isset($meta_measure['waist'])) ? $meta_measure['waist'] : "" ?>">
             </div>
-            <div class="col-md-4 form-group">
+            <div class="col-md-3 form-group">
                 <input type="text" class="form-control" id="hip" name="measure[hip]" placeholder="Caderas" value="<?php echo ($meta_measure && isset($meta_measure['hip'])) ? $meta_measure['hip'] : "" ?>">
             </div>
         </div>

@@ -2,7 +2,6 @@
 
 <?php get_template_part( 'template-parts/escort-slider' ); ?>
 
-
 <?php get_search_form(); ?>
 
 <section class="container">
