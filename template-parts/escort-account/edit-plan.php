@@ -16,21 +16,29 @@
         <h4>Plan</h4>
 
         <div class="row" style="margin-top: 25px">
-            <div class="col-md-4">
+
+            <div class="col-md-3">
+                <div style="background: #54c358; text-align: center; color: white; padding: 10px;">
+                    PLAN:
+                    <?= strtoupper($subscription['plan']['name']) ?>
+                </div>
+            </div>
+
+            <div class="col-md-3">
                 <div style="background: #54c358; text-align: center; color: white; padding: 10px;">
                     INICIO:
                     <?= $subscription['pretty_date'] ?>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div style="background: #54c358; text-align: center; color: white; padding: 10px;">
-                    TIEMPO USADO:
+                    USADO:
                     <?= $subscription['days']['used'] ?> dias
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div style="background: #54c358; text-align: center; color: white; padding: 10px;">
-                    TIEMPO RESTANTE:
+                    RESTANTE:
                     <?= $subscription['days']['left'] ?> dias
                 </div>
             </div>
