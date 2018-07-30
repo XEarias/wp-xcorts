@@ -45,7 +45,7 @@
                             <div class="escort-info-header-left">
                                 <a href="#" class="escort-info-header-link" style="color: #666;"><strong><?php echo $escort['name'];?></strong></a>
                                 <br>
-                                <p>Ciudad</p>
+                                <p><?php echo (count($escort['zone'])) ? $escort['zone'][0]['name'] : "" ?></p>
                             </div>
                             <div class="escort-info-header-right">
                                 <p class="escort-info-header-time">

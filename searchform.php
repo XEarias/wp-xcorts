@@ -4,23 +4,24 @@
     $zones = get_escorts_zones(); 
     $services = get_escorts_services(); 
 
-    if (isset($_GET['s'])) {
-        $hair_color_g = $_GET['basic_info']['hair_color'];
-        $skin_color_g = $_GET['basic_info']['skin_color'];
-        $complexion_g = $_GET['basic_info']['complexion'];
-        $stature_g = $_GET['basic_info']['stature'];
-        $age_g = $_GET['basic_info']['age'];
-        $zone_g = $_GET['zone'];
-        $services_g = $_GET['services'];
-    } else {
-        $hair_color_g = false;
-        $skin_color_g = false;
-        $complexion_g = false;
-        $stature_g = false;
-        $age_g = false;
-        $age_g = false;
-        $services_g = false;
+
+    $hair_color_g = false;
+    $skin_color_g = false;
+    $complexion_g = false;
+    $stature_g = false;
+    $age_g = false;
+   
+    if(isset($_GET['basic_info'])){
+        $hair_color_g = isset($_GET['basic_info']['hair_color']) ? $_GET['basic_info']['hair_color'] : false ;
+        $skin_color_g = isset($_GET['basic_info']['skin_color']) ? $_GET['basic_info']['skin_color'] : false ;
+        $complexion_g = isset($_GET['basic_info']['complexion']) ? $_GET['basic_info']['complexion'] : false;
+        $stature_g = isset($_GET['basic_info']['stature']) ? $_GET['basic_info']['stature'] : false;
+        $age_g = isset($_GET['basic_info']['age']) ? $_GET['basic_info']['age'] : false;
     }
+    
+    $zone_g = isset($_GET['zone']) ? $_GET['zone'] : false;
+    $services_g = isset($_GET['services']) ? $_GET['services'] : false;
+    
 
 ?>
 
