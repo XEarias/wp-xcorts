@@ -50,12 +50,12 @@ function escort_subscription()
 				'edit_item' => "Editar Suscripción",
 				'add_new_item' => "Añadir Nueva Suscripción"
 			],
-			'public' => true,
-			'has_archive' => true,
+			'public' => false,
+			/*'has_archive' => true,
 			"show_in_menu" => true,
 			'exclude_from_search' => true,
 			'show_in_nav_menus' => true,
-			"show_in_admin_bar" => false,
+			"show_in_admin_bar" => false,*/
 			"supports" => ["custom-fields"]
 		]
     );
@@ -278,6 +278,7 @@ function update_escort_status() {
 		$subscription_id = $subscriptions_raw[0]->ID;
 
 		$type = get_post_meta($subscription_id, "subscription_type", true);
+		$plan = get_post_meta($subscription_id, "subscription_plan", true);
 		$timestamp = strtotime($subscriptions_raw[0]->post_date);
 		$pretty_date = date('d-m-Y', $timestamp);
 		$days = days_left($pretty_date , $type);
@@ -292,10 +293,23 @@ function update_escort_status() {
 
 			$result = wp_update_post($update_args);
 
+			$escort_email = get_post_meta($escorts_ad->ID, "escort_email", true);
+
+			$message = "<h5>¡Tu subscrićión al plan ".$plan." ha acabado!</h5>".
+						"<p>Considera renovarla o solicitar otra</p>";
+
+			wp_mail($escort_email, 'Tu subscripción esta cerca de acabar', $message);
+
+
 		} else if((($days["left"] < 5) && ($type == "monthly")) || (($days["left"] < 5) && ($type == "weekly"))){//si esta cerca de vencerse
 
+			$escort_email = get_post_meta($escorts_ad->ID, "escort_email", true);
 
-				//TODO: ENVIAR CORREO
+			$message = "<h5>¡Tu subscrićión al plan ".$plan." está a punto de acabar!</h5>".
+						"<p>Te quedan solo ".$days["left"]." día(s). Considera renovarla o solicitar otra</p>";
+
+			wp_mail($escort_email, 'Tu subscripción esta cerca de acabar', $message);
+
 		}
 
 		$subscriptions[] = $days;

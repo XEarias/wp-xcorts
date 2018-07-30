@@ -94,30 +94,6 @@ $depilations = [
 
 /******** Escorts ********/
 
-function add_escort_type()
-{
-	register_post_type('escort',
-		[
-			'labels' => [
-				'name' => "Escorts",
-				'singular_name' => "Escort",
-				'add_new'  => "Añadir Escort",
-				'edit_item' => "Editar Escort",
-				'add_new_item' => "Añadir Nueva Escort"
-			],
-			'public' => true,
-			'has_archive' => true,
-			"show_in_menu" => true,
-			"exclude_from_search" => true,
-			'show_in_nav_menus' => true,
-			"show_in_admin_bar" => false,
-			"supports" => ["title", "thumbnail", "custom-fields", "editor", "the_excerpt", "author"]
-		]
-    );
-
-}
-add_action('init', 'add_escort_type');
-
 function add_escorts_service_taxonomy() { 
     
     /*** SERVICIOS ***/
@@ -140,7 +116,10 @@ function add_escorts_service_taxonomy() {
         'show_ui' => true,
         'query_var' => true,
         'show_admin_column' => true,
-        'show_in_nav_menus' => true
+        'show_in_nav_menus' => true,
+        'rewrite' => [
+            "slug" => 'servicio'
+        ]
     ];
  
     register_taxonomy( 'escorts_services', 'escort', $args );
@@ -167,12 +146,41 @@ function add_escorts_service_taxonomy() {
         "hierarchical" => true,
         'query_var' => true,
         'show_admin_column' => true,
-        'show_in_nav_menus' => true
+        'show_in_nav_menus' => true,
+        'rewrite' => [
+            "slug" => "ciudad"
+        ]
     ];
  
     register_taxonomy( 'escorts_zones', 'escort', $args );
 }  
 add_action( 'init', 'add_escorts_service_taxonomy');
+
+
+function add_escort_type()
+{
+	register_post_type('escort',
+		[
+			'labels' => [
+				'name' => "Escorts",
+				'singular_name' => "Escort",
+				'add_new'  => "Añadir Escort",
+				'edit_item' => "Editar Escort",
+				'add_new_item' => "Añadir Nueva Escort"
+			],
+			'public' => true,
+			'has_archive' => true,
+			"show_in_menu" => true,
+			"exclude_from_search" => true,
+			'show_in_nav_menus' => true,
+            "show_in_admin_bar" => false,
+			"supports" => ["title", "thumbnail", "custom-fields", "editor", "the_excerpt", "author"]
+		]
+    );
+
+}
+add_action('init', 'add_escort_type');
+
 
 
 function date_diff_helper($start, $days){
@@ -1316,13 +1324,51 @@ function prepare_escorts_by_custom_search (){
     set_query_var( 'escorts', $escorts );
 }
 
-/*
-function test(){
-    prepare_escorts_by_custom_search();
+
+function images_report(){
+    
+
+    if(!isset($_POST['report_nonce']) || !wp_verify_nonce( $_POST['report_nonce'], 'escort-report-image' )){
+        wp_redirect(home_url());
+        die;
+        return;
+    }
+    
+
+    if(!isset($_POST["id"]) || !isset($_POST["url"])){
+        wp_redirect(home_url());
+        die;
+        return;
+    }
+
+    $report_url = $_POST["url"];
+    $escort_ad_id = $_POST["id"];
+
+    $escort_ad = get_post($escort_ad_id);
+
+    if(!$escort_ad){
+        wp_redirect(home_url());
+        die;
+        return;
+    }
+
+    $escort_ad_url = get_post_permalink($escort_ad);
+    $escort_ad_title = $escort_ad->post_title;
+
+    $admin_email = get_bloginfo('admin_email');
+    $message = "<p>Se ha denunciado el siguiente anuncio: </p>".
+                "<a href='".$escort_ad_url."'>".$escort_ad_title."</a>".
+                "<p>Sus fotos pueden encontrarse en:</p>".
+                "<a href='".$report_url."'>".$report_url."</a>";
+
+    print_r($message);
+    wp_mail($admin_email, 'Denuncia de Imagen', $message);
+
+    wp_redirect($escort_ad_url);
+    die;
 }
 
-add_action( 'admin_post_nopriv_xxx', 'test' );
-add_action( 'admin_post_priv_xxx', 'test' );
-*/
+add_action( 'admin_post_nopriv_report_image', 'images_report' );
+add_action( 'admin_post_priv_report_image', 'images_report' );
 
 ?>

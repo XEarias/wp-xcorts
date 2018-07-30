@@ -133,9 +133,12 @@
         <div class="col-md-12 pt-4 pb-2 pl-0 pr-0">
             <h5 class="text-center">Si las fotos de esta ficha son falsas, puedes denunciarlas aquí. ¿Dónde has visto estas fotos?</h5>
             <div>
-                <form class="form-inline" style="justify-content: center;">
+                <form method="POST" action="<?php echo admin_url('/admin-post.php');?>" class="form-inline" style="justify-content: center;">
+                    <input type="hidden" name="action" value="report_image"/>
+                    <input type="hidden" name="id" value="<?php echo $escort["ID"]; ?>"/>
+                    <?php wp_nonce_field("escort-report-image", "report_nonce"); ?>
                     <div class="form-group mx-sm-3 mb-2">
-                        <input type="text" class="form-control" id="denuncia" placeholder="https://">
+                        <input type="text" class="form-control" id="denuncia" name="url" placeholder="https://">
                     </div>
                     <button type="submit" class="btn mb-2" style="background-color: #f39; color: white; border-radius:0;">DENUNCIAR</button>
                 </form>
