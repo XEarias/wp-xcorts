@@ -277,6 +277,15 @@ $services = get_escorts_services();
                         </div>
 
                         <div class="col-md-4 form-group">
+                            <label for="zone">Dias de atención</label>
+                            <select class="form-control" id="working_days" name="working_days">
+                                <?php foreach($working_days as $working_day):?>
+                                    <option value="<?php echo $working_day;?>"><?php echo $working_day;?></option>
+                                <?php endforeach;?>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 form-group">
                             <label for="services">Servicios (*)</label>
                             <?php foreach($services as $service):?>
                                 <div class="form-check">
@@ -286,6 +295,7 @@ $services = get_escorts_services();
                                     </label>
                                 </div>
                             <?php endforeach;?>
+                            <label id="services_error" class="hidden" for="services"> Debe seleccionar al menos un servicio</label>
                         </div>
                     </div>
 

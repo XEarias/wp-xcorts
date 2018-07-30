@@ -40,9 +40,15 @@
     set_query_var( 'ages', $ages );
     set_query_var( 'hair_colors', $hair_colors );
     set_query_var( 'langs', $langs );
+    set_query_var( 'countries', $countries );
     set_query_var( 'skin_colors', $skin_colors );
     set_query_var( 'payment_methods', $payment_methods );
     set_query_var( 'phone_permissions', $phone_permissions );
+    set_query_var( 'eyes_colors', $eyes_colors);
+    set_query_var( 'sexual_orientations', $sexual_orientations);
+    set_query_var( 'complexions', $complexions);
+    set_query_var( 'depilations', $depilations);
+    set_query_var( 'working_days', $working_days);
 
     $zones = get_escorts_zones(); 
     $services = get_escorts_services(); 

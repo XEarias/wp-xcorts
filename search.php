@@ -1,6 +1,5 @@
 <?php get_header(); ?>
 
-
 <?php get_search_form(); ?>
 
 <?php prepare_escorts_by_custom_search(); ?>

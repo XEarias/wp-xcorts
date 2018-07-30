@@ -7,7 +7,7 @@
 
 ?>
 
-<form action="<?php echo admin_url('/admin-post.php'); ?>" method="POST" class="escort-form" id="escort-edit-info" novalidate>
+<form action="<?php echo admin_url('/admin-post.php'); ?>" method="POST" class="escort-form" id="escort-edit-rates" novalidate>
     
     <input type="hidden" name="action" value="update_escort_ad" />
     <input type="hidden" name="redirect_p" value="rates" />
@@ -29,7 +29,7 @@
                     <label for="<?php echo $rate; ?>"><?php echo $rate; ?></label>
                     <input type="text" class="form-control" id="<?php echo $rate; ?>" name="rates[<?php echo $key; ?>]" placeholder="<?php echo $rate; ?>" value="<?php echo ($meta_rates && isset($meta_rates[$key])) ? $meta_rates[$key] : "" ;?>">
                 </div>
-            <?php if ($i == 3) { $i = 1; echo '</div>'; } else { $i++; } ?>
+            <?php if ($i == 3 || $rate == "Viajes") { $i = 1; echo '</div>'; } else { $i++; } ?>
         <?php endforeach;?>
         
         <div class="row">
