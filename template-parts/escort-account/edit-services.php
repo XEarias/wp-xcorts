@@ -3,7 +3,7 @@
     $post_id = $user['ad']['ID'];
 
     $escort_services = get_escort_ad_services($post_id);
-
+    $escort_zones = get_escort_ad_zones($post_id);
 ?>
 
 
@@ -25,14 +25,9 @@
                             <?php $child_zones = $zone["childs"]; ?>
                         <optgroup label="<?php echo $zone["name"]; ?>">
                             <?php foreach($child_zones as $child_zone):?>
-                            <option value="<?php echo $child_zone["ID"];?>"><?php echo $child_zone["name"];?></option>
+                            <option  value="<?php echo $child_zone["ID"];?>" <?php echo ($escort_zones[0]['name'] == $child_zone["name"]) ?  "selected='selected'" : "" ?>><?php echo $child_zone["name"];?></option>
                             <?php endforeach;?>
                         </optgroup>
-
-                        <?php else: ?>
-
-                        <option  value="<?php echo $zone["ID"];?>"><?php echo $zone["name"];?></option>
-
                         <?php endif;?>
                     <?php endforeach;?>
                 </select>
@@ -66,6 +61,7 @@
                         </label>
                     </div>
                 <?php endforeach;?>
+                <label id="services_error" class="hidden" for="services"> Debe seleccionar al menos un servicio</label>
             </div>
         </div>
 

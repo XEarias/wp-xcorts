@@ -854,6 +854,26 @@ function get_escort_ad_services($escort_ad_id){
     return $services;
 }
 
+function get_escort_ad_zones($escort_ad_id){
+    $zones_raw = get_the_terms( $escort_ad_id, "escorts_zones" );
+
+    $zones = [];
+
+    if($zones_raw){
+        foreach($zones_raw as $zone_raw){
+
+            $zone_url = get_term_link( $zone_raw, "escorts_zones" );
+            $zones[] = [
+                "name" => $zone_raw->name,
+                "ID" => $zone_raw->term_id,
+                "url" => $zone_url
+            ];
+        }
+    }
+
+    return $zones;
+}
+
 function get_escort_extra_info($id, &$data){
     
     GLOBAL $rates, $langs, $payment_methods, $phone_permissions;
@@ -928,21 +948,7 @@ function get_escort_extra_info($id, &$data){
     $services = get_escort_ad_services($id);    
 
     //ZONAS DE SERVICIO
-    $zones_raw = get_the_terms( $id, "escorts_zones" );
-
-    $zones = [];
-
-    if($zones_raw){
-        foreach($zones_raw as $zone_raw){
-
-            $zone_url = get_term_link( $zone_raw, "escorts_zones" );
-            $zones[] = [
-                "name" => $zone_raw->name,
-                "ID" => $zone_raw->term_id,
-                "url" => $zone_url
-            ];
-        }
-    }
+    $zones = get_escort_ad_zones($id);   
 
     $media = get_escort_ad_attachments($id);
 
