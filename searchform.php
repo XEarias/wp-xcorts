@@ -93,7 +93,11 @@
                                             <option value="<?php echo $child_zone["ID"];?>" <?php if($zone_g == $child_zone["ID"]): ?>selected<?php endif; ?>><?php echo $child_zone["name"];?></option>
                                             <?php endforeach;?>
                                         </optgroup>
-                                    <?php endif;?>
+                                    <?php else: ?>
+
+                                    <option  value="<?php echo $zone["ID"];?>" <?php if($zone_g == $zone["ID"]): ?>selected<?php endif; ?>><?php echo $zone["name"];?></option>
+                                    
+                                    <?php endif;?>                                
                                 <?php endforeach;?>
                             </select>
                         </div>

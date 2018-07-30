@@ -28,6 +28,11 @@
                             <option value="<?php echo $child_zone["ID"];?>"><?php echo $child_zone["name"];?></option>
                             <?php endforeach;?>
                         </optgroup>
+
+                        <?php else: ?>
+
+                        <option  value="<?php echo $zone["ID"];?>"><?php echo $zone["name"];?></option>
+
                         <?php endif;?>
                     <?php endforeach;?>
                 </select>
