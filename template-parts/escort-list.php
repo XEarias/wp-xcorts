@@ -11,7 +11,7 @@
         <?php endif; ?>
 
         <?php $langs_escort = $escort["basic_info"]["langs"]; ?>
-        <div data-escort-id="<?php echo $escort['ID'];?>" class="escort-item col-md-2 <?php echo ($offset == 1) ? 'offset-md-1' : ''; ?>">
+        <div data-escort-id="<?php echo $escort['ID'];?>" class="escort-item col-12 col-sm-12 col-md-4 <?php echo ($offset == 1) ? 'offset-md-1' : ''; ?> col-lg-2">
             <a href="<?php echo $escort['url'];?>">
                 <div class="escort-item-internal">
                     <!--IMAGEN DE PLAN-->

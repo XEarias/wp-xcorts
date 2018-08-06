@@ -459,7 +459,8 @@ form#loginform p input[type=submit] {
     margin-top: 30px;
 	overflow: hidden;
 	/*CSS counters to number the steps*/
-	counter-reset: step;
+    counter-reset: step;
+    padding: 0;
 }
 #progressbar li {
 	list-style-type: none;
@@ -692,6 +693,7 @@ button.slick-prev.slick-arrow {
     top: 40%;
     background-color: black;
     color: white;
+    z-index: 4;
 }
 
 button.slick-next.slick-arrow {
@@ -703,4 +705,55 @@ button.slick-next.slick-arrow {
     top: 40%;
     background-color: black;
     color: white;
+    z-index: 4;
+}
+
+time {
+    font-style: oblique;
+    color: grey;
+}
+
+#fancybox-content {
+    background: white;
+}
+
+@media (max-width: 575.98px) {
+    .single-escort-container {
+        padding-top: 0 !important;
+    }
+    .name-phone , .basic-info{
+        padding: 0 15px !important;
+    }
+    .nav-link {
+        text-align: center;
+    }
+    .nav-link button {
+        width: 100%;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .basic-info{
+        padding: 0 15px !important;
+    }
+    .nav-link {
+        text-align: center;
+    }
+    .nav-link button {
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .nav-link {
+        text-align: center;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    
+}
+
+@media (min-width: 1200px) {
+    
 }

@@ -72,8 +72,7 @@
             <div class="col-md-12">
                 <label>Video</label>
                 <div class="custom-file">
-                    <input type="file" name="video" class="custom-file-input" id="video" lang="es">
-                    <label class="custom-file-label" for="video">Seleccionar video</label>
+                    <input type="file" name="video" id="video" lang="es">
                 </div>
                 <?php if(count($media['videos'])): ?>
                 <div style="text-align: center;margin-top: 5px;">

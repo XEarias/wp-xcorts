@@ -24,7 +24,7 @@
 
         <?php if(count($media['videos'])): ?>
         <div class="col-md-12" style="text-align: center;margin-top: 5px;">
-            <video width="400" controls>
+            <video width="400" controls style="max-width:100%">
                 <source src="<?= $media['videos'][0]['url'] ?>" type="video/mp4">
                 Tu navegador no soporta HTML5 video
             </video>
@@ -51,7 +51,7 @@
 
     <div class="row">
 
-        <div class="col-md-8 pt-4 pb-2 pl-0 pr-0">
+        <div class="name-phone col-md-8 pt-4 pb-2 pl-0 pr-0">
             <h2 class="single-escort-name"><?= $escort['name'] ?> </h2>
             <h1 class="single-escort-name" style="visibility:hidden;height: 0;margin: 0;">Escort <?= $escort['name'] ?><?php if(count($escort['zone'])): ?>, <?= $escort['zone'][0]['name'] ?><?php endif; ?>, <?= $escort['basic_info']['age'] ?> años </h1>
             <?php if(count($escort['zone'])): ?>
@@ -60,7 +60,7 @@
                 <p class="single-escort-link"><a href="<?= home_url() ?>">Ver mas <strong>chicas</strong></a></p>
             <?php endif; ?>
         </div>
-        <div class="col-md-4 pt-4 pb-2 pl-0 pr-0 text-right"> 
+        <div class="name-phone col-md-4 pt-4 pb-2 pl-0 pr-0 text-right"> 
             <span class="single-escort-phone">
                 <?= ($escort['basic_info']['phone']['value']) ? $escort['basic_info']['phone']['value'] : 'N/A'; ?>
             </span>
@@ -73,14 +73,14 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12 pt-4 pb-2 pl-0 pr-0">
+        <div class="name-phone col-md-12 pt-4 pb-2 pl-0 pr-0">
             <h4 style="color:#F39" class="text-center">¡Tu guía de putas de lujo!</h4>
             <p style="text-align: justify; font-size: 13px;"><?= ($escort['description']) ? $escort['description'] : '...' ?></p>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-4 pl-0 pr-3 mb-3">
+        <div class="basic-info col-md-4 pl-0 pr-3 mb-3">
             <div class="single-escort-info-card p-2">
                 <div class="single-escort-info-card-header">INFORMACION Y DATOS</div>
                 <ul>
@@ -125,7 +125,7 @@
                 </ul>
             </div>
         </div>
-        <div class="col-md-4 pl-3 pr-3 mb-3">
+        <div class="basic-info col-md-4 pl-3 pr-3 mb-3">
             <div class="single-escort-info-card p-2">
                 <div class="single-escort-info-card-header">SERVICIOS</div>
                 <?php $services = $escort["services"]; ?>
@@ -136,7 +136,7 @@
                 <?php endforeach;?>    
             </div>
         </div>
-        <div class="col-md-4 pl-3 pr-0 mb-3">
+        <div class="basic-info col-md-4 pl-3 pr-0 mb-3">
             <div class="single-escort-info-card p-2">
                 <div class="single-escort-info-card-header">TARIFAS</div>
                 <ul>
@@ -186,11 +186,11 @@
 
 <?php get_template_part( 'template-parts/escort-list' ); ?>
 
-<section>
+<section class="single-escort-container container">
 
     <div class="row">
         <div class="col-md-12 text-center">
-            <a class="btn mb-2" style="background-color: #f39; color: white; border-radius:0;">VER MAS PUTAS</a>
+            <a class="btn mb-2" style="background-color: #f39; color: white; border-radius:0;">VER MAS ESCORTS</a>
         </div>
     </div>
 

@@ -37,7 +37,7 @@
 
         <input name="s" value=" " type="hidden"/>
         <div class="row" style="margin-top: 25px">
-            <div class="col-md-2">
+            <div class="col-md-2 form-group">
                 <select name="basic_info[hair_color]" id="hair_color" class="form-control">
                     <option <?php if($hair_color_g == ''): ?>selected<?php endif; ?> value="">Color de cabello</option>
                     <?php foreach($hair_colors as $hair_color):?>
@@ -45,7 +45,7 @@
                     <?php endforeach;?>
                 </select>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 form-group">
                 <select name="basic_info[skin_color]" id="skin_color" class="form-control">
                     <option <?php if($skin_color_g == ''): ?>selected<?php endif; ?> value="">Color de piel</option>
                     <?php foreach($skin_colors as $skin_color):?>
@@ -53,7 +53,7 @@
                     <?php endforeach;?>
                 </select>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 form-group">
                 <select name="basic_info[complexion]" id="complexion" class="form-control">
                     <option <?php if($complexion_g == ''): ?>selected<?php endif; ?> value="">Complexion</option>
                     <?php foreach($complexions as $complexion):?>
@@ -61,7 +61,7 @@
                     <?php endforeach;?>
                 </select>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 form-group">
                 <select name="basic_info[stature]" id="stature" class="form-control">
                     <option <?php if($stature_g == ''): ?>selected<?php endif; ?> value="">Estatura</option>
                     <option <?php if($stature_g == 1): ?>selected<?php endif; ?> value="1">Hasta 1,60 mts</option>

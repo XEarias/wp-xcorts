@@ -51,6 +51,7 @@ function adding_packages() {
 
     wp_enqueue_style( 'fmp-style', get_stylesheet_uri() );
 
+    wp_enqueue_style( 'load-fa', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' );
 
     wp_localize_script('escort_subscription', 'wp_params', [
         'home_url' => home_url()

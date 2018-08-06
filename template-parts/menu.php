@@ -17,7 +17,7 @@ $login_url = get_page_link($login_page->ID);
 <nav class="navbar navbar-expand-lg navbar-dark  bg-dark" style="background-color: black !important;" id="principal-menu">
   <?php get_template_part('template-parts/custom-logo'); ?>
 
-  <div class="collapse navbar-collapse">
+  <div class="collapse navbar-collapse show">
     <ul class="navbar-nav mr-auto" style="margin: auto;">
     <?php if($menu_items):?>
         <?php foreach($menu_items as $key => $menu_item):?>
@@ -44,21 +44,28 @@ $login_url = get_page_link($login_page->ID);
 
         <?php endforeach;?>
     <?php endif; ?>
-    </ul>
-
+    
     <?php if(is_user_logged_in()): ?>
-        <a href="<?php echo $account_url; ?>">
-        <button class="btn my-2 my-sm-0" style="background-color: rgb(255, 51, 153) !important; color: white; font-size: 14px; font-weight: bold;">MI CUENTA</button>
-        </a>
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo $account_url; ?>" style="padding: 0 1rem;">
+                <button class="btn my-2 my-sm-0" style="background-color: rgb(255, 51, 153) !important; color: white; font-size: 14px; font-weight: bold;">MI CUENTA</button>
+            </a>
+        </li>
     <?php else: ?>
-        <a href="<?php echo $login_url; ?>">
-            <button class="btn my-2 my-sm-0" style="background-color: white !important; color: black; font-size: 14px; font-weight: bold;margin-right: 5px;">INGRESA</button>
-        </a>
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo $login_url; ?>" style="padding: 0 1rem;">
+                <button class="btn my-2 my-sm-0" style="background-color: white !important; color: black; font-size: 14px; font-weight: bold;">INGRESA</button>
+            </a>
+        </li>
 
-        <a href="<?php echo $subscription_url; ?>">
-        <button class="btn my-2 my-sm-0" style="background-color: rgb(255, 51, 153) !important; color: white; font-size: 14px; font-weight: bold;">ANUNCIATE</button>
-        </a>
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo $subscription_url; ?>" style="padding: 0 1rem;">
+                <button class="btn my-2 my-sm-0" style="background-color: rgb(255, 51, 153) !important; color: white; font-size: 14px; font-weight: bold;">ANUNCIATE</button>
+            </a>
+            </a>
+        </li>
     <?php endif; ?>
+    </ul>
   </div>
 
 </nav>

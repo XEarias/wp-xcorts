@@ -45,7 +45,7 @@ $services = get_escorts_services();
 
                     <div class="row">
                         <div class="col-md-4 form-group">
-                            <label for="first_name">Nombes (*)</label>
+                            <label for="first_name">Nombres (*)</label>
                             <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Nombres">
                         </div>
                         <div class="col-md-4 form-group">
@@ -245,8 +245,7 @@ $services = get_escorts_services();
                         <div class="col-md-12">
                             <label>Video</label>
                             <div class="custom-file">
-                                <input type="file" name="video" class="custom-file-input" id="video" lang="es">
-                                <label class="custom-file-label" for="video">Seleccionar video</label>
+                                <input type="file" name="video" id="video" lang="es">
                             </div>
                         </div>
                     </div>
@@ -306,7 +305,7 @@ $services = get_escorts_services();
                     <div class="row" style="margin-top: 25px">
                         <div class="col-md-12">
                             <h5 class="text-center">Tarifas</h5>
-                            <small>Los campos que dejes vacíos se pondrá a "consultar"</small>
+                            <small>Los campos que dejes vacíos se pondrá a "consultar"  Y la opcion que no aplique para tu servicio escribir "No"</small>
                             <br>
                             <br>
                         </div>
