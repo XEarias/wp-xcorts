@@ -4,6 +4,8 @@
 
     $subscription = get_or_set_subscription($post_id);
 
+    $subscription_name = ($subscription['plan']['name'] == 'free') ? 'Inactiva' : $subscription['plan']['name'];
+
 ?>
 
 <form action="<?php echo admin_url('/admin-post.php'); ?>" method="POST" class="escort-form" id="escort-edit-plan" novalidate>
@@ -20,7 +22,7 @@
             <div class="col-md-3">
                 <div style="background: #54c358; text-align: center; color: white; padding: 10px;">
                     PLAN:
-                    <?= strtoupper($subscription['plan']['name']) ?>
+                    <?= strtoupper($subscription_name) ?>
                 </div>
             </div>
 

@@ -18,14 +18,16 @@ $hair_colors = [
     "Rubio",
     "Castaño",
     "Pelirrojo",
-    "Negro"
+    "Negro",
+    "Otro"
 ];
 
 $skin_colors = [
     "Blanca",
     "Negra",
     "Morena",
-    "Apiñonada"
+    "Apiñonada",
+    "Otro"
 ];
 
 $langs = [
@@ -36,6 +38,9 @@ $langs = [
     "IT" => "Italiano",
     "RU" => "Ruso",
     "AR" => "Árabe",
+    "ZI" => "Chino",
+    "NE" => "Noruego",
+    "JP" => "Japones",
     "WE" => "Otro"
 ];
 
@@ -83,7 +88,8 @@ $eyes_colors = [
     "Negros", 
     "Verdes",
     "Azules", 
-    "Grises"
+    "Grises",
+    "Otros"
 ];
 
 $depilations = [
@@ -174,7 +180,10 @@ function add_escort_type()
 			"exclude_from_search" => true,
 			'show_in_nav_menus' => true,
             "show_in_admin_bar" => false,
-			"supports" => ["title", "thumbnail", "custom-fields", "editor", "the_excerpt", "author"]
+            "supports" => ["title", "thumbnail", "custom-fields", "editor", "the_excerpt", "author"],
+            'rewrite' => [
+                "slug" => "escort"
+            ]
 		]
     );
 
@@ -1174,7 +1183,7 @@ function get_escorts($options = []){
 
             get_escort_extra_info($escort_raw_id, $escort);
             
-            if($escort["subscription"]["plan"]["name"] != "free" && $escort["subscription"]["status"] == 'default'){
+            if($escort["subscription"]["plan"]["name"] == "free" || $escort["subscription"]["status"] == 'default'){
                 continue;
             }
 
