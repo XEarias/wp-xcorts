@@ -237,7 +237,7 @@ function escort_subscription_metabox_html($post){
 
     <input type="hidden" name="subscription[id]" value="<?php echo $subscription["ID"];?>"/>
     <label><b>Plan:</b></label>
-    <span style="text-transform: uppercase;"><b><?php echo $subscription["plan"]["name"];?></b></span>
+    <span style="text-transform: uppercase;"><b><?php echo ($subscription["plan"]["name"] == 'free') ? 'Inactivo' : $subscription["plan"]["name"];?></b></span>
     <br>
 
     <label><b>Estado de suscripción:</b></label>
