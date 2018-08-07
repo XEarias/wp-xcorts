@@ -365,26 +365,18 @@ jQuery(document).ready(function () {
 
     jQuery('.rates label').click(function() {
 
-        if (!jQuery(this).hasClass('checked')) {
+            var label = jQuery(this);
+            var type = label.attr('for').split('_')[1];
+            var plan = label.attr('for').split('_')[0];
 
-            if(jQuery(this).hasClass('l')) {
-                jQuery(this).next().removeClass('checked');
-                jQuery(this).addClass('checked');
-            } else {
-                jQuery(this).prev().removeClass('checked');
-                jQuery(this).addClass('checked');
-            }
+            jQuery("input[name='plan[type]']").prop("checked", false);
+            jQuery("input#" + type).prop("checked", true);
 
-            var price = parseInt(jQuery(this).data('price'));
-            var h4 = jQuery(this).parent().next().children('div.price').children('h4.price');
+            jQuery("input[name='plan[name]']").prop("checked", false);
+            jQuery("input#" + plan).prop("checked", true);
+
+            jQuery('form#escort-subscription').submit();
         
-            if (price) {
-                h4.text(price + ' $');
-            } else {
-                h4.html('<span style="color: green">GRATIS</span>');
-            }
-        
-        }
     });
 
     jQuery('.select-button label').click(function() {

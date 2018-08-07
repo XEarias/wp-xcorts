@@ -245,7 +245,7 @@ $services = get_escorts_services();
                         <div class="col-md-12">
                             <label>Video</label>
                             <div class="custom-file">
-                                <input type="file" name="video" id="video" lang="es">
+                                <input type="file" name="video" id="video" style="visibility: visible">
                             </div>
                         </div>
                     </div>
@@ -345,7 +345,8 @@ $services = get_escorts_services();
 
                     <div class="row" style="margin-top: 25px">
                         <?php foreach ($plans as $name => $plan): ?>
-                            <div class="col-md-3">
+                            <?php if ($name != 'free'): ?>
+                            <div class="col-md-4">
                                 <div class="plan-box">
                                     <div class="plan-box-header">
                                         <img src="<?= get_template_directory_uri() . '/assets/img/PLAN_'.strtoupper($name).'.png' ?>);" width="100%" alt="">
@@ -367,16 +368,23 @@ $services = get_escorts_services();
                                                 <?php endif; ?>
                                             </label>
                                         </div>
+                                        <div class="prices">
+                                            <h4 class="price week">
+                                                <?php if ($name == 'free'): ?>
+                                                    <span style="color: green">GRATIS</span>
+                                                <?php else: ?>
+                                                    <?= $plan['rates']['weekly'] ?> $
+                                                <?php endif; ?>
+                                            </h4>
+                                            <h4 class="price month">
+                                                <?php if ($name == 'free'): ?>
+                                                    <span style="color: green">GRATIS</span>
+                                                <?php else: ?>
+                                                    <?= $plan['rates']['monthly'] ?> $
+                                                <?php endif; ?>
+                                            </h4>
+                                        </div>
                                         <div class="description">
-                                            <div class="price">
-                                                <h4 class="price">
-                                                    <?php if ($name == 'free'): ?>
-                                                        <span style="color: green">GRATIS</span>
-                                                    <?php else: ?>
-                                                        <?= $plan['rates']['weekly'] ?> $
-                                                    <?php endif; ?>
-                                                </h4>
-                                            </div>
                                             <?= $plan['description'] ?>
                                         </div>
                                         <div class="items">
@@ -386,12 +394,13 @@ $services = get_escorts_services();
                                                 <?php endforeach; ?>
                                             </ul>
                                         </div>
-                                        <div class="select-button">
+                                        <!--<div class="select-button">
                                             <label for="<?= $name ?>" class="<?php if ($name == 'free') { echo 'selected-plan'; } ?>">ESCOGER</label>
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                     </div>
 

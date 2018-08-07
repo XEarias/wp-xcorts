@@ -570,24 +570,31 @@ form#loginform p input[type=submit] {
     background: linear-gradient(black, #858585, #ccc, #eee);
 }
 
-.plan-box-body .rates, .plan-box-body .description, .plan-box-body .items, .plan-box-body .select-button{
+.plan-box-body .rates, .plan-box-body .rates, .plan-box-body .description, .plan-box-body .items, .plan-box-body .select-button{
     display: flex;
-    justify-content: center
+    justify-content: space-around;
+}
+
+.plan-box-body .prices h4.price {
+    border: none;
+    color: green;
 }
 
 .plan-box-body .rates label {
-    background-color: white;
+    background-color: #f44336;
     padding: 3px 10px;
     margin-top: 20px;
     cursor: pointer;
+    width: 44%;
+    text-align: center;
 }
 
 .plan-box-body .rates label.l {
-    border-radius: 23px 0 0 23px;
+    border-radius: 23px;
 }
 
 .plan-box-body .rates label.r {
-    border-radius: 0 23px 23px 0;
+    border-radius: 23px;
 }
 
 .plan-box-body .rates label.checked {
