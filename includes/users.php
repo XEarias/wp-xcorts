@@ -366,7 +366,7 @@ add_action( 'rest_api_init', function () {
 
 add_filter('login_redirect', 'my_login_redirect', 10, 3);
 function my_login_redirect($redirect_to, $requested_redirect_to, $user) {
-    if (is_wp_error($user)) {
+    if (is_wp_error($user) && count($user->errors)) {
 
         GLOBAL $login_slug;
 

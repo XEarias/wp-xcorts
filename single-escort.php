@@ -74,7 +74,7 @@
 
     <div class="row">
         <div class="name-phone col-md-12 pt-4 pb-2 pl-0 pr-0">
-            <h4 style="color:#F39" class="text-center">¡Tu guía de putas de lujo!</h4>
+            <h4 style="color:#F39" class="text-center">¡Tu guía de escorts de lujo!</h4>
             <p style="text-align: justify; font-size: 13px;"><?= ($escort['description']) ? $escort['description'] : '...' ?></p>
         </div>
     </div>
