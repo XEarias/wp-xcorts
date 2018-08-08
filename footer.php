@@ -9,10 +9,12 @@
                         </div>
 
                         <ul class="site-map">
-                            <li><a href="#">HOME</a></li>
-                            <li><a href="#">LINK</a></li>
-                            <li><a href="#">LINK</a></li>
-                            <li><a href="#">LINK</a></li>
+                            <li><a href="/ciudad/df-cdmx">Escorts DF / CDMX</a></li>
+                            <li><a href="/ciudad/cuervacana">Escorts Cuernavaca</a></li>
+                            <li><a href="/ciudad/guadalajara">Escorts Guadalajara</a></li>
+                            <li><a href="/ciudad/monterrey">Escorts Monterrey</a></li>
+                            <li><a href="/ciudad/queretaro">Escorts Querétaro</a></li>
+                            <li><a href="/ciudad/veracruz">Escorts Veracruz</a></li>
                         </ul>
                     </div>
                 </div>
