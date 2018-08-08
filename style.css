@@ -570,7 +570,7 @@ form#loginform p input[type=submit] {
     background: linear-gradient(black, #858585, #ccc, #eee);
 }
 
-.plan-box-body .rates, .plan-box-body .rates, .plan-box-body .description, .plan-box-body .items, .plan-box-body .select-button{
+.plan-box-body .rates, .plan-box-body .prices, .plan-box-body .description, .plan-box-body .items, .plan-box-body .select-button{
     display: flex;
     justify-content: space-around;
 }
@@ -586,6 +586,7 @@ form#loginform p input[type=submit] {
     margin-top: 20px;
     cursor: pointer;
     width: 44%;
+    color: white;
     text-align: center;
 }
 

@@ -15,9 +15,14 @@ $login_url = get_page_link($login_page->ID);
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark  bg-dark" style="background-color: black !important;" id="principal-menu">
+
   <?php get_template_part('template-parts/custom-logo'); ?>
 
-  <div class="collapse navbar-collapse show">
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nb" aria-controls="nb" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="nb">
     <ul class="navbar-nav mr-auto" style="margin: auto;">
     <?php if($menu_items):?>
         <?php foreach($menu_items as $key => $menu_item):?>

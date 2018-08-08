@@ -119,7 +119,8 @@ var messages = [
         username: {
             maxlength: "El usuario no puede contener mas de 50 caracteres",
             required: 'El usuario es obligatorio',
-            remote: 'El usuario ya se encuentra en uso'
+            remote: 'El usuario ya se encuentra en uso',
+            alphanumeric: 'Solo se permiten numeros y letras, sin caracteres especiales',
         },
         password: {
             maxlength: "La contraseña no puede contener mas de 10 caracteres",
@@ -248,6 +249,10 @@ jQuery(document).ready(function () {
                 easing: 'easeInOutBack'
             });
 
+            jQuery([document.documentElement, document.body]).animate({
+                scrollTop: jQuery("#progressbar").offset().top
+            }, 1000);
+
         }
     });
 
@@ -285,6 +290,10 @@ jQuery(document).ready(function () {
             //this comes from the custom easing plugin
             easing: 'easeInOutBack'
         });
+
+        jQuery([document.documentElement, document.body]).animate({
+            scrollTop: jQuery("#progressbar").offset().top
+        }, 1000);
     });
 
     jQuery(".submit").click(function () {
