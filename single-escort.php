@@ -74,7 +74,7 @@
 
     <div class="row">
         <div class="name-phone col-md-12 pt-4 pb-2 pl-0 pr-0">
-            <h4 style="color:#F39" class="text-center">¡Tu guía de escorts de lujo!</h4>
+            <h4 style="color:#F39" class="text-center">¡Evas Escorts México, #VerdaderasAmigas!</h4>
             <p style="text-align: justify; font-size: 13px;"><?= ($escort['description']) ? $escort['description'] : '...' ?></p>
         </div>
     </div>
@@ -174,7 +174,7 @@
                     <div class="form-group mx-sm-3 mb-2">
                         <input type="text" class="form-control" id="denuncia" name="url" placeholder="https://">
                     </div>
-                    <button type="submit" class="btn mb-2" style="background-color: #f39; color: white; border-radius:0;">DENUNCIAR</button>
+                    <button type="submit" class="btn mb-2" style="background-color: #f39; color: white; border-radius:0;">REPORTAR</button>
                 </form>
             </div>
             <div class="mt-4 mb-4" style="background-color: #EDEDED; height: 5px;"></div>

@@ -15,6 +15,8 @@
                             <li><a href="/ciudad/monterrey">Escorts Monterrey</a></li>
                             <li><a href="/ciudad/queretaro">Escorts Querétaro</a></li>
                             <li><a href="/ciudad/veracruz">Escorts Veracruz</a></li>
+                            <li><a href="/politica">Terminos y Condiciones</a></li>
+                            <li><a href="/avisos-legales">Avisos Legales</a></li>
                         </ul>
                     </div>
                 </div>

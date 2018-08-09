@@ -721,6 +721,33 @@ time {
     color: grey;
 }
 
+.list-inline {
+    padding-left: 0;
+    margin-left: -5px;
+    list-style: none;
+    text-align:  center;
+}
+
+.list-inline li {
+    font-size: 12px;
+}
+
+.list-inline li i {
+    font-size: 38px !important;
+    color: white;
+}
+
+.no-deco {
+    text-decoration: none;
+}
+
+.list-inline>li {
+    display: inline-block;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+
 #fancybox-content {
     background: white;
 }
@@ -737,6 +764,10 @@ time {
     }
     .nav-link button {
         width: 100%;
+    }
+
+    .filterbar-container{
+        display: none;
     }
 }
 
