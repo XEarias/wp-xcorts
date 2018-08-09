@@ -3,6 +3,7 @@
 $account_slug = 'escort-account';
 $login_slug = 'escort-login';
 $subscription_slug = 'escort-subscription';
+$subscription_success_slug = 'escort-subscription-success';
 
 
 $page_definitions = [
@@ -16,6 +17,10 @@ $page_definitions = [
     ],
     'escort-subscription' => [
         'title' => "Anunciate",
+        'content' => ''
+    ],
+    'escort-subscription-success' => [
+        'title' => "Registro Exitoso",
         'content' => ''
     ]
 ];
@@ -122,7 +127,7 @@ function do_cleaner_array(&$files) {
 function add_new_escort(){
     
 
-    GLOBAL $subscription_slug, $login_slug;
+    GLOBAL $subscription_slug, $subscription_success_slug;
 
     $nonce = $_POST['escort_nounce'];
     
@@ -185,7 +190,7 @@ function add_new_escort(){
 
     admin_save_escort($escort_ad_id,$escort_ad_object );
 
-    escort_page_redirect($login_slug);
+    escort_page_redirect($subscription_success_slug);
 
 }
 

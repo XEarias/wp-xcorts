@@ -71,7 +71,7 @@ $complexions = [
 $working_days = [
     "Full time",
     "Fines de semana",
-    "Días de semana"
+    "Entre Semana"
 ];
 
 $sexual_orientations = [
