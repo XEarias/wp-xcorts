@@ -45,7 +45,7 @@ $services = get_escorts_services();
 
                     <div class="row">
                         <div class="col-md-4 form-group">
-                            <label for="first_name">Nombres (*)</label>
+                            <label for="first_name">Nombres (*) </label>
                             <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Nombres">
                         </div>
                         <div class="col-md-4 form-group">
@@ -53,7 +53,7 @@ $services = get_escorts_services();
                             <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Apellidos">
                         </div>
                         <div class="col-md-4 form-group">
-                            <label for="email">Email (*)</label>
+                            <label for="email">Email (*) </label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Email">
                         </div>
                     </div>
@@ -70,6 +70,21 @@ $services = get_escorts_services();
                                     <option value="<?php echo $key; ?>"><?php echo $phone_permission;?></option>
                                 <?php endforeach;?>
                             </select>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <div class="form-check">
+                                <input class="form-check-input isChecked" type="checkbox" name="politics" id="politics">
+                                <label class="form-check-label" for="politics">
+                                    Lorem ipsum
+                                </label>
+                            </div>
+                            <!--<label id="politics_error" class="hidden" for="politics"> </label>-->
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <small><strong>Estos datos no son publicos, Son para uso interno del Sitio</strong></small>
                         </div>
                     </div>
 
@@ -112,15 +127,16 @@ $services = get_escorts_services();
 
                     <div class="row">
                         <div class="col-md-3 form-group">
-                            <label for="age">Que idiomas hablas</label>
+                            <label for="langs">Que idiomas hablas</label>
                             <?php foreach($langs as $key => $lang):?>
                                 <div class="form-check">
-                                    <input class="form-check-input"type="checkbox" name="lang[<?php echo $key;?>]" id="<?php echo $key;?>">
+                                    <input class="form-check-input isOneCheckedI"type="checkbox" name="langs[<?php echo $key;?>]" id="<?php echo $key;?>">
                                     <label class="form-check-label" for="<?php echo $key;?>">
                                         <?php echo $lang;?>
                                     </label>
                                 </div>
                             <?php endforeach;?>
+                            <label id="langs_error" class="hidden" for="langs"> Debe seleccionar al menos un idioma</label>
                         </div>
                         <div class="col-md-3 form-group">
                             <label for="origin">Que nacionalidad tienes?</label>
@@ -220,7 +236,7 @@ $services = get_escorts_services();
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <input type="file" id="featured_image" name="featured_image" style="visibility:hidden; height: 1px"><br>
+                            <input type="file" id="featured_image" name="featured_image" style="visibility:hidden; height: 1px;display: block;"><br>
                         </div>
                     </div>
 
@@ -237,16 +253,11 @@ $services = get_escorts_services();
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <input type="file" id="images" name="images[]" style="visibility:hidden; height: 1px" multiple>
+                            <input type="file" id="images" name="images[]" style="visibility:hidden; height: 1px;display: block;" multiple>
                         </div>
-                    </div>
-
-                    <div class="row" style="margin-top: 25px">
                         <div class="col-md-12">
-                            <label>Video</label>
-                            <div class="custom-file">
-                                <input type="file" name="video" id="video" style="visibility: visible">
-                            </div>
+                            <small><strong>En movil:</strong> Manten presionada cada imagen que desees subir una tras otra y asi puedes subir multiples imagenes</small> <br>
+                            <small><strong>En escritorio:</strong> Manten presionado (Ctrl) y al mismo tiempo sin soltarlo haces clic en cada imagen que desees subir y asi puedes subir multiples imagenes</small>
                         </div>
                     </div>
 
@@ -292,7 +303,7 @@ $services = get_escorts_services();
                             <label for="services">Servicios (*)</label>
                             <?php foreach($services as $service):?>
                                 <div class="form-check">
-                                    <input class="form-check-input"type="checkbox" name="services[]" id="<?php echo $service["name"];?>" value="<?php echo $service["ID"];?>">
+                                    <input class="form-check-input isOneCheckedS"type="checkbox" name="services[]" id="<?php echo $service["name"];?>" value="<?php echo $service["ID"];?>">
                                     <label class="form-check-label" for="<?php echo $service["name"];?>">
                                         <?php echo $service["name"];?>
                                     </label>
@@ -420,5 +431,9 @@ $services = get_escorts_services();
         </div>
     </div>
 </section>
+
+<div class="overlay">
+    Cargando...
+</div>
 
 <?php get_footer(); ?>

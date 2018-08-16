@@ -3,6 +3,26 @@ var current_fs, next_fs, previous_fs; //fieldsets
 var left, opacity, scale; //fieldset properties which we will animate
 var animating; //flag to prevent quick multi-click glitches
 
+function isOneCheckedI() {
+    var valid = true;
+    jQuery('input[name^="langs"]').each(function (index) {
+        console.log('index', index)
+        if (jQuery(this).is(':checked')) {
+            valid = false;
+        }
+    })
+
+    if (valid) {
+        jQuery('label#langs_error').removeClass('hidden');
+        jQuery('label#langs_error').addClass('is-invalid');
+    } else {
+        jQuery('label#langs_error').removeClass('is-invalid');
+        jQuery('label#langs_error').addClass('hidden');
+    }
+
+    return valid;
+}
+
 function isOneCheckedS() {
     var valid = true;
     jQuery('input[name^="services"]').each(function (index) {
@@ -43,6 +63,46 @@ function isOneCheckedMP() {
     return valid;
 }
 
+function isChecked() {
+    var valid = true;
+    if(jQuery('#politics').is(':checked')) {
+        valid = false
+    }
+
+    /*if (valid) {
+        jQuery('label#services_error').removeClass('hidden');
+        jQuery('label#services_error').addClass('is-invalid');
+    } else {
+        jQuery('label#services_error').removeClass('is-invalid');
+        jQuery('label#services_error').addClass('hidden');
+    }*/
+
+    return valid;
+}
+
+jQuery.validator.addMethod('filesize', function (value, element, param) {
+    console.log(element)
+    for (let i = 0; i < element.files.length; i++) {
+        var size = element.files[i].size / 1024 / 1024;
+        console.log(size > param)
+        if (size > param) {
+            return false;
+        }
+    }
+    return true;
+}, 'Las imagenes deben ser de menor o igual tamaño que {0} Mb');
+
+
+jQuery.validator.addMethod("CustomRequired", jQuery.validator.methods.required, "");
+
+jQuery.validator.addClassRules("isOneCheckedI", {
+    CustomRequired: isOneCheckedI
+});
+
+jQuery.validator.addClassRules("isOneCheckedS", {
+    CustomRequired: isOneCheckedI
+});
+
 
 var rules = [
     {
@@ -76,7 +136,8 @@ var rules = [
                 type: "post"
             }
         },
-        'phone[value]': { required: true }
+        'phone[value]': { required: true },
+        'politics': { required: isChecked },
     },
     {
         visible_name: {
@@ -98,9 +159,13 @@ var rules = [
     {
         featured_image: {
             required: true,
-            accept: "image/jpeg, image/pjpeg, image/png"
+            accept: "image/jpeg, image/pjpeg, image/png", 
+            filesize: 1
         },
-        images: { accept: "image/jpeg, image/pjpeg, image/png" },
+        "images[]": { 
+            accept: "image/jpeg, image/pjpeg, image/png", 
+            filesize: 1
+        },
         video: { accept: "video/mp4, video/3pg, video/mkv"  }
     },
     {
@@ -140,12 +205,14 @@ var messages = [
             required: "El email es obligatorio",
             remote: "El email ya se encuentra en uso"
         },
-        'phone[value]': { required: "El telefono es obligatorio" }
+        'phone[value]': { required: "El telefono es obligatorio" },
+        'politics': { required: "" }
     },
     {
         visible_name: {
             required: "El nombre para mostrar en el anuncio es obligatorio"
         },
+        'langs[]': { required: '' },
         stature: {
             required: "La estatura es obligatoria",
             number: "La estatura solo puede contener numeros"
@@ -384,6 +451,7 @@ jQuery(document).ready(function () {
             jQuery("input[name='plan[name]']").prop("checked", false);
             jQuery("input#" + plan).prop("checked", true);
 
+            jQuery('.overlay').addClass('show');
             jQuery('form#escort-subscription').submit();
         
     });
