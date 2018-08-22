@@ -694,11 +694,15 @@ function admin_save_escort( $post_id, $post_object)
             
             if ( ! wp_is_post_revision( $post_id ) ){
                
+                $time = current_time('mysql');
+
                 remove_action(' post_updated', 'admin_save_escort');
 
                 $update_subscription_args = [
                     "ID" => $subscription_id,
-                    "post_status" => "paid"
+                    "post_status" => "paid",
+                    'post_date'     => $time,
+                    'post_date_gmt' => get_gmt_from_date( $time )
                 ];
 
                 $updated_subscription = wp_update_post($update_subscription_args);
