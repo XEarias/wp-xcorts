@@ -6,5 +6,7 @@ jQuery(document).ready(function(){
         pauseOnHover:false
     });
 
+    jQuery('.slick-prev').text('<')
+    jQuery('.slick-next').text('>')
 })
 
