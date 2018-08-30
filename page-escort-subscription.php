@@ -71,12 +71,28 @@ $services = get_escorts_services();
                                 <?php endforeach;?>
                             </select>
                         </div>
-                        <div class="col-md-6 form-group">
+                        <div class="col-md-12 form-group">
                             <div class="form-check">
                                 <input class="form-check-input isChecked" type="checkbox" name="politics" id="politics">
-                                <label class="form-check-label" for="politics">
-                                    Lorem ipsum
-                                </label>
+                                <label class="form-check-label" for="politics"><small>
+                                    Requisitos para publicar en www.EVAS.mx - #VerdaderasAmigas:
+                                    <br><br>
+                                    &nbsp&nbsp&nbsp&nbsp 1. Antes de llenar los campos solicitados en esta forma, toma en cuenta que solicitamos la siguiente información.
+                                    <br>
+                                    &nbsp&nbsp&nbsp&nbsp 2. INE o documento oficial con fotografía para comprobar que eres una chica mayor de edad (anéxala junto con tus imágenes).
+                                    <br>
+                                    &nbsp&nbsp&nbsp&nbsp 3. Ser una chica que publique por su propia cuenta sin intermediarios y 100% independiente.
+                                    <br>
+                                    &nbsp&nbsp&nbsp&nbsp 4. Enviar un mínimo de 6 fotografías recientes, de buena calidad, sin letras, logos, números o marcas de agua.
+                                    <br>
+                                    &nbsp&nbsp&nbsp&nbsp 4. Las fotografías deben ser de tu propiedad, en ningún caso aceptamos anuncios con imágenes bajadas de internet.
+                                    <br>
+                                    &nbsp&nbsp&nbsp&nbsp 5. Recuerda agregar tus datos generales como nombre, edad, zonas, teléfono y texto de tu anuncio.
+                                    <br><br>
+                                    Tus datos personales son estrictamente confidenciales y están protegidos y nunca se publicarán.
+                                    <br>
+                                    Nos reservamos el derecho de admisión.
+                                </small></label>
                             </div>
                             <!--<label id="politics_error" class="hidden" for="politics"> </label>-->
                         </div>
@@ -424,8 +440,6 @@ $services = get_escorts_services();
                         <input type="radio" id="monthly" name="plan[type]" value="monthly">
                     </div>
 
-                    <input type="button" data-step="4" name="previous" class="previous-step action-button" value="Anterior" />
-                    <input type="submit" data-step="5" value="Enviar" />
                 </fieldset>
             </form>
         </div>
