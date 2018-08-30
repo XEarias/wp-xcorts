@@ -53,7 +53,8 @@
 
         <div class="name-phone col-md-8 pt-4 pb-2 pl-0 pr-0">
             <h2 class="single-escort-name"><?= $escort['name'] ?> </h2>
-            <h1 class="single-escort-name" style="visibility:hidden;height: 0;margin: 0;">Escort <?= $escort['name'] ?><?php if(count($escort['zone'])): ?>, <?= $escort['zone'][0]['name'] ?><?php endif; ?>, <?= $escort['basic_info']['age'] ?> años </h1>
+            <h1 class="single-escort-name" style="visibility:hidden;height: 0;margin: 0;width: 0;
+    overflow: hidden;">Escort <?= $escort['name'] ?><?php if(count($escort['zone'])): ?>, <?= $escort['zone'][0]['name'] ?><?php endif; ?>, <?= $escort['basic_info']['age'] ?> años </h1>
             <?php if(count($escort['zone'])): ?>
                 <p class="single-escort-link"><a href="<?= $escort['zone'][0]['url'] ?>">Escorts en <strong><?= $escort['zone'][0]['name'] ?></strong></a></p>
             <?php else: ?>
@@ -190,7 +191,7 @@
 
     <div class="row">
         <div class="col-md-12 text-center">
-            <a class="btn mb-2" style="background-color: #f39; color: white; border-radius:0;">VER MAS ESCORTS</a>
+            <a class="btn mb-2" href="<?= $escort['zone'][0]['url'] ?>" style="background-color: #f39; color: white; border-radius:0;">VER MAS ESCORTS</a>
         </div>
     </div>
 

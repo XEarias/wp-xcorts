@@ -168,6 +168,7 @@ svg.hidden-background {
 .single-escort-info-card {
     height: 400px;
     background-color: #F5F5F5;
+    overflow: scroll;
     border-bottom: 2px solid #999;
 }
 
