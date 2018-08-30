@@ -182,7 +182,7 @@
     </div>
 </section>
 
-<?php prepare_escorts(['limit' => 6]); ?>
+<?php prepare_escorts(['limit' => 5]); ?>
 
 <?php get_template_part( 'template-parts/escort-list' ); ?>
 
