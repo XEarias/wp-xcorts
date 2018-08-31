@@ -42,6 +42,7 @@ html {
 
 .escort-item .escort-item-internal .escort-info-container .escort-info-header {
     height: 20%;
+    overflow: hidden;
 }
 
 .escort-item .escort-item-internal .escort-info-container .escort-info-header .escort-info-header-left{
@@ -86,6 +87,7 @@ html {
     font-size: 11px;
     padding: 0px 15px;
     overflow: hidden;
+    overflow-y: auto;
 }
 
 .escort-item .escort-item-internal .escort-info-container .escort-info-body .escort-extra-data {
@@ -759,10 +761,16 @@ time {
     padding-top: 100px;
     color: white;
     font-size: 27px;
+    display: none;
 }
 
 .overlay.show {
     display: block;
+}
+
+.ocultar-menu{
+    visibility: hidden;
+    width: 170px;
 }
 
 #fancybox-content {

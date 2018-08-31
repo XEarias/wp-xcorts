@@ -525,6 +525,8 @@ function upload_attachments_escorts_ads($escort_ad_id, $file){
 
     $attach_data = wp_generate_attachment_metadata( $attach_id, $moved_file["file"] );
 
+    generate_escort_watermarked_image($attach_data, $attach_id);
+
     $updated_data = wp_update_attachment_metadata( $attach_id, $attach_data );
 
     return $attach_id;

@@ -260,7 +260,7 @@ function theme_admin_page_html(){
 }
 
 function add_theme_admin_pages(){
-add_menu_page("Xcorts Theme",  "Xcorts Theme", "manage_options", "xcorts_theme", "theme_admin_page_html" );
+    add_menu_page("Xcorts Theme",  "Xcorts Theme", "manage_options", "xcorts_theme", "theme_admin_page_html" );
 }
 
 
