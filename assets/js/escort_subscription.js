@@ -453,6 +453,12 @@ jQuery(document).ready(function () {
 
             jQuery('.overlay').addClass('show');
             jQuery('form#escort-subscription').submit();
+            
+        console.log(jQuery('form#escort-edit-plan').length, jQuery('form#escort-subscription').length)
+
+            if (jQuery('form#escort-edit-plan')) {
+                jQuery('form#escort-edit-plan').submit()
+            }
         
     });
 

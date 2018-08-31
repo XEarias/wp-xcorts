@@ -72,16 +72,24 @@
                                             <?php endif; ?>
                                         </label>
                                     </div>
+
+                                    <div class="prices">
+                                        <h4 class="price week">
+                                            <?php if ($name == 'free'): ?>
+                                                <span style="color: green">GRATIS</span>
+                                            <?php else: ?>
+                                                <?= $plan['rates']['weekly'] ?> $
+                                            <?php endif; ?>
+                                        </h4>
+                                        <h4 class="price month">
+                                            <?php if ($name == 'free'): ?>
+                                                <span style="color: green">GRATIS</span>
+                                            <?php else: ?>
+                                                <?= $plan['rates']['monthly'] ?> $
+                                            <?php endif; ?>
+                                        </h4>
+                                    </div>
                                     <div class="description">
-                                        <div class="price">
-                                            <h4 class="price">
-                                                <?php if ($name == 'free'): ?>
-                                                    <span style="color: green">GRATIS</span>
-                                                <?php else: ?>
-                                                    <?= $subscription['plan']['value'] ?> $
-                                                <?php endif; ?>
-                                            </h4>
-                                        </div>
                                         <?= $plan['description'] ?>
                                     </div>
                                     <div class="items">
@@ -91,7 +99,7 @@
                                             <?php endforeach; ?>
                                         </ul>
                                     </div>
-                                    <div class="select-button">
+                                    <!--<div class="select-button">
                                         <label for="<?= $name ?>" class="<?php if ($subscription['plan']['name'] == $name) { echo 'selected-plan'; } ?>" <?php if ($subscription['plan']['name'] == $name) { echo 'disabled'; } ?>>
                                         <?php if ($subscription['plan']['name'] == $name): ?>
                                             ACTIVO
@@ -99,7 +107,7 @@
                                             ESCOGER
                                         <?php endif; ?>
                                         </label>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                         </div>
@@ -122,8 +130,6 @@
             <input type="radio" id="weekly" name="new_plan[type]" value="weekly" <?php if ($subscription['plan']['type'] == 'weekly') { echo 'checked'; } ?>>
             <input type="radio" id="monthly" name="new_plan[type]" value="monthly" <?php if ($subscription['plan']['name'] == 'montly') { echo 'checked'; } ?>>
         </div>
-
-        <input type="submit" value="Guardar" />
 
     </fieldset>
 </form>
