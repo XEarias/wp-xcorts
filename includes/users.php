@@ -180,7 +180,7 @@ function add_new_escort(){
     }
 
     $plan_name = $plan["name"];
-    $plan_type = ($plan["name"] != 'free') ? $plan["type"] : null;
+    $plan_type = $plan["type"];//($plan["name"] != 'free') ? $plan["type"] : null;
 
     //nueva suscripcion gratis
     $subscription_id = add_new_subscription($escort_ad_id, $plan_name, $plan_type);

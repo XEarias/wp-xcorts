@@ -232,23 +232,32 @@ add_action('add_meta_boxes', 'add_escorts_metaboxes');
 /****  META BOX CON DATOS DE SUSCRIPCION ***/
 function escort_subscription_metabox_html($post){
 
+    GLOBAL $plans;
+
     $subscription = get_or_set_subscription($post->ID);
+
+    switch ($subscription["status"]) {
+        case "finished":
+            $status = "<span style='color: blue'>Concluida</span>";
+        case "default":
+            $status = "<span style='color: red'>En Deuda</span>";
+        case "paid":
+            $status = "<span style='color: green'>Activa</span>";
+    };
     ?>
 
     <input type="hidden" name="subscription[id]" value="<?php echo $subscription["ID"];?>"/>
     <label><b>Plan:</b></label>
-    <span style="text-transform: uppercase;"><b><?php echo ($subscription["plan"]["name"] == 'free') ? 'Inactivo' : $subscription["plan"]["name"];?></b></span>
+    <span style="text-transform: uppercase;"><b><?php echo $subscription["plan"]["name"];?></b></span>
     <br>
 
     <label><b>Estado de suscripción:</b></label>
-    <span><?php echo ($subscription["status"] == "default") ? "<span style='color:red;'>En deuda</span>" : "<span style='color:green;'>Activa</span>";?> </span>
+    <span><?php echo $status;?> </span>
     <br>
 
     <label><b>Fecha de suscripción:</b></label>
     <span><?php echo $subscription["pretty_date"];?> </span>
     <br>
-
-    <?php if($subscription["plan"]["name"] != "free"): ;?>
     
     <label><b>Días Restantes:</b></label>
     <span><?php echo $subscription["days"]["left"]; ?> </span>
@@ -266,20 +275,28 @@ function escort_subscription_metabox_html($post){
     <span><?php echo $subscription["plan"]["value"];?> </span>
     <br>
 
-        <?php if($subscription["status"] == "default"):?>
-        <label for="subscription_paid"><b>Marcar como paga:</b></label>
-        <input id="subscription_paid" name="subscription[paid]" type="checkbox"/>
-        <br>
-        <?php endif;?>
-    
-
-
+    <?php if($subscription["status"] == "default"):?>
+    <label for="subscription_paid"><b>Marcar como paga:</b></label>
+    <input id="subscription_paid" name="subscription[paid]" type="checkbox"/>
+    <br>
     <?php endif;?>
-
-    <?php ?>
-
-
     
+    <label><b>Generar nueva Suscripción:</b></label>
+    <select id="generate_subscription" name="generate_subscription[name]">
+        <option value="">No Generar</option>
+    <?php foreach($plans as $key => $plan):?>
+        <option value="<?php echo $key; ?>"><?php echo ucfirst($key);?></option>
+    <?php endforeach;?>
+    </select>
+    <br>
+
+    <label><b>Tipo de Nueva Suscripción:</b></label>
+    <select id="generate_subscription_type" name="generate_subscription[type]">
+        <option value="weekly">Semanal</option>
+        <option value="monthly">Mensual</option>
+    </select>
+    <br>
+
     <!---->
     <?php
 }
@@ -713,6 +730,15 @@ function admin_save_escort( $post_id, $post_object)
             }
         }
 
+    }
+
+
+    if(isset( $_POST["generate_subscription"]) && isset( $_POST["generate_subscription"]["name"])){
+        $plan_name = $_POST["generate_subscription"]["name"];
+        $type = $_POST["generate_subscription"]["type"];
+
+        add_new_subscription($post_id,$plan_name, $type);
+        
     }
 
     //AGREGAR SERVICIOS y ZONA A UN ANUNCIO
@@ -1189,7 +1215,7 @@ function get_escorts($options = []){
 
             get_escort_extra_info($escort_raw_id, $escort);
             
-            if($escort["subscription"]["plan"]["name"] == "free" || $escort["subscription"]["status"] == 'default'){
+            if($escort["subscription"]["plan"]["name"] == "finished" ||  $escort["subscription"]["status"] == 'default'){
                 continue;
             }
 

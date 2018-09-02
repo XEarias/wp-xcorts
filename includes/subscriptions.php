@@ -177,8 +177,8 @@ function get_or_set_subscription($escort_ad_id){
 	$subscriptions = get_posts($args);
 
 	//si no tiene suscripciones o la ultima suscripcion finalizo se le crea una nueva de tipo 'free'
-	if(!$subscriptions || !count($subscriptions) || $subscriptions[0]->post_status == "finished" ){
-		$subscription = add_new_subscription($escort_ad_id);
+	if(!$subscriptions || !count($subscriptions) /*|| $subscriptions[0]->post_status == "finished"*/ ){
+		$subscription = add_new_subscription($escort_ad_id, "free", "weekly");
 		return $subscription;
 	} 
 
@@ -257,12 +257,12 @@ function update_escort_status() {
 					'key'     => 'subscription_ad',
 					'value'   => $escorts_ad->ID,
 					'compare' => '='
-				],
+				]/*,
 				[
 					'key'     => 'subscription_plan',
 					'value'   => 'free',
 					'compare' => '!='
-				]
+				]*/
 			]
 
 		];
