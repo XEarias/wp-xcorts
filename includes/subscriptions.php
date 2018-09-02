@@ -139,7 +139,7 @@ function add_new_subscription($escort_ad_id, $plan = "free", $type = false){
 	if($type){
 		$subscription["plan"]["type"] = $type;
 
-		if(isset($plans[$plan]) && $plans[$plan]["rates"][$type]){
+		if(isset($plans[$plan]) && isset($plans[$plan]["rates"][$type])){
 			$value = $plans[$plan]["rates"][$type];
 			$subscription["plan"]["value"] = $value;
 		}
