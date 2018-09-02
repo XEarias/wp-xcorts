@@ -236,6 +236,8 @@ function escort_subscription_metabox_html($post){
 
     $subscription = get_or_set_subscription($post->ID);
 
+    print_r($subscription);
+
     switch ($subscription["status"]) {
         case "finished":
             $status = "<span style='color: blue'>Concluida</span>";

@@ -4,7 +4,7 @@
 
     $subscription = get_or_set_subscription($post_id);
 
-    $subscription_name = ($subscription['plan']['name'] == 'free') ? 'Inactiva' : $subscription['plan']['name'];
+    $subscription_name = $subscription['plan']['name'];
 
 ?>
 
@@ -49,70 +49,66 @@
         <div class="row" style="margin-top: 25px">
             <?php if ($subscription['status'] == "paid"): ?>
                 <?php foreach ($plans as $name => $plan): ?>
-                    <?php if ($name != 'free'): ?>
-                        <div class="col-md-4">
-                            <div class="plan-box">
-                                <div class="plan-box-header">
-                                    <img src="<?= get_template_directory_uri() . '/assets/img/PLAN_'.strtoupper($name).'.png' ?>);" width="100%" alt="">
-                                </div>
-                                <div class="plan-box-body">
-                                    <div class="rates">
-                                        <label for="<?= $name.'_weekly' ?>" data-price="<?= $plan['rates']['weekly'] ?>" class="l <?php if($subscription['plan']['name'] != $name): ?> checked <?php elseif($subscription['plan']['name'] == $name && $subscription['plan']['type'] == 'weekly'): ?> checked <?php endif; ?>">
-                                            <?php if ($name == 'free'): ?>
-                                                N/A
-                                            <?php else: ?>
-                                                SEMANAL
-                                            <?php endif; ?>
-                                        </label>
+                    <div class="col-md-3">
+                        <div class="plan-box">
+                            <div class="plan-box-header">
+                                <img src="<?= get_template_directory_uri() . '/assets/img/PLAN_'.strtoupper($name).'.png' ?>);" width="100%" alt="">
+                            </div>
+                            <div class="plan-box-body">
+                                <div class="rates">
+                                    <label for="<?= $name.'_weekly' ?>" data-price="<?= $plan['rates']['weekly'] ?>" class="l <?php if($subscription['plan']['name'] != $name): ?> checked <?php elseif($subscription['plan']['name'] == $name && $subscription['plan']['type'] == 'weekly'): ?> checked <?php endif; ?>">
+                                        SEMANAL
+                                    </label>
+                                    <?php if ($name != 'free'): ?>
                                         <label for="<?= $name.'_monthly' ?>" data-price="<?= $plan['rates']['monthly'] ?>" class="r <?php if($subscription['plan']['name'] == $name && $subscription['plan']['type'] == 'monthly'): ?> checked <?php endif; ?>">
-                                            <?php if ($name == 'free'): ?>
-                                                N/A
-                                            <?php else: ?>
-                                                MENSUAL
-                                            <?php endif; ?>
+                                            MENSUAL
                                         </label>
-                                    </div>
-
-                                    <div class="prices">
-                                        <h4 class="price week">
-                                            <?php if ($name == 'free'): ?>
-                                                <span style="color: green">GRATIS</span>
-                                            <?php else: ?>
-                                                <?= $plan['rates']['weekly'] ?> $
-                                            <?php endif; ?>
-                                        </h4>
-                                        <h4 class="price month">
-                                            <?php if ($name == 'free'): ?>
-                                                <span style="color: green">GRATIS</span>
-                                            <?php else: ?>
-                                                <?= $plan['rates']['monthly'] ?> $
-                                            <?php endif; ?>
-                                        </h4>
-                                    </div>
-                                    <div class="description">
-                                        <?= $plan['description'] ?>
-                                    </div>
-                                    <div class="items">
-                                        <ul>
-                                            <?php foreach ($plan['items'] as $key => $val): ?>
-                                                <li> <?= $val ?></li>
-                                            <?php endforeach; ?>
-                                        </ul>
-                                    </div>
-                                    <!--<div class="select-button">
-                                        <label for="<?= $name ?>" class="<?php if ($subscription['plan']['name'] == $name) { echo 'selected-plan'; } ?>" <?php if ($subscription['plan']['name'] == $name) { echo 'disabled'; } ?>>
-                                        <?php if ($subscription['plan']['name'] == $name): ?>
-                                            ACTIVO
-                                        <?php else: ?>
-                                            ESCOGER
-                                        <?php endif; ?>
-                                        </label>
-                                    </div>-->
+                                    <?php endif; ?>
                                 </div>
+
+                                <div class="prices">
+                                    <h4 class="price week">
+                                        <?php if ($name == 'free'): ?>
+                                            <span style="color: green">GRATIS</span>
+                                        <?php else: ?>
+                                            <?= $plan['rates']['weekly'] ?> $
+                                        <?php endif; ?>
+                                    </h4>
+                                    <?php if ($name != 'free'): ?>
+                                        <h4 class="price month">
+                                            <?= $plan['rates']['monthly'] ?> $
+                                        </h4>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="description">
+                                    <?= $plan['description'] ?>
+                                </div>
+                                <div class="items">
+                                    <ul>
+                                        <?php foreach ($plan['items'] as $key => $val): ?>
+                                            <li> <?= $val ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                                <!--<div class="select-button">
+                                    <label for="<?= $name ?>" class="<?php if ($subscription['plan']['name'] == $name) { echo 'selected-plan'; } ?>" <?php if ($subscription['plan']['name'] == $name) { echo 'disabled'; } ?>>
+                                    <?php if ($subscription['plan']['name'] == $name): ?>
+                                        ACTIVO
+                                    <?php else: ?>
+                                        ESCOGER
+                                    <?php endif; ?>
+                                    </label>
+                                </div>-->
                             </div>
                         </div>
-                    <?php endif; ?>
+                    </div>
                 <?php endforeach; ?>
+            <?php elseif($subscription['status'] == "finished"): ?>
+                <div class="col-md-12">
+                    <div style="background: #f44336; text-align: center; color: white; padding: 10px;">
+                        Considere contratar un nuevo plan
+                    </div>
+                </div>
             <?php else: ?>
                 <div class="col-md-12">
                     <div style="background: #f44336; text-align: center; color: white; padding: 10px;">
