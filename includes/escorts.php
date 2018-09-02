@@ -733,7 +733,7 @@ function admin_save_escort( $post_id, $post_object)
     }
 
 
-    if(isset( $_POST["generate_subscription"]) && isset( $_POST["generate_subscription"]["name"])){
+    if(isset( $_POST["generate_subscription"]) && isset( $_POST["generate_subscription"]["name"]) && $_POST["generate_subscription"]["name"]){
         $plan_name = $_POST["generate_subscription"]["name"];
         $type = $_POST["generate_subscription"]["type"];
 
