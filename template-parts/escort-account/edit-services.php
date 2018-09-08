@@ -37,7 +37,7 @@
                 <label for="zone">Dias de atención</label>
                 <select class="form-control" id="working_days" name="working_days">
                     <?php foreach($working_days as $working_day):?>
-                        <option value="<?php echo $working_day;?>"><?php echo $working_day;?></option>
+                        <option value="<?php echo $working_day;?>" <?php checked($working_day, $user['ad']['working_days']); ?>><?php echo $working_day;?></option>
                     <?php endforeach;?>
                 </select>
             </div>
