@@ -285,13 +285,13 @@ function update_escort_ad(){
        
         }
 
-    } else if(isset($_POST['display_name']) || isset($_POST['description'])) {
+    } else if(isset($_POST['visible_name']) || isset($_POST['description'])) {
 
         $escort_ad_data = ['ID' => $escort_ad_id];
 
-        if(isset($_POST['display_name'])){
+        if(isset($_POST['visible_name'])){
 
-            $escort_ad_display_name = wp_strip_all_tags($_POST['display_name']);
+            $escort_ad_display_name = wp_strip_all_tags($_POST['visible_name']);
             $escort_ad_data['post_title'] = $escort_ad_display_name;
         
         }

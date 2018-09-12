@@ -289,7 +289,12 @@ function escorts_watermark($url, $escort_attach_id) {
         return $url;
     }
 
-    return $escort_watermarked_image;
+    $file_info = pathinfo($url);
+    $path_to_img = isset($file_info['extension'])
+        ? str_replace($file_info['filename'] . "." . $file_info['extension'], "", $url)
+        : $url;
+
+    return $path_to_img.$escort_watermarked_image;
 }
 
 

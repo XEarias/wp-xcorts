@@ -81,7 +81,7 @@
                 <label for="age">Que idiomas hablas</label>
                 <?php foreach($langs as $key => $lang):?>
                     <div class="form-check">
-                        <input class="form-check-input"type="checkbox" name="lang[<?= $key ?>]" id="<?= $key ?>" <?php echo (in_array($key, $meta_langs)) ? "checked='checked'" : ""; ?>>
+                        <input class="form-check-input"type="checkbox" name="langs[<?= $key ?>]" id="<?= $key ?>" <?php echo (in_array($key, $meta_langs)) ? "checked='checked'" : ""; ?>>
                         <label class="form-check-label" for="<?= $key ?>">
                             <?= $lang ?>
                         </label>

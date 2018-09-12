@@ -271,9 +271,11 @@ function escort_subscription_metabox_html($post){
     <span><?php echo ($subscription["plan"]["type"] == "monthly") ? "Mensual" : "Semanal";?> </span>
     <br>
 
+    <?php if(isset($subscription["plan"]["value"])):?>
     <label><b>Costo de suscripción:</b></label>
     <span><?php echo $subscription["plan"]["value"];?> </span>
     <br>
+    <?php endif;?>
 
     <?php if($subscription["status"] == "default"):?>
     <label for="subscription_paid"><b>Marcar como paga:</b></label>
