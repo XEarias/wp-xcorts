@@ -9,6 +9,9 @@
                 wp_login_form(['redirect' => $page_url]);
             ?>
         </div>
+        <div class="col-md-4 offset-md-4 reset-password-link">
+			<a href="/reiniciar-contrasena">Olvide mi contraseña!</a>
+		</div>
     </div>
 </section>
 

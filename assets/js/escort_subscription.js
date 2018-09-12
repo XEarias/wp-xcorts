@@ -533,7 +533,6 @@ jQuery(document).ready(function () {
             validClass: 'is-valid',
             rules: {
                 featured_image: {
-                    required: true,
                     accept: "image/jpeg, image/pjpeg, image/png"
                 },
                 images: { accept: "image/jpeg, image/pjpeg, image/png" },
